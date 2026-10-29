@@ -248,7 +248,7 @@ A RADIAN divide um sistema de apoio à decisão para desastres naturais em duas 
 | Sistemas de Gerenciamento de Dados e Conhecimento | Banco SQLite (índices calculados e inscritos do bot), malhas IBGE e estações |
 | Sistemas de Suporte | Privacidade (LGPD): o site não coleta dados pessoais; o bot guarda só o chat e os municípios escolhidos |
 | Sistemas de Infraestrutura Computacional | Coleta (Open-Meteo, INMET), cálculo e integração com IBGE e Telegram |
-| Ecossistema | Open-Meteo, INMET, Epagri/Ciram, IBGE, Cemaden (referência metodológica), Defesa Civil SC (link para o painel oficial), Telegram, OpenStreetMap, Google Maps (links "como chegar") |
+| Ecossistema | Open-Meteo, INMET, IBGE, Cemaden (referência metodológica), Defesa Civil SC (link para o painel oficial), Telegram, OpenStreetMap, Google Maps (links "como chegar") |
 
 Não se aplicam ao projeto o módulo Planejamento da Execução (abrigos, doações, resgates) e as macrofuncionalidades de decisão multicritério, plataforma colaborativa, governança/auditoria e atuação sobre sistemas físicos.
 
@@ -309,7 +309,7 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 
 | Tela | Rota | Conteúdo principal |
 |---|---|---|
-| Monitoramento | `/` | Mapa colorido pela classe de risco, resumo "N de 6 em alerta", previsões D0–D3, busca, legenda e painel do município |
+| Monitoramento | `/` | Mapa colorido pela classe de risco, resumo "N de 27 em alerta" com a data e a hora da última atualização, previsões D0–D3, busca, legenda e painel do município |
 | Simulação | `/simulacao` | Município, período e chuva informada; o mapa recolore e compara a situação atual com a simulada |
 | Dados da análise | `/dados` | Indicadores, evolução do índice em 7 dias (padrão), 30 dias ou um período personalizado de até 1 ano, chuva acumulada e tabela por município (minigráfico dos últimos 7 dias) |
 | Áreas de risco | `/areas-de-risco` | Setores de risco geológico do SGB e ocorrências por município; estações do INMET como camada opcional |
@@ -359,7 +359,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RN04** — Todo texto de risco é condicional ("poderá entrar em alerta"), e toda tela com índice informa que o VIGIA não emite alerta oficial.
 - **RN05** — Números usam vírgula decimal.
 - **RN06** — Previsões (D1–D3) aparecem sempre marcadas como valores estimados.
-- **RN07** — A simulação usa a mesma equação do subíndice, trocando a chuva prevista pela chuva informada: (EfR + chuva) ÷ limiar. Ela não altera dados reais e não dispara alertas (o protótipo ainda usa uma fórmula ilustrativa).
+- **RN07** — A simulação usa a mesma equação do subíndice, trocando a chuva prevista pela chuva informada: (EfR × 0,5^((h − 24) ÷ MV) + chuva) ÷ limiar, em que h é o período escolhido (24, 48 ou 72 h) e o EfR do D0 decai pela meia-vida até o fim do período (com 24 h, fica (EfR + chuva) ÷ limiar). Ela não altera dados reais e não dispara alertas.
 - **RN08** — O aviso do bot não se repete enquanto o município permanecer na mesma classe.
 - **RN09** — Só vão ao ar contatos verificados com a prefeitura.
 - **RN10** — O VIGIA não incorpora sites oficiais: o painel da Defesa Civil de SC aparece só como link, na tela Contatos, com o crédito da fonte.
@@ -387,29 +387,53 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 
 ```
 vigia-deslizamentos/
+├── .github/workflows/
+│   ├── ci.yml               # Testes do frontend, backend e Worker, build e axe-core em todo PR
+│   ├── pages.yml            # Build e publicação do site no GitHub Pages
+│   └── pipeline.yml         # Pipeline agendado (3, 9, 15 e 21 UTC) e branch estado
 ├── backend/
 │   ├── app/
-│   │   ├── coleta/          # Clientes das APIs de precipitação
-│   │   ├── calculo/         # Chuva efetiva, subíndices, índice de risco
-│   │   ├── classificacao/   # Classes de risco e probabilidades
-│   │   ├── bot/             # Mensagens e avisos do Telegram
-│   │   ├── exportacao/      # Geração do indices.json consumido pelo frontend
-│   │   └── modelos/         # Modelos de dados e persistência
+│   │   ├── coleta/          # Open-Meteo (chuva antecedente e ensemble) e INMET (estações)
+│   │   ├── calculo/         # Chuva efetiva, subíndice, índice e agregação por dia-alvo
+│   │   ├── classificacao/   # Classes de risco e probabilidades complementares
+│   │   ├── modelos/         # Tipos compartilhados e persistência em SQLite
+│   │   ├── exportacao/      # indices.json, historico.json e bot.json; publicação por commit
+│   │   ├── bot/             # Mensagens, inscrição, regra de aviso (RN08) e envio
+│   │   ├── config.py        # Variáveis de ambiente e municipios.json
+│   │   ├── pipeline.py      # Uma execução inteira: coleta → cálculo → publicação → avisos
+│   │   └── main.py          # --uma-vez (Actions) ou serviço (bot + agendador)
 │   ├── config/
-│   │   └── municipios.json  # Limiar, meia-vida e pontos de cálculo por município
-│   └── tests/
-├── bot-worker/              # Worker do Telegram (webhook, inscritos no D1)
+│   │   └── municipios.json  # Limiar, meia-vida, pontos de cálculo e microrregião por município
+│   ├── scripts/             # Geradores dos dados estáticos e preparação da branch estado
+│   ├── deploy/              # Unidade systemd (alternativa ao Actions)
+│   └── tests/               # Suíte pytest, sem rede
+├── bot-worker/              # Cloudflare Worker do Telegram
+│   ├── src/                 # Webhook, comandos /start, /status e /parar, inscritos no D1
+│   ├── test/                # Testes (vitest) e fixture do bot.json gerada pelo backend
+│   └── migrations/          # Schema do D1
 ├── frontend/
 │   ├── src/
-│   │   ├── components/      # Componentes de interface (React)
-│   │   ├── layouts/         # Layouts Astro
-│   │   ├── pages/           # Páginas do site
-│   │   └── data/            # GeoJSON dos municípios e camadas estáticas
-│   └── public/
-└── docs/                    # Metodologia, fontes de dados e decisões de projeto
+│   │   ├── pages/[...lang]/ # As 6 telas, geradas em PT (/), ES (/es/) e EN (/en/)
+│   │   ├── layouts/         # Layout Astro comum (menu, cabeçalho, tema)
+│   │   ├── components/      # Componentes React das telas
+│   │   ├── lib/             # Regras e formatação das telas, com testes
+│   │   ├── i18n/            # Traduções ES e EN (o português é a chave)
+│   │   ├── styles/          # CSS por tela e tokens de cor
+│   │   ├── conteudo/        # Textos da Cartilha
+│   │   ├── data/            # GeoJSON dos municípios
+│   │   └── fixtures/        # Dados de exemplo do npm run dev e dos testes
+│   ├── public/data/         # JSON publicados: índices, históricos, contatos, estações,
+│   │                        # ocorrências e setores de risco
+│   └── scripts/             # Geração do GeoJSON e verificação com axe-core
+└── docs/
+    ├── contratos-de-dados.md  # Formato dos arquivos trocados entre backend, bot e site
+    ├── indices.schema.json    # JSON Schema do indices.json
+    ├── pendencias.md          # Pendências de desenvolvimento
+    ├── decisoes/              # Decisões de fontes, convenções e pesos do ensemble
+    ├── diagramas/             # Diagrama de casos de uso
+    ├── auditoria/             # Auditoria README × código
+    └── superpowers/           # Especificações e planos de implementação
 ```
-
-> Estrutura sujeita a ajustes conforme o projeto evolui.
 
 ## Roteiro de desenvolvimento
 
