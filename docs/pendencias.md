@@ -19,7 +19,7 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 - ~~🔴 **Hospedagem do backend**~~ **Resolvida:** pipeline no GitHub Actions e bot no Cloudflare Worker (`bot-worker/`). A unidade systemd em `backend/deploy/vigia.service` segue como alternativa.
 - ⚪ **Commit do `indices.json` a cada execução.** São 4 commits e 4 deploys do Pages por dia na `main` (≈120 por mês). Decidir antes de ligar: aceitar, ou publicar numa branch `dados` com o site lendo dela via `PUBLIC_DADOS_URL`.
 - ~~⚪ **Atualizar `actions/checkout` e `actions/setup-node` do `pages.yml`**~~ **Resolvida:** runner `ubuntu-24.04` e actions com Node.js 24 fixadas por SHA (inclusive `upload-pages-artifact` e `deploy-pages`).
-- ~~⚪ **CI só cobre o frontend.**~~ **Resolvida em parte:** o `ci.yml` roda o `pytest -W error` do backend e os testes do Worker em todo PR. O axe-core continua pendente (ver "Qualidade e testes").
+- ~~⚪ **CI só cobre o frontend.**~~ **Resolvida em parte:** o `ci.yml` roda o `pytest -W error` do backend e os testes do Worker em todo PR. O job `a11y` roda o axe-core (29/10/2026).
 
 ## Metodologia e calibração
 
@@ -67,7 +67,7 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 ## Qualidade e testes
 
 - ~~⚪ **Workflow `backend.yml`**~~ **Resolvida:** o job `backend` do `ci.yml` roda o `pytest -W error`.
-- ⚪ **axe-core no `pages.yml`** sobre o `dist/`, como o README exige antes de cada publicação.
+- ~~⚪ **axe-core no `pages.yml`**~~ **Resolvida (29/10/2026):** o job `a11y` do `ci.yml` roda `npm run test:a11y` (Playwright + `@axe-core/playwright`, WCAG 2.1 A e AA) em todas as telas do `dist/`, nos temas claro e escuro, em todo PR. O axe cobre só parte dos critérios WCAG; teclado e leitor de tela ainda pedem conferência manual.
 - ~~⚪ **Teste de componente da Evolução**~~ **Resolvida:** ponteiro e setas viraram funções puras em `lib/graficos.ts` (`indiceMaisProximo`, `focoAposSeta`, `vizinhoCiclico`, `passoDaSeta`), com teste.
 - ~~⚪ **O PR não roda CI**~~ **Resolvida:** o `ci.yml` roda frontend, backend e Worker em todo PR para a `main`.
 

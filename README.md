@@ -379,7 +379,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **Hospedagem do backend:** GitHub Actions (pipeline) e Cloudflare Workers (bot)
 - **Arquitetura de referência:** RADIAN
 - **Idiomas:** Português, Espanhol e Inglês
-- **Acessibilidade:** verificação com axe-core antes de cada publicação
+- **Acessibilidade:** verificação com axe-core (WCAG 2.1 A e AA, temas claro e escuro) em todo PR, no job `a11y` do CI
 
 > **Sobre a escolha do backend:** o GitHub Pages serve apenas conteúdo estático, e o bot com inscrição por usuário exige um banco de inscritos e algo que responda ao Telegram a qualquer hora. A solução sem servidor próprio é o Worker, que responde por webhook e guarda os inscritos no D1, e o Actions, que roda o pipeline por agendamento. Python foi escolhido por concentrar as bibliotecas adequadas ao tipo de processamento da metodologia (séries horárias, decaimento exponencial, agregação de ensemble) e por ter a biblioteca de bot mais madura para o caso de uso.
 

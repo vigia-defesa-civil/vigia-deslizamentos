@@ -147,8 +147,10 @@ export default function Cartilha({ lang }: Props) {
           <p>{t("Em perigo agora? Saia do local e ligue {N}.", { N: EMERGENCIA })}</p>
           <p>{t("Aprenda a ver os sinais e o que fazer. É rápido: toque nos cartões.")}</p>
         </div>
-        <a className="sos" href={rota("contatos", lang)} aria-label={t("Emergência: Defesa Civil {N}, Bombeiros {N} — ver contatos", NUMEROS)}>
+        <a className="sos" href={rota("contatos", lang)}>
           <Phone aria-hidden="true" />
+          {/* O nome acessível é o próprio texto visível (WCAG 2.5.3), com "Defesa Civil" só para o leitor de tela. */}
+          <span className="sr-only">{t("Defesa Civil")} </span>
           <b>
             {EMERGENCIA}
             <small>{t("Bombeiros {N}", { N: BOMBEIROS })}</small>

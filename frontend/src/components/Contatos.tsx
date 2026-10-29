@@ -192,8 +192,9 @@ export default function Contatos({ lang, municipios }: Props) {
                       <span className="sr-only">{t("Site da prefeitura")}</span>
                     </dt>
                     <dd>
-                      <a href={hrefSite(c.site)} target="_blank" rel="noopener" aria-label={t("Site da prefeitura de {M} (abre em nova aba)", { M: c.nome })}>
+                      <a href={hrefSite(c.site)} target="_blank" rel="noopener">
                         {c.site}
+                        <span className="sr-only"> {t("(abre em nova aba)")}</span>
                       </a>
                     </dd>
                   </>
