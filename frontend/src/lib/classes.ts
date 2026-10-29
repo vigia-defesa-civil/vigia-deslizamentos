@@ -5,6 +5,7 @@ export type NumeroClasse = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export type IconeClasse =
   | "circulo-check"
+  | "circulo-menos"
   | "olho"
   | "triangulo-exclamacao"
   | "triangulo-exclamacao-dupla"
@@ -44,7 +45,7 @@ const info = (
 
 export const CLASSES: readonly InfoClasse[] = [
   info(1, "extremamente baixo", "< 0,40", 0, "circulo-check"),
-  info(2, "muito baixo", "0,40 – 0,70", 0.4, "circulo-check"),
+  info(2, "muito baixo", "0,40 – 0,70", 0.4, "circulo-menos"),
   info(3, "baixo", "0,70 – 1,00", 0.7, "olho"),
   info(4, "moderado", "1,00 – 1,80", 1.0, "triangulo-exclamacao", { espacamento: 16, cruzada: false }),
   info(5, "alto", "1,80 – 2,60", 1.8, "triangulo-exclamacao-dupla", { espacamento: 11, cruzada: false }),

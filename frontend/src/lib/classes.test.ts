@@ -51,8 +51,12 @@ describe("CLASSES", () => {
     ]);
     expect(CLASSES[3]).toMatchObject({ numero: 4, cor: "var(--c4)", corIcone: "var(--ci4)" });
     expect(CLASSES.map((c) => c.icone)).toEqual([
-      "circulo-check", "circulo-check", "olho", "triangulo-exclamacao", "triangulo-exclamacao-dupla", "octogono-exclamacao", "octogono-x",
+      "circulo-check", "circulo-menos", "olho", "triangulo-exclamacao", "triangulo-exclamacao-dupla", "octogono-exclamacao", "octogono-x",
     ]);
+  });
+
+  it("cada classe tem um ícone próprio, não só a cor (RN03)", () => {
+    expect(new Set(CLASSES.map((c) => c.icone)).size).toBe(CLASSES.length);
   });
 
   it("hachura a partir do moderado, cruzada nas classes 6 e 7 (RN03)", () => {
