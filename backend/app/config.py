@@ -37,11 +37,6 @@ ATRIBUTO_POR_VARIAVEL_OPCIONAL = {
     "BOT_JSON_PATH": "bot_json_path",
 }
 
-#: Liga o comando `/simular` do bot quando vale exatamente "1". Desligado por
-#: padrão: sem ela o bot se comporta como sempre.
-VARIAVEL_SIMULACAO = "VIGIA_SIMULACAO"
-
-
 class ConfiguracaoInvalidaError(Exception):
     """Configuração de município ou de ambiente mal formada ou incompleta."""
 
@@ -86,7 +81,6 @@ class Config:
     db_path: str
     log_path: str
     inmet_token: str | None = None
-    simulacao: bool = False
     worker_url: str | None = None
     worker_segredo: str | None = None
     bot_json_path: str | None = None
@@ -220,7 +214,5 @@ def carregar_env(ambiente: Mapping[str, str]) -> Config:
         )
     if valores["worker_url"]:
         valores["worker_url"] = valores["worker_url"].rstrip("/")
-
-    valores["simulacao"] = ambiente.get(VARIAVEL_SIMULACAO) == "1"
 
     return Config(**valores)

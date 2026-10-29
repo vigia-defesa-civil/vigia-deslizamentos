@@ -207,7 +207,6 @@ Textos prontos do bot, gerados pelo backend (`app/exportacao/bot_json.py`) a cad
 | `status.separador` | Entre blocos |
 | `status.rodape` | Fim do `/status`, com o link do site |
 | `status.sem_inscricao` | `/status` de quem não tem inscrição |
-| `simulacao` | `null`, ou, com `VIGIA_SIMULACAO=1`, `{mensagens: {ibge: [...]}, fim, municipio_invalido, pausa_s}` para o `/simular` |
 
 O `/status` é montado como `cabecalho + separador.join(blocos dos municípios inscritos) + rodape`.
 

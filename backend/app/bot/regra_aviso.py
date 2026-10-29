@@ -27,8 +27,8 @@ class Aviso:
     dar certo. `indice` e `classe` são os do D0 — os que a mensagem exibe.
 
     `efr_mm`, `rtotal_mm`, `dia_alvo` e `calculado_em` também são do D0 e só
-    servem à mensagem; ficam `None` quando não há cálculo por trás (o
-    `/simular`), e a mensagem então omite as linhas correspondentes.
+    servem à mensagem; ficam `None` quando não há cálculo por trás, e a
+    mensagem então omite as linhas correspondentes.
     """
 
     ibge: str

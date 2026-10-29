@@ -207,9 +207,7 @@ def _gravar_bot_json(
         municipio.ibge: banco.indice_atual(conexao, municipio.ibge)
         for municipio in municipios
     }
-    dados = montar_bot_json(
-        municipios, atuais, config.site_url, config.simulacao, gerado_em
-    )
+    dados = montar_bot_json(municipios, atuais, config.site_url, gerado_em)
     caminho = Path(config.bot_json_path)
     caminho.parent.mkdir(parents=True, exist_ok=True)
     caminho.write_bytes(serializar(dados))

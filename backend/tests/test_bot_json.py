@@ -27,12 +27,6 @@ from app.bot.mensagens import (
     texto_do_status,
     texto_inscricao_confirmada,
 )
-from app.bot.simulacao import (
-    PAUSA_ENTRE_MENSAGENS_S,
-    mensagens_da_simulacao,
-    texto_de_fim,
-    texto_municipio_invalido,
-)
 from app.config import carregar_municipios
 from app.exportacao.bot_json import SCHEMA_VERSION_BOT_JSON, montar_bot_json
 from app.exportacao.exportar import serializar
@@ -62,12 +56,11 @@ def atuais_de_teste() -> dict[str, IndiceAtual | None]:
     }
 
 
-def montar(simulacao: bool = False, atuais=None, gerado_em=GERADO_EM) -> dict:
+def montar(atuais=None, gerado_em=GERADO_EM) -> dict:
     return montar_bot_json(
         MUNICIPIOS,
         atuais if atuais is not None else atuais_de_teste(),
         SITE,
-        simulacao,
         gerado_em,
     )
 
@@ -81,7 +74,6 @@ def test_campos_da_raiz_e_ordem_dos_municipios():
         "municipios",
         "textos",
         "status",
-        "simulacao",
         "grupos",
     }
     assert SCHEMA_VERSION_BOT_JSON == 1
@@ -166,34 +158,13 @@ def test_bloco_de_municipio_sem_calculo():
     assert "ainda sem cálculo" not in blocos[MUNICIPIOS[1].ibge]
 
 
-def test_simulacao_nula_quando_desligada():
-    assert montar(simulacao=False)["simulacao"] is None
-
-
-def test_simulacao_preenchida_quando_ligada():
-    simulacao = montar(simulacao=True)["simulacao"]
-
-    assert simulacao["mensagens"] == {
-        m.ibge: mensagens_da_simulacao(m, SITE) for m in MUNICIPIOS
-    }
-    por_municipio = len(mensagens_da_simulacao(MUNICIPIOS[0], SITE))
-    assert por_municipio > 0
-    assert simulacao["fim"] == texto_de_fim(por_municipio)
-    assert simulacao["pausa_s"] == PAUSA_ENTRE_MENSAGENS_S
-    assert "{entrada}" in simulacao["municipio_invalido"]
-    assert simulacao["municipio_invalido"] == texto_municipio_invalido(
-        MUNICIPIOS, ["{entrada}"]
-    )
-
-
 def test_gerado_em_sem_fuso_levanta():
     with pytest.raises(ValueError, match="gerado_em"):
         montar(gerado_em=datetime(2026, 10, 15, 14, 30, 5))
 
 
-@pytest.mark.parametrize("simulacao", [False, True])
-def test_resultado_e_serializavel(simulacao):
-    dados = montar(simulacao=simulacao)
+def test_resultado_e_serializavel():
+    dados = montar()
 
     assert json.loads(serializar(dados)) == dados
 
@@ -206,8 +177,7 @@ FIXTURE_DO_WORKER = (
 
 
 def test_fixture_do_worker_igual_ao_montar_bot_json():
-    # Com a simulação ligada, para o Worker ver também o formato do objeto `simulacao`.
-    esperado = montar(simulacao=True)
+    esperado = montar()
     if os.environ.get("VIGIA_REGERAR_FIXTURES") == "1":
         FIXTURE_DO_WORKER.parent.mkdir(parents=True, exist_ok=True)
         FIXTURE_DO_WORKER.write_bytes(serializar(esperado))
@@ -256,7 +226,12 @@ def test_rotulos_de_botao_unicos_no_bot_json_inteiro():
 
 def test_sem_microrregiao_nao_ha_grupos():
     sem = [dataclasses.replace(m, microrregiao=None) for m in MUNICIPIOS]
-    dados = montar_bot_json(sem, {m.ibge: None for m in sem}, SITE, False, GERADO_EM)
+    dados = montar_bot_json(sem, {m.ibge: None for m in sem}, SITE, GERADO_EM)
     assert "grupos" not in dados
     assert "opcao_voltar" not in dados["textos"]
     assert "boas_vindas_grupos" not in dados["textos"]
+
+
+def test_bot_json_nao_tem_simulacao():
+    # O /simular de demonstração saiu; o Worker novo não lê mais o campo.
+    assert "simulacao" not in montar()

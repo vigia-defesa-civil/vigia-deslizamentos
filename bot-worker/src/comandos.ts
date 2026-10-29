@@ -2,52 +2,19 @@ import { TEXTO_INDISPONIVEL, carregarBotJson } from "./bot-json";
 import { ibgesDoChat, inscrever, removerChat } from "./inscritos";
 import {
   enviarMensagem,
-  escaparHtml,
   interpretarComando,
   normalizarNome,
   partesDoStatus,
 } from "./telegram";
 import { tecladoDoGrupo, tecladoInicial } from "./teclados";
-import type { BotJson, Env } from "./tipos";
+import type { Env } from "./tipos";
 
 type Mensagem = { chat?: { id?: unknown }; text?: unknown };
-
-const esperar = (segundos: number) => new Promise<void>((ok) => setTimeout(ok, segundos * 1000));
-
-async function enviarSimulacao(env: Env, chatId: number, textos: string[], pausaS: number) {
-  for (const [i, texto] of textos.entries()) {
-    if (i > 0 && pausaS > 0) await esperar(pausaS);
-    await enviarMensagem(env, chatId, texto, "nenhum");
-  }
-}
-
-/** `/simular`: só chamado com `bot.simulacao` preenchida. */
-async function simular(
-  bot: BotJson,
-  sim: NonNullable<BotJson["simulacao"]>,
-  args: string[],
-  env: Env,
-  chatId: number,
-  ctx: ExecutionContext,
-): Promise<void> {
-  const alvo =
-    args.length === 0
-      ? bot.municipios[0]
-      : bot.municipios.find((m) => normalizarNome(m.nome) === normalizarNome(args.join(" ")));
-  if (!alvo) {
-    const texto = sim.municipio_invalido.replace("{entrada}", () => escaparHtml(args.join(" ")));
-    await enviarMensagem(env, chatId, texto, "nenhum");
-    return;
-  }
-  const textos = [...(sim.mensagens[alvo.ibge] ?? []), sim.fim];
-  ctx.waitUntil(enviarSimulacao(env, chatId, textos, sim.pausa_s));
-}
 
 async function tratarMensagem(
   texto: string,
   chatId: number,
   env: Env,
-  ctx: ExecutionContext,
 ): Promise<void> {
   const bot = await carregarBotJson(env.BOT_JSON_URL);
   if (bot === null) {
@@ -100,9 +67,6 @@ async function tratarMensagem(
     await removerChat(env.DB, chatId);
     await enviarMensagem(env, chatId, t.inscricoes_apagadas, "remover");
     return;
-  } else if (comando.comando === "simular" && bot.simulacao !== null) {
-    await simular(bot, bot.simulacao, comando.args, env, chatId, ctx);
-    return;
   }
   await enviarMensagem(env, chatId, t.opcao_desconhecida, "municipios", bot);
 }
@@ -111,11 +75,10 @@ async function tratarMensagem(
 export async function tratarAtualizacao(
   update: unknown,
   env: Env,
-  ctx: ExecutionContext,
 ): Promise<void> {
   const mensagem = (update as { message?: Mensagem } | null)?.message;
   const texto = mensagem?.text;
   const chatId = mensagem?.chat?.id;
   if (typeof texto !== "string" || typeof chatId !== "number") return;
-  await tratarMensagem(texto, chatId, env, ctx);
+  await tratarMensagem(texto, chatId, env);
 }

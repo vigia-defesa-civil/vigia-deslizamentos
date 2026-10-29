@@ -48,7 +48,7 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 
 ## Backend
 
-- 🔴 **Remover o comando `/simular` do bot antes do deploy.** Existe só para demonstração (liga com `VIGIA_SIMULACAO=1`). Apagar `app/bot/simulacao.py`, `tests/test_simulacao.py`, o `comando_simular` e o registro dele em `app/bot/bot.py`, a variável `VIGIA_SIMULACAO` (`app/config.py`, `.env.exemplo`, `backend/README.md`, a variável do workflow `pipeline.yml`), o campo `simulacao` do `bot.json` (`app/exportacao/bot_json.py`, o contrato em `docs/contratos-de-dados.md` e o `simulacao=True` de `test_fixture_do_worker_igual_ao_montar_bot_json`, regenerando `bot-worker/test/fixtures/bot.exemplo.json` com `VIGIA_REGERAR_FIXTURES=1`) e a parte do `/simular` no Worker (`bot-worker/`). Opcional: os campos de chuva e horário do `Aviso` (`app/bot/regra_aviso.py`) aceitam `None` só por causa dela. `faixas_das_classes` fica: a barra de cores das mensagens reais também a usa.
+- ~~🔴 **Remover o comando `/simular` do bot antes do deploy.**~~ **Resolvida (29/10/2026):** comando, variável `VIGIA_SIMULACAO` e campo `simulacao` do `bot.json` removidos do backend e do Worker. Implantação: apagar a variável no GitHub, publicar o Worker e só então mesclar (ver `backend/README.md`, "Worker do bot").
 
 - ⚪ **`rodar_local.py` grava em `frontend/public/data/indices.json`**, o mesmo caminho que o bot publica na `main`. O arquivo não pode ir para o `.gitignore`; cuidado para não commitá-lo, e apagar a cópia local antes de um `git pull` depois da primeira publicação.
 - ~~⚪ **Recálculo do histórico quando o `limiar_mm` muda**~~ **Resolvida:** a conversão é automática na leitura (ver "Bancos já existentes").

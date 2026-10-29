@@ -91,7 +91,7 @@ describe("funções puras", () => {
   it("interpretarComando", () => {
     expect(interpretarComando("/status@VigiaDeslizamentosBot")).toEqual({ comando: "status", args: [] });
     expect(interpretarComando("/start 4206900")).toEqual({ comando: "start", args: ["4206900"] });
-    expect(interpretarComando("/Simular  Foo  bar")).toEqual({ comando: "simular", args: ["Foo", "bar"] });
+    expect(interpretarComando("/Status  Foo  bar")).toEqual({ comando: "status", args: ["Foo", "bar"] });
     expect(interpretarComando("Ibirama")).toBeNull();
   });
 
@@ -210,26 +210,11 @@ describe("POST /telegram", () => {
     expect(await listarTodos(env.DB)).toEqual([{ chat_id: 5, ibge: "4208203" }]);
   });
 
-  it("/simular sem argumento usa o primeiro município", async () => {
+  it("/simular saiu: cai em opcao_desconhecida", async () => {
     await enviar(mensagem("/simular"));
-    expect(envios.map((e) => e.text)).toEqual(["a1", "a2", "Fim da simulação."]);
-    expect(envios.every((e) => e.parse_mode === "HTML" && e.reply_markup === undefined)).toBe(true);
-  });
-
-  it("/simular witmarsum (minúsculas)", async () => {
-    await enviar(mensagem("/simular witmarsum"));
-    expect(envios.map((e) => e.text)).toEqual(["b1", "b2", "Fim da simulação."]);
-  });
-
-  it("/simular com nome inválido escapa a entrada", async () => {
-    await enviar(mensagem("/simular <b>X</b>"));
-    expect(envios.map((e) => e.text)).toEqual(["Município inválido: &lt;b&gt;X&lt;/b&gt;"]);
-  });
-
-  it("/simular com simulacao null cai em opcao_desconhecida", async () => {
-    botJson = { ...botJsonDeTeste(), simulacao: null };
-    await enviar(mensagem("/simular"));
+    await enviar(mensagem("/simular Witmarsum"));
     expect(envios).toEqual([
+      { chat_id: CHAT, text: "Não entendi.", parse_mode: "HTML", reply_markup: TECLADO_MUNICIPIOS },
       { chat_id: CHAT, text: "Não entendi.", parse_mode: "HTML", reply_markup: TECLADO_MUNICIPIOS },
     ]);
   });

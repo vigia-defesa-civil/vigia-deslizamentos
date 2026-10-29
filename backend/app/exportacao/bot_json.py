@@ -2,8 +2,8 @@
 
 Função pura: recebe os municípios, o índice atual de cada um, a URL do site e o
 `gerado_em` — nada de rede, banco, relógio ou `os.environ`. Todo texto sai das
-mesmas funções que o bot em Python usa (`app.bot.mensagens` e
-`app.bot.simulacao`), de modo que o Worker nunca escreve texto do domínio.
+mesmas funções que o bot em Python usa (`app.bot.mensagens`), de modo que o
+Worker nunca escreve texto do domínio.
 
 O `/status` é montado pelo Worker a partir de pedaços: `cabecalho`, os `blocos`
 dos municípios inscritos unidos por `separador`, e `rodape`. A junção reproduz
@@ -31,12 +31,6 @@ from app.bot.mensagens import (
     texto_escolha_do_grupo,
     texto_inscricao_confirmada,
 )
-from app.bot.simulacao import (
-    PAUSA_ENTRE_MENSAGENS_S,
-    mensagens_da_simulacao,
-    texto_de_fim,
-    texto_municipio_invalido,
-)
 from app.config import Municipio
 from app.modelos.banco import IndiceAtual
 
@@ -46,32 +40,12 @@ SCHEMA_VERSION_BOT_JSON = 1
 
 _FORMATO_DATA_HORA = "%Y-%m-%dT%H:%M:%SZ"
 
-#: Marcador que o Worker troca pelo texto digitado em `/simular`.
-_MARCADOR_DA_ENTRADA = "{entrada}"
-
-
 def _data_hora_utc(nome: str, momento: datetime) -> str:
     if momento.tzinfo is None or momento.utcoffset() is None:
         raise ValueError(
             f"'{nome}' precisa ser um datetime com fuso (aware); recebido sem fuso"
         )
     return momento.astimezone(timezone.utc).strftime(_FORMATO_DATA_HORA)
-
-
-def _simulacao_em_json(municipios: list[Municipio], site_url: str) -> dict:
-    mensagens = {
-        municipio.ibge: mensagens_da_simulacao(municipio, site_url)
-        for municipio in municipios
-    }
-    por_municipio = len(mensagens[municipios[0].ibge]) if municipios else 0
-    return {
-        "mensagens": mensagens,
-        "fim": texto_de_fim(por_municipio),
-        "municipio_invalido": texto_municipio_invalido(
-            municipios, [_MARCADOR_DA_ENTRADA]
-        ),
-        "pausa_s": PAUSA_ENTRE_MENSAGENS_S,
-    }
 
 
 def _grupos_em_json(municipios: list[Municipio]) -> list[dict] | None:
@@ -99,7 +73,6 @@ def montar_bot_json(
     municipios: list[Municipio],
     atuais: dict[str, IndiceAtual | None],
     site_url: str,
-    simulacao: bool,
     gerado_em: datetime,
 ) -> dict:
     """Dicionário do `bot.json`. `gerado_em` sem fuso levanta `ValueError`.
@@ -144,7 +117,6 @@ def montar_bot_json(
             "rodape": SEPARADOR_DO_STATUS + rodape_do_status(site_url),
             "sem_inscricao": TEXTO_SEM_INSCRICAO,
         },
-        "simulacao": _simulacao_em_json(municipios, site_url) if simulacao else None,
     }
     grupos = _grupos_em_json(municipios)
     if grupos is not None:

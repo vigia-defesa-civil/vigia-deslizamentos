@@ -30,12 +30,6 @@ export function botJsonDeTeste(): BotJson {
       rodape: "\n\nsite",
       sem_inscricao: "Sem inscrição.",
     },
-    simulacao: {
-      mensagens: { "4208203": ["a1", "a2"], "4128104": ["b1", "b2"] },
-      fim: "Fim da simulação.",
-      municipio_invalido: "Município inválido: {entrada}",
-      pausa_s: 0,
-    },
   };
 }
 

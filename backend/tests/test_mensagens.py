@@ -32,7 +32,6 @@ from app.bot.mensagens import (
     texto_inscricao_confirmada,
 )
 from app.bot.regra_aviso import Aviso
-from app.bot.simulacao import indices_simulados
 from app.classificacao.classes import faixas_das_classes, nome_classe
 from app.modelos.banco import IndiceAtual
 
@@ -221,8 +220,14 @@ ICONE_E_TITULO_ESPERADOS = {
 CALCULADO_EM = datetime(2026, 10, 1, 21, 30, tzinfo=UTC)  # 18:30 em Brasília
 
 
+def _indice_da_classe(numero_classe: int) -> float:
+    """Ponto médio da faixa da classe; na última (aberta), o último corte + 0,5."""
+    _, inferior, superior = faixas_das_classes()[numero_classe - 1]
+    return inferior + 0.5 if superior is None else (inferior + superior) / 2
+
+
 def aviso_completo(numero_classe: int, nome: str = "Ibirama") -> Aviso:
-    indice = dict(indices_simulados())[numero_classe]
+    indice = _indice_da_classe(numero_classe)
     return Aviso(
         ibge="4206900",
         nome=nome,
