@@ -57,9 +57,11 @@
   gap: 10px;
 }
 
+/* A trilha continua fina; a altura de 28 px é a área de toque. */
 .fld input[type="range"] {
   flex: 1;
   min-width: 0;
+  height: 28px;
   accent-color: var(--accent);
 }
 
