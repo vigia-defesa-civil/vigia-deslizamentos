@@ -734,9 +734,19 @@
     padding: 8px 10px;
   }
 
+  /* Ao lado das Previsões sobram ~100 px e o campo fica em 16 px (base.css, zoom do iOS): seta desenhada
+     em CSS (a nativa ocupa ~20 px) e a fonte de texto do site, mais estreita que a mono, para
+     "Satélite"/"Satellite" caberem sem corte. */
   .layers-sel {
-    max-width: 92px;
-    padding: 0 8px;
+    right: 8px;
+    max-width: 102px;
+    padding: 0 22px 0 8px;
+    font-family: var(--font-sans);
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: right 13px center, right 8px center;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
   }
 
   /* O resumo quebra em duas linhas; a faixa, menor, fica entre ele e os botões das Previsões, sem cobri-los. */
