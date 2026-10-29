@@ -1,5 +1,7 @@
 // Regras da tela Monitoramento: resumo do dia, município inicial e variáveis do painel.
+import type { T } from "../i18n";
 import { emAlerta } from "./classes";
+import { formatarDataHora } from "./formato";
 import type { Dia, IndiceClasse, Indices, Municipio } from "./tipos";
 
 export interface Resumo {
@@ -50,3 +52,7 @@ export function selecaoDaBusca(indices: Indices, busca: string, conhecidos: Read
   const ibge = new URLSearchParams(busca).get("municipio");
   return ibge && conhecidos.has(ibge) ? ibge : municipioInicial(indices);
 }
+
+/** RN11: data e hora da última atualização (`gerado_em`), no horário de Brasília. */
+export const textoAtualizacao = (t: T, gerado_em: string): string =>
+  t("Atualizado em {N} (horário de Brasília)", { N: formatarDataHora(gerado_em) });

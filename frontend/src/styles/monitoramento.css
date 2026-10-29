@@ -149,6 +149,14 @@
   color: var(--accent-ink);
 }
 
+/* RN11: data e hora da última atualização, abaixo do total em alerta. */
+.resumo .atualizado {
+  display: block;
+  margin-top: 2px;
+  font-size: 11.5px;
+  color: var(--ink-2);
+}
+
 @media (max-width: 900px) {
   .mon {
     flex-direction: column;

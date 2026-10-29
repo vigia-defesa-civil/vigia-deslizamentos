@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import exemplo from "../fixtures/indices.exemplo.json";
-import { municipioInicial, resumo, selecaoDaBusca, variaveis } from "./monitoramento";
+import { tradutor } from "../i18n";
+import { municipioInicial, resumo, selecaoDaBusca, textoAtualizacao, variaveis } from "./monitoramento";
 import type { Indices } from "./tipos";
 
 const indices = exemplo as Indices;
@@ -45,5 +46,17 @@ describe("selecaoDaBusca", () => {
   it("desconhecido ou ausente: município inicial", () => {
     expect(selecaoDaBusca(indices, "?municipio=1", conhecidos)).toBe("4214003");
     expect(selecaoDaBusca(indices, "", conhecidos)).toBe("4214003");
+  });
+});
+
+describe("textoAtualizacao (RN11)", () => {
+  it("data e hora da última atualização no horário de Brasília, no idioma", () => {
+    expect(textoAtualizacao(tradutor("pt"), "2026-10-29T09:50:18Z")).toBe("Atualizado em 29/10/2026 06:50 (horário de Brasília)");
+    expect(textoAtualizacao(tradutor("es"), "2026-10-29T09:50:18Z")).toBe("Actualizado el 29/10/2026 06:50 (hora de Brasilia)");
+    expect(textoAtualizacao(tradutor("en"), "2026-10-29T09:50:18Z")).toBe("Updated 29/10/2026 06:50 (Brasília time)");
+  });
+
+  it("perto da meia-noite UTC, a data é a de Brasília", () => {
+    expect(textoAtualizacao(tradutor("pt"), "2026-10-30T01:10:00Z")).toBe("Atualizado em 29/10/2026 22:10 (horário de Brasília)");
   });
 });

@@ -80,7 +80,7 @@ describe("lerIndices", () => {
   });
 });
 
-describe("desatualizado (RN12)", () => {
+describe("desatualizado (RNF04)", () => {
   const gerado = "2026-09-29T06:00:00-03:00";
   it("12 h exatas → falso", () => {
     expect(desatualizado(gerado, new Date("2026-09-29T18:00:00-03:00"))).toBe(false);

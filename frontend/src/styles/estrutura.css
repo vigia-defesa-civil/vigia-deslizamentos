@@ -234,7 +234,7 @@ astro-island {
   color: var(--on-accent);
 }
 
-/* RN12 */
+/* RNF04: aviso de dados desatualizados */
 .faixa-aviso {
   grid-column: 2;
   grid-row: 2;

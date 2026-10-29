@@ -73,7 +73,7 @@ export function lerContatos(json: unknown): Resultado<Contato[]> {
   return r.ok ? { ok: true, dados: r.dados.filter((c) => c.verificado === true) } : r;
 }
 
-/** RN12: mais de 12 h desde `gerado_em`. */
+/** RNF04: mais de 12 h desde `gerado_em` (aviso de dados desatualizados). */
 export const desatualizado = (gerado_em: string, agora: Date): boolean =>
   agora.getTime() - new Date(gerado_em).getTime() > LIMITE_MS;
 

@@ -23,7 +23,7 @@ const IDIOMAS: [Idioma, string, string][] = [
 
 const REAVALIAR_MS = 60_000;
 
-/** Marca, região, Telegram, idioma, acessibilidade e o carimbo dia-alvo (RN11, RN12). */
+/** Marca, região, Telegram, idioma, acessibilidade, o carimbo dia-alvo (RN11) e o aviso de dados desatualizados (RNF04). */
 export default function Cabecalho({ lang, tela }: Props) {
   const t = tradutor(lang);
   const [telegram, setTelegram] = useState(false);
@@ -33,7 +33,7 @@ export default function Cabecalho({ lang, tela }: Props) {
 
   useEffect(() => {
     carregar("indices.json", lerIndices).then(setIndices);
-    // RN12 com a aba aberta: reavalia o atraso a cada minuto.
+    // RNF04 com a aba aberta: reavalia o atraso a cada minuto.
     const timer = setInterval(() => setAgora(new Date()), REAVALIAR_MS);
     return () => clearInterval(timer);
   }, []);
