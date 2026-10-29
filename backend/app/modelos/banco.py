@@ -225,6 +225,44 @@ def historico(
 
 
 @dataclass(frozen=True)
+class LimiarAnterior:
+    """O limiar usado antes da troca e o último dia-alvo calculado com ele."""
+
+    limiar_mm: float
+    ate: date
+
+
+def limiar_anterior(
+    conexao: sqlite3.Connection, ibge: str, dia_alvo_d0: date, limiar_mm: float
+) -> LimiarAnterior | None:
+    """Último dia-alvo anterior a `dia_alvo_d0` cujo cálculo publicado usou outro limiar.
+
+    "Publicado" é o mesmo critério de `historico()`: o cálculo de maior
+    `calculado_em` de cada dia-alvo. Serve para a tela Dados avisar que os dias
+    até `ate` aparecem convertidos para o limiar atual. `None` sem troca.
+    """
+    linha = conexao.execute(
+        """
+        SELECT dia_alvo, limiar_mm FROM (
+            SELECT dia_alvo, limiar_mm,
+                   ROW_NUMBER() OVER (
+                       PARTITION BY dia_alvo ORDER BY calculado_em DESC
+                   ) AS posicao
+            FROM indices
+            WHERE ibge = ? AND dia_alvo < ?
+        )
+        WHERE posicao = 1 AND limiar_mm != ?
+        ORDER BY dia_alvo DESC
+        LIMIT 1
+        """,
+        (ibge, dia_alvo_d0.isoformat(), limiar_mm),
+    ).fetchone()
+    if linha is None:
+        return None
+    return LimiarAnterior(limiar_mm=float(linha[1]), ate=date.fromisoformat(linha[0]))
+
+
+@dataclass(frozen=True)
 class IndiceAtual:
     """Índice, classe, dia-alvo e data/hora do cálculo mais recente de um município.
 

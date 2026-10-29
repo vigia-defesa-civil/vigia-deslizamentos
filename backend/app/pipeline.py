@@ -184,8 +184,13 @@ def _publicar_historico(
         )
         for m in municipios
     }
+    anteriores = {
+        m.ibge: anterior
+        for m in municipios
+        if (anterior := banco.limiar_anterior(conexao, m.ibge, resultado.dia_alvo_d0, m.limiar_mm))
+    }
     return publicar(
-        serializar_compacto(montar_historico(historicos, FONTE_HISTORICO)),
+        serializar_compacto(montar_historico(historicos, FONTE_HISTORICO, anteriores)),
         config,
         http,
         CAMINHO_HISTORICO,

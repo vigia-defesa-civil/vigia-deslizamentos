@@ -749,3 +749,21 @@ def test_historico_publicado_usa_365_dias():
         "inicio": (D0 - timedelta(days=20)).isoformat(),
         "indices": [0.4],
     }
+
+
+def test_historico_publicado_marca_a_troca_de_limiar():
+    conn = conexao()
+    conn.execute(
+        "INSERT INTO indices (ibge, dia_alvo, calculado_em, indice, classe, efr_mm, "
+        "rtotal_mm, limiar_mm, n_membros, prob_pontuais, prob_esparsos, "
+        "prob_generalizados) VALUES ('4206900', ?, ?, 0.4, 2, 0, 0, 150, 3, 0, 0, 0)",
+        ((D0 - timedelta(days=2)).isoformat(), f"{(D0 - timedelta(days=2)).isoformat()}T12:00:00Z"),
+    )
+    conn.commit()
+    _gravar_calculo(conn, "4206900", D0 - timedelta(days=1), 0.5)
+
+    _, publicacao, _ = executar([IBIRAMA], {"4206900": dados("4206900", 120.0)}, conn=conn)
+
+    item = publicacao.json_de(CAMINHO_HISTORICO)["municipios"]["4206900"]
+    assert item["limiar_anterior"] == {"limiar_mm": 150.0, "ate": (D0 - timedelta(days=2)).isoformat()}
+    assert item["indices"] == [0.6, 0.5]

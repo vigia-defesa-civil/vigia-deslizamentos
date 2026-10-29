@@ -10,7 +10,7 @@ Parâmetros de cada município, versionados no repositório. Incluir um municíp
 |---|---|---|
 | `ibge` | string (7 dígitos) | Código IBGE; chave do município em todo o sistema |
 | `nome` | string | Nome oficial (IBGE) |
-| `limiar_mm` | número | Limiar crítico de 24 h. Enquanto não houver valor de fonte oficial: 150 (provisório da equipe; o hipotético do GeoRisk é 250) |
+| `limiar_mm` | número | Limiar crítico de 24 h. Enquanto não houver valor de fonte oficial: 100 (provisório da equipe, com base nos critérios da Defesa Civil de Blumenau; o hipotético do GeoRisk é 250) |
 | `fonte_limiar` | string | Origem do limiar (ex.: "GeoRisk, limiar hipotético padrão") |
 | `mv_h` | número | Meia-vida da água no solo, em horas. Padrão: 24 |
 | `pontos` | lista de `{lat, lon}` | Pontos de cálculo; no mínimo o centroide do município |
@@ -79,6 +79,7 @@ Histórico de um ano do índice de todos os municípios da configuração, publi
 |---|---|---|
 | `inicio` | data (UTC) | Primeiro dia-alvo com dado |
 | `indices` | lista | `indices[i]` é o índice do dia-alvo `inicio + i`, com 4 casas decimais; `null` é dia sem dado; a lista não termina em `null` |
+| `limiar_anterior` | objeto, opcional | `{"limiar_mm": número > 0, "ate": data (UTC)}`: o município trocou de limiar, e `ate` é o último dia-alvo anterior ao D0 cujo cálculo publicado (o de maior `calculado_em` do dia) usou outro limiar; `limiar_mm` é esse limiar. Os índices até `ate` estão convertidos para o limiar atual. Ausente quando não houve troca. Só o `historico.json` traz o campo |
 
 Vem de `banco.historico(..., dias=365)`: último cálculo de cada dia-alvo, no `limiar_mm` atual, D0 fora. Entram todos os municípios de `municipios.json`, inclusive os que falharam na execução.
 
@@ -86,6 +87,7 @@ Vem de `banco.historico(..., dias=365)`: último cálculo de cada dia-alvo, no `
 
 - Arquivo inválido (`schema_version` desconhecido, campo faltando, `inicio` inválido, item que não seja número finito ou `null`): falha de carregamento do arquivo inteiro, nunca dados parciais.
 - A classe não vai no arquivo: o site a calcula pelo índice.
+- `limiar_anterior` inválido (sem `ate` em data válida, ou `limiar_mm` que não seja número maior que zero) também falha o arquivo inteiro. Válido, a tela Dados marca no gráfico de evolução o primeiro dia no limiar atual e, quando o período mostra dias até `ate`, avisa que eles aparecem convertidos.
 - Sem data de geração, de propósito: o conteúdo só muda quando muda um dia, e a publicação é pulada se nada mudou.
 
 ## `frontend/public/data/historico_reconstruido.json`

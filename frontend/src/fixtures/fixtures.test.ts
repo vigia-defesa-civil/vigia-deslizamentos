@@ -40,3 +40,18 @@ describe("public/data/*.json", () => {
     expect(LEITORES[nome](json)).toEqual({ ok: true, dados: expect.anything() });
   });
 });
+
+// O npm run dev lê os exemplos (PUBLIC_DADOS_URL=exemplos/): o histórico de exemplo mostra a troca de limiar na tela Dados.
+const EXEMPLOS = import.meta.glob<unknown>("./historico.exemplo.json", { eager: true, import: "default" });
+
+describe("historico.exemplo.json", () => {
+  it("segue o contrato e traz a troca de limiar nos municípios do exemplo", () => {
+    const json = EXEMPLOS["./historico.exemplo.json"];
+    const r = lerHistorico(json);
+    expect(r).toEqual({ ok: true, dados: expect.anything() });
+    if (!r.ok) return;
+    const ibges = indices.municipios.map((m) => m.ibge);
+    expect(Object.keys(r.dados.municipios).sort()).toEqual([...ibges].sort());
+    for (const ibge of ibges) expect(r.dados.municipios[ibge].limiar_anterior).toEqual({ limiar_mm: 150, ate: "2026-09-24" });
+  });
+});

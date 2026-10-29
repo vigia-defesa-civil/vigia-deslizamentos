@@ -16,7 +16,7 @@ import {
   formatarVariacao,
 } from "../lib/formato";
 import { diasComDadosDe, diasEixo, etiquetaChuva, indicadores, serieMunicipio, variacoesDiarias } from "../lib/graficos";
-import { avisoHistorico, combinarHistorico, lerHistorico, primeiroDiaReal, type ArquivoHistorico } from "../lib/historico";
+import { avisoHistorico, combinarHistorico, lerHistorico, primeiroDiaReal, trocaDeLimiar, trocaVisivel, type ArquivoHistorico } from "../lib/historico";
 import { municipioInicial, variaveis } from "../lib/monitoramento";
 import { ajustarPersonalizado, dataValida, eixoDoPeriodo, escreverPeriodo, lerPeriodo, limitesPersonalizado, somarDias, type Periodo } from "../lib/periodo";
 import type { Idioma } from "../lib/preferencias";
@@ -114,6 +114,7 @@ export default function Dados({ lang, nomes }: { lang: Idioma; nomes: readonly N
   const destaque = municipios.find((m) => m.ibge === ibge);
   const comHistorico = destaque ? diasComDadosDe(destaque, eixo) : eixo.length;
   const temReconstruido = destaque ? serieMunicipio(destaque, eixo).some((p) => p.reconstruido) : false;
+  const troca = destaque ? trocaDeLimiar(real?.ok ? real.dados : undefined, destaque.ibge, destaque.limiar_mm) : null;
   const eixo7 = diasEixo(dia0, DIAS_TABELA);
   const limites = limitesPersonalizado(dia0);
   const personalizado = periodo.tipo === "personalizado" ? periodo : null;
@@ -255,7 +256,14 @@ export default function Dados({ lang, nomes }: { lang: Idioma; nomes: readonly N
                   </span>
                 )}
               </div>
-              <Evolucao t={t} municipios={municipios} destaque={destaque} eixo={eixo} inicioReal={inicioReal} lang={lang} aoSelecionar={selecionar} />
+              <Evolucao t={t} municipios={municipios} destaque={destaque} eixo={eixo} inicioReal={inicioReal} troca={troca} lang={lang} aoSelecionar={selecionar} />
+              {troca && trocaVisivel(troca, eixo) && (
+                <p className="sub">
+                  {t("Até {N}, o VIGIA calculou com limiar de {N} mm. Os índices desses dias aparecem convertidos para o limiar atual de {N} mm, e não como foram publicados na época.", {
+                    N: [formatarData(troca.ate), formatarNumero(troca.anterior_mm, 0), formatarNumero(troca.atual_mm, 0)],
+                  })}
+                </p>
+              )}
               {temReconstruido && <p className="sub">{t("Dias antes de {N}: estimativa reconstruída com chuva de reanálise (ERA5, Open-Meteo) e os parâmetros atuais, sem ensemble. A reanálise suaviza chuvas fortes e localizadas e tende a subestimar picos. Não é o que o sistema publicou na época nem dado oficial. Dias de alerta podem não aparecer.", { N: formatarData(inicioReal ?? dia0) })}</p>}
               {semDados.length > 0 && (
                 <p className="sub">{t("Sem dados nesta execução: {M}.", { M: semDados.map((m) => m.nome).join(", ") })}</p>

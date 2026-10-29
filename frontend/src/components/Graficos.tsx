@@ -19,6 +19,7 @@ import {
   variacoesDiarias,
   type Area,
 } from "../lib/graficos";
+import type { TrocaLimiar } from "../lib/historico";
 import type { Idioma } from "../lib/preferencias";
 import { sentido } from "../lib/texto";
 import type { ChuvaAcum, Municipio } from "../lib/tipos";
@@ -46,13 +47,15 @@ interface PropsEvolucao {
   eixo: string[];
   /** Primeiro dia publicado pelo sistema (depois dos reconstruídos), ou null sem histórico reconstruído. */
   inicioReal: string | null;
+  /** Troca de limiar do destaque (marca no primeiro dia no limiar atual), ou null. */
+  troca: TrocaLimiar | null;
   lang: Idioma;
   aoSelecionar: (ibge: string) => void;
 }
 
 /** Evolução do índice (RF06): faixas das classes, linha de alerta, faixa mínimo–máximo dos demais municípios e o destaque.
  * Linha-guia com o valor do destaque e da faixa no dia apontado (mouse, ou ←/→ com o gráfico em foco). */
-export function Evolucao({ t, municipios, destaque, eixo, inicioReal, lang, aoSelecionar }: PropsEvolucao) {
+export function Evolucao({ t, municipios, destaque, eixo, inicioReal, troca, lang, aoSelecionar }: PropsEvolucao) {
   const painel = useRef<HTMLDivElement>(null);
   const [focoBruto, setFoco] = useState<number | null>(null);
   // O eixo pode encolher (troca de período) com o foco ainda no índice antigo.
@@ -90,6 +93,8 @@ export function Evolucao({ t, municipios, destaque, eixo, inicioReal, lang, aoSe
   const meio = xs.length > 1 ? (xs[1] - xs[0]) / 2 : 0;
   const iInicio = inicioReal ? eixo.indexOf(inicioReal) : -1;
   const xInicio = iInicio < 0 ? 0 : iInicio > 0 ? xs[iInicio] - meio : xs[0];
+  const iTroca = troca ? eixo.indexOf(troca.dia) : -1;
+  const xTroca = iTroca < 0 ? 0 : iTroca > 0 ? xs[iTroca] - meio : xs[0];
   const rotulosX = useMemo(() => rotulosEixo(eixo, (dia) => mesAno(dia, lang)), [eixo, lang]);
   const rotulo = t("Evolução do índice de risco em {N} dias — {M}", { N: String(eixo.length), M: destaque.nome });
   const ultimo = coords.at(-1);
@@ -175,6 +180,14 @@ export function Evolucao({ t, municipios, destaque, eixo, inicioReal, lang, aoSe
               <line className="inicio" x1={xInicio} x2={xInicio} y1={topo} y2={y(0)} />
               <text className="inicio-l" x={xInicio + (xInicio > largura * 0.7 ? -4 : 4)} y={topo + 10} textAnchor={xInicio > largura * 0.7 ? "end" : "start"}>
                 {t("início do sistema")}
+              </text>
+            </>
+          )}
+          {troca && iTroca >= 0 && (
+            <>
+              <line className="inicio troca" x1={xTroca} x2={xTroca} y1={topo} y2={y(0)} />
+              <text className="inicio-l" x={xTroca + (xTroca > largura * 0.7 ? -4 : 4)} y={topo + 24} textAnchor={xTroca > largura * 0.7 ? "end" : "start"}>
+                {t("limiar {N} → {N} mm", { N: [formatarNumero(troca.anterior_mm, 0), formatarNumero(troca.atual_mm, 0)] })}
               </text>
             </>
           )}
