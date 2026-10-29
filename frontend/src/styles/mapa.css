@@ -132,7 +132,7 @@
 .mlabel small {
   display: block;
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--ink-2);
 }
 
@@ -158,7 +158,7 @@
 }
 
 .mapa .leaflet-control-attribution {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* Cartões flutuantes */
@@ -382,7 +382,7 @@
 .leg .rows .r {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--muted);
 }
 
@@ -401,7 +401,7 @@
 
 .leg .foot .seg button {
   padding: 5px 9px;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .leg .hint {
@@ -562,7 +562,7 @@
 
 .prevs label small {
   margin-left: auto;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -688,7 +688,7 @@
   }
 
   .mapa .leaflet-tooltip.mlabel {
-    font-size: 10.5px;
+    font-size: 11px;
     padding: 3px 6px 3px 4px;
   }
 
@@ -743,7 +743,7 @@
   .dayflag {
     bottom: 84px;
     padding: 5px 8px;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.02em;
   }
 }
