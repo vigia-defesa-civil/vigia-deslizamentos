@@ -7,6 +7,7 @@ import { CLASSES, infoClasse, SEM_DADOS } from "../lib/classes";
 import { formatarIndice } from "../lib/formato";
 import { CAMADA_NEUTRA, classesDoRotulo, limites, posicoes, pontoInterno, rotulosDeLonge, rotuloAria, type Camada, type FeicaoMunicipio, type LatLon, type Valor } from "../lib/mapa";
 import { FEICOES } from "../lib/municipios";
+import { semMovimento } from "../lib/movimento";
 import type { GrauSetor, Setor } from "../lib/setores";
 import Camadas from "./Camadas";
 import type { Pino, PropsMapa } from "./Mapa";
@@ -333,21 +334,21 @@ export default function MapaLeaflet({
   useEffect(() => {
     if (!mapa || !temSetores || !selecionado || setorSelecionado) return;
     const f = MONITORADOS.find((x) => x.feicao.properties.ibge === selecionado)?.feicao;
-    if (f) mapa.fitBounds(limites([f]), { padding: [24, 24] });
+    if (f) mapa.fitBounds(limites([f]), { padding: [24, 24], animate: !semMovimento() });
   }, [mapa, temSetores, selecionado, setorSelecionado]);
 
   // Volta à região (tinha município ou setor e não tem mais): reenquadra a região. Nunca na abertura.
   const tinhaSelecao = useRef(false);
   useEffect(() => {
     const tem = !!(selecionado || setorSelecionado);
-    if (mapa && temSetores && tinhaSelecao.current && !tem) mapa.fitBounds(LIMITES, { padding: [24, 24] });
+    if (mapa && temSetores && tinhaSelecao.current && !tem) mapa.fitBounds(LIMITES, { padding: [24, 24], animate: !semMovimento() });
     tinhaSelecao.current = tem;
   }, [mapa, temSetores, selecionado, setorSelecionado]);
 
   // Setor selecionado: enquadra o setor, com zoom máximo limitado.
   useEffect(() => {
     const s = setoresRef.current.find((x) => x.id === setorSelecionado);
-    if (mapa && s) mapa.fitBounds(polygon(s.aneis).getBounds(), { maxZoom: 16, padding: [32, 32] });
+    if (mapa && s) mapa.fitBounds(polygon(s.aneis).getBounds(), { maxZoom: 16, padding: [32, 32], animate: !semMovimento() });
   // temSetores: com a seleção vinda da URL, os setores chegam depois; reenquadra quando carregam.
   }, [mapa, setorSelecionado, temSetores]);
 
@@ -413,10 +414,10 @@ export default function MapaLeaflet({
         <Hachuras />
       </MapContainer>
       <div className="float zoom">
-        <button type="button" aria-label={t("Aproximar")} onClick={() => mapa?.zoomIn()}>
+        <button type="button" aria-label={t("Aproximar")} onClick={() => mapa?.zoomIn(1, { animate: !semMovimento() })}>
           +
         </button>
-        <button type="button" aria-label={t("Afastar")} onClick={() => mapa?.zoomOut()}>
+        <button type="button" aria-label={t("Afastar")} onClick={() => mapa?.zoomOut(1, { animate: !semMovimento() })}>
           −
         </button>
       </div>
