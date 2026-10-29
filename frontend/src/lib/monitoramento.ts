@@ -1,7 +1,7 @@
 // Regras da tela Monitoramento: resumo do dia, município inicial e variáveis do painel.
 import type { T } from "../i18n";
 import { emAlerta } from "./classes";
-import { formatarDataHora } from "./formato";
+import { formatarData, formatarDataHora, formatarHora, hojeEmBrasilia } from "./formato";
 import type { Dia, IndiceClasse, Indices, Municipio } from "./tipos";
 
 export interface Resumo {
@@ -56,3 +56,7 @@ export function selecaoDaBusca(indices: Indices, busca: string, conhecidos: Read
 /** RN11: data e hora da última atualização (`gerado_em`), no horário de Brasília. */
 export const textoAtualizacao = (t: T, gerado_em: string): string =>
   t("Atualizado em {N} (horário de Brasília)", { N: formatarDataHora(gerado_em) });
+
+/** RN11 no celular: "Atualizado 29/10 06:50", dia/mês e hora de Brasília, para o resumo caber numa linha. */
+export const textoAtualizacaoCurto = (t: T, gerado_em: string): string =>
+  t("Atualizado {N}", { N: `${formatarData(hojeEmBrasilia(new Date(gerado_em)), "dia")} ${formatarHora(gerado_em)}` });

@@ -6,7 +6,7 @@ import { emAlerta, infoClasse, type NumeroClasse } from "../lib/classes";
 import { carregar, estadoMunicipio, lerIndices, type Resultado } from "../lib/dados";
 import { formatarData, formatarIndice, formatarMm, formatarRazao } from "../lib/formato";
 import { mensagemSelecao, valoresDoDia } from "../lib/mapa";
-import { resumo, selecaoDaBusca, textoAtualizacao, variaveis, type Variaveis } from "../lib/monitoramento";
+import { resumo, selecaoDaBusca, textoAtualizacao, textoAtualizacaoCurto, variaveis, type Variaveis } from "../lib/monitoramento";
 import { MONITORADOS, NOMES } from "../lib/municipios";
 import type { Idioma } from "../lib/preferencias";
 import { rota } from "../lib/telas";
@@ -95,7 +95,12 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
         <p className="float resumo">
           <b className={nAlerta ? "al" : undefined}>{nAlerta}</b>{" "}
           {t("de {N} municípios em alerta · maior índice {N}", { N: [String(total), maior === null ? "—" : formatarIndice(maior)] })}
-          <span className="atualizado">{textoAtualizacao(t, indices.gerado_em)}</span>
+          <span className="atualizado">
+            <span className="longo">{textoAtualizacao(t, indices.gerado_em)}</span>
+            <span className="curto" aria-hidden="true">
+              {textoAtualizacaoCurto(t, indices.gerado_em)}
+            </span>
+          </span>
         </p>
       </Mapa>
       {selecionado && (

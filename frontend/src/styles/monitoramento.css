@@ -157,6 +157,28 @@
   color: var(--ink-2);
 }
 
+.resumo .atualizado .curto {
+  display: none;
+}
+
+/* No celular estreito a frase longa cobria o mapa: fica a curta na tela e a longa para o leitor de tela. */
+@media (max-width: 400px) {
+  .resumo .atualizado .longo {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .resumo .atualizado .curto {
+    display: inline;
+    white-space: nowrap;
+  }
+}
+
 @media (max-width: 900px) {
   .mon {
     flex-direction: column;
