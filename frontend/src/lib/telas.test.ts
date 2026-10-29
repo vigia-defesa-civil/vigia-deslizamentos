@@ -21,12 +21,11 @@ describe("rotaComEstado", () => {
 });
 
 describe("TELAS", () => {
-  it("7 telas na ordem do menu, Contatos por último", () => {
+  it("6 telas na ordem do menu, Contatos por último", () => {
     expect(TELAS.map((t) => t.rota)).toEqual([
       "",
       "simulacao",
       "dados",
-      "monitoramento-sc",
       "areas-de-risco",
       "cartilha",
       "contatos",

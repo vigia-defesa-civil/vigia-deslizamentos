@@ -23,6 +23,8 @@ const EMERGENCIAS = [
   { numero: "40199", href: "sms:40199", rotulo: "SMS com seu CEP para receber alertas", Icone: Bell },
 ] as const;
 
+const URL_PAINEL_SC = "https://monitoramento.defesacivil.sc.gov.br/mapa";
+
 const semMovimento = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /** Contatos (RF12): números de emergência e a Defesa Civil de cada município (só verificados, RN09). */
@@ -85,6 +87,26 @@ export default function Contatos({ lang, municipios }: Props) {
           </li>
         ))}
       </ul>
+
+      {/* Painel da Defesa Civil de SC só como link: o site não permite incorporação e o VIGIA não tem autorização (RN10). */}
+      <section id="painel-sc" className="cc painel-sc" aria-labelledby="painel-sc-t">
+        <h2 id="painel-sc-t">{t("Painel oficial da Defesa Civil de SC")}</h2>
+        <p>
+          {t(
+            "Estações, chuva acumulada e níveis de rios em tempo real, publicados pela Secretaria de Estado da Proteção e Defesa Civil de Santa Catarina. É um site do governo estadual, sem vínculo com o VIGIA.",
+          )}
+        </p>
+        <a
+          className="btn"
+          href={URL_PAINEL_SC}
+          target="_blank"
+          rel="noopener"
+          aria-label={t("Abrir o painel oficial da Defesa Civil de SC (abre em nova aba)")}
+        >
+          <ExternalLink aria-hidden="true" />
+          {t("Abrir o painel oficial")}
+        </a>
+      </section>
 
       <BannerTelegram lang={lang} />
 

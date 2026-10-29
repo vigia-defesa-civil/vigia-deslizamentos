@@ -248,6 +248,22 @@
   flex: 1 1 130px;
 }
 
+/* Painel oficial da Defesa Civil de SC: um cartão .cc com texto e link externo. */
+.painel-sc {
+  scroll-margin-top: 16px;
+}
+
+.painel-sc p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+.painel-sc .btn {
+  align-self: flex-start;
+}
+
 .cnote {
   font-size: 12px;
   color: var(--muted);

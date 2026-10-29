@@ -7,7 +7,6 @@ import {
   Mountain,
   PersonStanding,
   Phone,
-  RadioTower,
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
@@ -20,7 +19,6 @@ const ICONES: Record<string, LucideIcon> = {
   "": IconeMapa,
   simulacao: CloudRain,
   dados: ChartLine,
-  "monitoramento-sc": RadioTower,
   "areas-de-risco": Mountain,
   cartilha: BookOpen,
   contatos: Phone,

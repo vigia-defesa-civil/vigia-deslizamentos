@@ -241,13 +241,13 @@ A RADIAN divide um sistema de apoio à decisão para desastres naturais em duas 
 
 | Bloco RADIAN | No VIGIA |
 |---|---|
-| Sistema de Interface do Usuário | 7 telas, idiomas PT/ES/EN, acessibilidade e contatos de emergência |
+| Sistema de Interface do Usuário | 6 telas, idiomas PT/ES/EN, acessibilidade e contatos de emergência |
 | Sistemas Cognitivos — Análise e Tomada de Decisão | Mapa de risco, painel do município, previsões D0–D3, simulação, dados da análise e cartilha (FAQ) |
 | Sistemas Cognitivos — Supervisão da Execução de Decisões | Geração e envio de alertas pelo Telegram |
 | Sistemas de Gerenciamento de Dados e Conhecimento | Banco SQLite (índices calculados e inscritos do bot), malhas IBGE e estações |
 | Sistemas de Suporte | Privacidade (LGPD): o site não coleta dados pessoais; o bot guarda só o chat e os municípios escolhidos |
-| Sistemas de Infraestrutura Computacional | Coleta (Open-Meteo, INMET), cálculo e integração com IBGE, Defesa Civil SC (iframe) e Telegram |
-| Ecossistema | Open-Meteo, INMET, Epagri/Ciram, IBGE, Cemaden (referência metodológica), Defesa Civil SC, Telegram, OpenStreetMap, Google Maps (links "como chegar") |
+| Sistemas de Infraestrutura Computacional | Coleta (Open-Meteo, INMET), cálculo e integração com IBGE e Telegram |
+| Ecossistema | Open-Meteo, INMET, Epagri/Ciram, IBGE, Cemaden (referência metodológica), Defesa Civil SC (link para o painel oficial), Telegram, OpenStreetMap, Google Maps (links "como chegar") |
 
 Não se aplicam ao projeto o módulo Planejamento da Execução (abrigos, doações, resgates) e as macrofuncionalidades de decisão multicritério, plataforma colaborativa, governança/auditoria e atuação sobre sistemas físicos.
 
@@ -311,10 +311,9 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 | Monitoramento | `/` | Mapa colorido pela classe de risco, resumo "N de 6 em alerta", previsões D0–D3, busca, legenda e painel do município |
 | Simulação | `/simulacao` | Município, período e chuva informada; o mapa recolore e compara a situação atual com a simulada |
 | Dados da análise | `/dados` | Indicadores, evolução do índice em 7 dias (padrão), 30 dias ou um período personalizado de até 1 ano, chuva acumulada e tabela por município (minigráfico dos últimos 7 dias) |
-| Monitoramento SC | `/monitoramento-sc` | Mapa oficial da Defesa Civil de SC incorporado, com link para o site |
 | Áreas de risco | `/areas-de-risco` | Setores de risco geológico do SGB e ocorrências por município; estações do INMET como camada opcional |
 | Cartilha | `/cartilha` | Sinais de perigo, o que fazer antes/durante/depois, mochila de emergência, "não faça". Cada seção cita suas fontes oficiais: Defesa Civil Nacional (MDR), Serviço Geológico do Brasil (SGB), Defesa Civil de SC, Ministério das Comunicações, Defesa Civil do Paraná e SP Sempre Alerta |
-| Contatos | `/contatos` | Números de emergência e Defesa Civil de cada município |
+| Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e Defesa Civil de cada município |
 
 Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram".
 
@@ -332,7 +331,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RF07** — Exibir probabilidades complementares, fontes e dados brutos com data da coleta, e, se viável, a camada de suscetibilidade do CPRM (ainda sem tela no protótipo). O histórico de ocorrências fica em Áreas de risco.
 
 **Informação à população**
-- **RF08** — Incorporar o mapa oficial da Defesa Civil de SC; se o site bloquear, mostrar só o link.
+- **RF08** — Indicar, na tela Contatos, o painel oficial da Defesa Civil de SC como link externo, com uma frase explicando o que ele mostra.
 - **RF09** — Mostrar a localização das estações de monitoramento do INMET, com tipo, município e fonte, como camada opcional em Áreas de risco.
 - **RF10** — Apresentar a cartilha de autoproteção e os contatos de emergência e das Defesas Civis municipais.
 
@@ -362,7 +361,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RN07** — A simulação usa a mesma equação do subíndice, trocando a chuva prevista pela chuva informada: (EfR + chuva) ÷ limiar. Ela não altera dados reais e não dispara alertas (o protótipo ainda usa uma fórmula ilustrativa).
 - **RN08** — O aviso do bot não se repete enquanto o município permanecer na mesma classe.
 - **RN09** — Só vão ao ar contatos verificados com a prefeitura.
-- **RN10** — O mapa oficial de SC só é incorporado com autorização, mantendo o crédito da fonte.
+- **RN10** — O VIGIA não incorpora sites oficiais: o painel da Defesa Civil de SC aparece só como link, na tela Contatos, com o crédito da fonte.
 - **RN11** — Dia-alvo e horário da última atualização ficam sempre visíveis.
 
 ## Tecnologias

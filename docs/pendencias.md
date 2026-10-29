@@ -12,7 +12,7 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 
 ## Autorizações externas
 
-- 🟡 **Defesa Civil de SC (RN10).** O mapa oficial em iframe já funciona (`PUBLIC_SC_IFRAME=true`), mas só pode ir para produção com autorização. Pedir junto o uso da API GraphQL de `monitoramento.defesacivil.sc.gov.br`, que tem estação dentro de cada município (o INMET só tem duas estações dentro dos 27) e pode substituir o INMET na conferência de chuva.
+- ~~🟡 **Defesa Civil de SC (RN10).**~~ **Fora do escopo (29/10/2026):** sem chave nem autorização da Defesa Civil de SC, e com o iframe bloqueado pelo site, a tela Monitoramento SC saiu. O painel oficial aparece só como link na tela Contatos, e os endereços antigos redirecionam para lá.
 
 ## Infraestrutura e deploy
 
@@ -44,7 +44,6 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 - ⚪ **Marcar ocorrências do Atlas no gráfico de evolução** (sugestão, fora do escopo dos períodos): mostrar no gráfico de períodos longos onde houve ocorrência registrada em Áreas de risco.
 - ~~⚪ **Contorno do município sem classe nos fundos detalhados**~~ **Resolvida:** sem classe, o contorno usa `--muted`, que contrasta nos dois temas; o preenchimento segue `--surface-000`.
 - ~~⚪ **Seletor de camadas some abaixo de 900 px**~~ **Resolvida:** no Monitoramento e na Simulação os botões viram um `<select>` nativo abaixo de 900 px.
-- ~~⚪ **Altura fixa do iframe da Defesa Civil**~~ **Resolvida:** `height: min(80vh, 760px)` em `sc.css`.
 - ~~⚪ **Rótulo "hoje" das previsões pela posição**~~ **Resolvida:** o rótulo (e o anúncio para leitor de tela) agora compara o `dia_alvo` com a data de Brasília; com o `indices.json` atrasado, o dia passado aparece como "ontem" ou "-Nd", e não como "hoje".
 
 ## Backend
@@ -53,7 +52,7 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 
 - ⚪ **`rodar_local.py` grava em `frontend/public/data/indices.json`**, o mesmo caminho que o bot publica na `main`. O arquivo não pode ir para o `.gitignore`; cuidado para não commitá-lo, e apagar a cópia local antes de um `git pull` depois da primeira publicação.
 - ~~⚪ **Recálculo do histórico quando o `limiar_mm` muda**~~ **Resolvida:** a conversão é automática na leitura (ver "Bancos já existentes").
-- ⚪ **Conferência de chuva com as estações da Defesa Civil**, no lugar ou ao lado do INMET (depende da autorização RN10).
+- ~~⚪ **Conferência de chuva com as estações da Defesa Civil**~~ **Fora do escopo:** dependia da API da Defesa Civil de SC, sem autorização (ver "Autorizações externas").
 - ~~🔴 **Worker aceitava cabeçalho vazio quando o segredo não estava configurado**~~ **Resolvida:** sem `TELEGRAM_WEBHOOK_SEGREDO` (ou com ele vazio), `segredoConfere` recusa toda requisição, em vez de aceitar `X-Telegram-Bot-Api-Secret-Token` vazio.
 - ~~⚪ **Execução com o Worker indisponível termina verde**~~ **Resolvida:** a etapa "Avisar erros registrados no log" do `pipeline.yml` transforma as linhas ERROR do log em avisos no resumo do run. O job continua verde de propósito, para o estado ser gravado.
 - ~~⚪ **Fixture de contrato do `bot.json`**~~ **Resolvida:** `bot-worker/test/fixtures/bot.exemplo.json` sai de `montar_bot_json` (teste `test_fixture_do_worker_igual_ao_montar_bot_json`); o Worker confere o formato no `tsc` e nos testes. Para regenerar: `VIGIA_REGERAR_FIXTURES=1 pytest tests/test_bot_json.py`.
