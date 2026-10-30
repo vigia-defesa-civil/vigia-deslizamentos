@@ -232,11 +232,6 @@
   }
 }
 
-.cc .pend-t {
-  color: var(--muted);
-  font-style: italic;
-}
-
 .cc .acts {
   display: flex;
   flex-wrap: wrap;

@@ -153,6 +153,15 @@ for (const [w, h] of [
   }
 }
 
+// Contatos: sem nome do coordenador, a linha some (nada de "a confirmar" no ar).
+{
+  const { pagina: p, fechar } = await abrir("contatos/");
+  await p.waitForSelector(".cc h2", { timeout: 30_000 });
+  const texto = await p.locator(".cgrid").innerText();
+  verificar(!/coordenador\(a\) a confirmar/i.test(texto), "Contatos mostra \"Nome do coordenador(a) a confirmar\"");
+  await fechar();
+}
+
 // Foco do município: com clique de mouse (inclusive vindo de ?municipio=), nenhum contorno nem realce de toque;
 // com teclado, o tracejado segue o contorno do polígono.
 {

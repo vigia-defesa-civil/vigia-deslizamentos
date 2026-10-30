@@ -143,14 +143,19 @@ export default function Contatos({ lang, municipios }: Props) {
                 <span className="tag ok">{t("verificado")}</span>
               </h2>
               <dl>
-                <dt>
-                  <User aria-hidden="true" />
-                  <span className="sr-only">{t("Responsável")}</span>
-                </dt>
-                <dd>
-                  {c.responsavel ?? <span className="pend-t">{t("Nome do coordenador(a) a confirmar")}</span>}
-                  <small>{t("Coordenador(a) municipal de Defesa Civil")}</small>
-                </dd>
+                {/* Sem nome confirmado, a linha inteira sai: nada de "a confirmar" no ar. */}
+                {c.responsavel && (
+                  <>
+                    <dt>
+                      <User aria-hidden="true" />
+                      <span className="sr-only">{t("Responsável")}</span>
+                    </dt>
+                    <dd>
+                      {c.responsavel}
+                      <small>{t("Coordenador(a) municipal de Defesa Civil")}</small>
+                    </dd>
+                  </>
+                )}
                 {c.telefone && (
                   <>
                     <dt>
