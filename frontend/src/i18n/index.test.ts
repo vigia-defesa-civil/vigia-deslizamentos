@@ -76,6 +76,36 @@ describe("dicionário", () => {
     expect(divergentes).toEqual([]);
   });
 
+  it("nenhuma frase de es.json sobrou sem uso (sobras do protótipo)", () => {
+    const fontes = import.meta.glob<string>(["../**/*.{ts,tsx,astro,json}", "../../public/data/*.json", "!../**/*.test.ts", "!./*.json"], {
+      query: "?raw",
+      import: "default",
+      eager: true,
+    });
+    const codigo = Object.values(fontes).join("\n");
+    // Frases montadas no código: o título "VIGIA · {tela}" (Base.astro), o aviso "{opção} ativado" (PainelAcessibilidade)
+    // e as setas de classe "↑ {C}"/"↓ {C}" (lib/graficos › marcaClasse, traduzidas pelo modelo com {C}).
+    const dinamica = (f: string) =>
+      TELAS.some((t) => f === `VIGIA · ${t.nome}`) ||
+      (f.endsWith(" ativado") && codigo.includes(`"${f.slice(0, -" ativado".length)}"`)) ||
+      f === "↑ {C}" ||
+      f === "↓ {C}";
+    const literal = (f: string) => codigo.includes(JSON.stringify(f).slice(1, -1)) || codigo.includes(f);
+    expect(Object.keys(ES).filter((f) => !literal(f) && !dinamica(f))).toEqual([]);
+  });
+
+  it('toda frase t("…") também de src/lib, inclusive com quebra de linha depois de t(, existe em es.json', () => {
+    const fontes = import.meta.glob<string>(["../components/**/*.tsx", "../layouts/**/*.astro", "../pages/**/*.astro", "../lib/**/*.ts", "!../lib/**/*.test.ts"], {
+      query: "?raw",
+      import: "default",
+      eager: true,
+    });
+    const faltando = Object.values(fontes)
+      .flatMap((codigo) => [...codigo.matchAll(/\bt\(\s*"([^"]+)"/g)].map((m) => m[1]))
+      .filter((frase) => !(frase in ES));
+    expect(faltando).toEqual([]);
+  });
+
   it("nomes e rótulos curtos das telas existem em es.json", () => {
     const frases = TELAS.flatMap((t) => [t.nome, t.curto, `VIGIA · ${t.nome}`]);
     expect(frases.filter((f) => !(f in ES))).toEqual([]);
