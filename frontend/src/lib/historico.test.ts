@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { classe } from "./classes";
-import { avisoHistorico, combinarHistorico, lerHistorico, primeiroDiaReal, trocaDeLimiar, trocaVisivel, type ArquivoHistorico } from "./historico";
+import { avisoHistorico, combinarHistorico, lerHistorico, marcaDaTroca, primeiroDiaReal, trocaDeLimiar, trocaVisivel, type ArquivoHistorico } from "./historico";
 import type { Municipio } from "./tipos";
 
 const arq = (inicio: string, indices: (number | null)[]) => ({ schema_version: 1, fonte: "f", municipios: { "4214805": { inicio, indices } } });
@@ -103,5 +103,24 @@ describe("limiar_anterior", () => {
     expect(trocaVisivel(troca, ["2026-10-22", "2026-10-23"])).toBe(false);
     expect(trocaVisivel(null, ["2026-10-20"])).toBe(false);
     expect(trocaVisivel(troca, [])).toBe(false);
+  });
+
+  it("trocaVisivel ignora os dias reconstruídos, já calculados com o limiar atual", () => {
+    const troca = { ate: "2026-10-21", dia: "2026-10-22", anterior_mm: 150, atual_mm: 100 };
+    // Período inteiro antes do início do sistema (15/10): nenhum dia convertido.
+    expect(trocaVisivel(troca, ["2026-10-01", "2026-10-14"], "2026-10-15")).toBe(false);
+    // Período que alcança um dia real até a troca: há dia convertido.
+    expect(trocaVisivel(troca, ["2026-10-13", "2026-10-14", "2026-10-15"], "2026-10-15")).toBe(true);
+    // Sem reconstrução, todo dia até `ate` é convertido.
+    expect(trocaVisivel(troca, ["2026-10-01"], null)).toBe(true);
+  });
+
+  it("marcaDaTroca só quando a nota aparece e o dia da troca não é a borda esquerda do gráfico", () => {
+    const troca = { ate: "2026-10-21", dia: "2026-10-22", anterior_mm: 150, atual_mm: 100 };
+    expect(marcaDaTroca(troca, ["2026-10-21", "2026-10-22", "2026-10-23"], null)).toBe(1);
+    // O período começa no dia da troca: nenhum dia convertido à vista, sem marca.
+    expect(marcaDaTroca(troca, ["2026-10-22", "2026-10-23"], null)).toBe(-1);
+    expect(marcaDaTroca(troca, ["2026-10-01", "2026-10-14"], "2026-10-15")).toBe(-1);
+    expect(marcaDaTroca(null, ["2026-10-21", "2026-10-22"], null)).toBe(-1);
   });
 });

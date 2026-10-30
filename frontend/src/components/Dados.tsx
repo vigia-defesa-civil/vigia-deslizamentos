@@ -257,7 +257,7 @@ export default function Dados({ lang, nomes }: { lang: Idioma; nomes: readonly N
                 )}
               </div>
               <Evolucao t={t} municipios={municipios} destaque={destaque} eixo={eixo} inicioReal={inicioReal} troca={troca} lang={lang} aoSelecionar={selecionar} />
-              {troca && trocaVisivel(troca, eixo) && (
+              {troca && trocaVisivel(troca, eixo, inicioReal) && (
                 <p className="sub">
                   {t("Até {N}, o VIGIA calculou com limiar de {N} mm. Os índices desses dias aparecem convertidos para o limiar atual de {N} mm, e não como foram publicados na época.", {
                     N: [formatarData(troca.ate), formatarNumero(troca.anterior_mm, 0), formatarNumero(troca.atual_mm, 0)],

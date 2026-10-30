@@ -64,8 +64,19 @@ export function trocaDeLimiar(real: ArquivoHistorico | undefined, ibge: string, 
   return { ate: anterior.ate, dia: somarDias(anterior.ate, 1), anterior_mm: anterior.limiar_mm, atual_mm };
 }
 
-/** A nota da troca só aparece quando o gráfico mostra algum dia convertido (até `ate`). */
-export const trocaVisivel = (troca: TrocaLimiar | null, eixo: string[]): boolean => !!troca && eixo.length > 0 && eixo[0] <= troca.ate;
+/**
+ * A nota da troca só aparece quando o gráfico mostra algum dia convertido: um dia real (a partir de `inicioReal`,
+ * quando há reconstrução) até `ate`. Os dias reconstruídos já foram calculados com o limiar atual.
+ */
+export const trocaVisivel = (troca: TrocaLimiar | null, eixo: string[], inicioReal: string | null = null): boolean =>
+  !!troca && eixo.some((dia) => dia <= troca.ate && (!inicioReal || dia >= inicioReal));
+
+/** Índice do dia da troca no eixo para a marca do gráfico, ou -1: só com a nota à vista e nunca na borda esquerda. */
+export function marcaDaTroca(troca: TrocaLimiar | null, eixo: string[], inicioReal: string | null): number {
+  if (!troca || !trocaVisivel(troca, eixo, inicioReal)) return -1;
+  const i = eixo.indexOf(troca.dia);
+  return i > 0 ? i : -1;
+}
 
 /** Dia seguinte ao último dia com dado em qualquer município do reconstruído. */
 export function primeiroDiaReal(reconstruido?: ArquivoHistorico): string | null {

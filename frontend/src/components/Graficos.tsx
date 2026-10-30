@@ -19,7 +19,7 @@ import {
   variacoesDiarias,
   type Area,
 } from "../lib/graficos";
-import type { TrocaLimiar } from "../lib/historico";
+import { marcaDaTroca, type TrocaLimiar } from "../lib/historico";
 import type { Idioma } from "../lib/preferencias";
 import { sentido } from "../lib/texto";
 import type { ChuvaAcum, Municipio } from "../lib/tipos";
@@ -93,8 +93,8 @@ export function Evolucao({ t, municipios, destaque, eixo, inicioReal, troca, lan
   const meio = xs.length > 1 ? (xs[1] - xs[0]) / 2 : 0;
   const iInicio = inicioReal ? eixo.indexOf(inicioReal) : -1;
   const xInicio = iInicio < 0 ? 0 : iInicio > 0 ? xs[iInicio] - meio : xs[0];
-  const iTroca = troca ? eixo.indexOf(troca.dia) : -1;
-  const xTroca = iTroca < 0 ? 0 : iTroca > 0 ? xs[iTroca] - meio : xs[0];
+  const iTroca = marcaDaTroca(troca, eixo, inicioReal);
+  const xTroca = iTroca > 0 ? xs[iTroca] - meio : 0;
   const rotulosX = useMemo(() => rotulosEixo(eixo, (dia) => mesAno(dia, lang)), [eixo, lang]);
   const rotulo = t("Evolução do índice de risco em {N} dias — {M}", { N: String(eixo.length), M: destaque.nome });
   const ultimo = coords.at(-1);
@@ -183,7 +183,7 @@ export function Evolucao({ t, municipios, destaque, eixo, inicioReal, troca, lan
               </text>
             </>
           )}
-          {troca && iTroca >= 0 && (
+          {troca && iTroca > 0 && (
             <>
               <line className="inicio troca" x1={xTroca} x2={xTroca} y1={topo} y2={y(0)} />
               <text className="inicio-l" x={xTroca + (xTroca > largura * 0.7 ? -4 : 4)} y={topo + 24} textAnchor={xTroca > largura * 0.7 ? "end" : "start"}>
