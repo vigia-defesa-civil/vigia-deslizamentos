@@ -253,6 +253,8 @@ export default function MapaLeaflet({
   ref,
 }: PropsMapa) {
   const t = useMemo(() => tradutor(lang), [lang]);
+  // prefers-reduced-motion: zoom (teclado, duplo clique, pinça) e arrasto sem animação. Só vale na criação do mapa.
+  const [reduzido] = useState(() => semMovimento());
   const [mapa, setMapa] = useState<MapaL | null>(null);
   const [fundo, setFundo] = useState<Camada>(CAMADA_NEUTRA);
   const [longeAtual, setLongeAtual] = useState(false);
@@ -389,7 +391,7 @@ export default function MapaLeaflet({
 
   return (
     <>
-      <MapContainer ref={setMapa} fadeAnimation={false} bounds={enquadramento} boundsOptions={{ padding: comPinos ? [48, 48] : [24, 24] }} zoomSnap={0.25} zoomControl={false} className="mapa">
+      <MapContainer ref={setMapa} fadeAnimation={false} zoomAnimation={!reduzido} markerZoomAnimation={!reduzido} inertia={!reduzido} bounds={enquadramento} boundsOptions={{ padding: comPinos ? [48, 48] : [24, 24] }} zoomSnap={0.25} zoomControl={false} className="mapa">
         <TileLayer
           key={fundo.id}
           url={fundo.url}

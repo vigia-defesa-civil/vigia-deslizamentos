@@ -162,6 +162,18 @@ for (const [w, h] of [
   await fechar();
 }
 
+// Movimento reduzido: o zoom por teclado (+/−), duplo clique e pinça também fica sem animação (o Leaflet só cria
+// o .leaflet-proxy com a animação de zoom ligada).
+for (const [reducao, animado] of [
+  ["reduce", false],
+  ["no-preference", true],
+]) {
+  const { pagina: p, fechar } = await abrir("", { reducedMotion: reducao });
+  const tem = await p.locator(".mapa .leaflet-proxy").count();
+  verificar(Boolean(tem) === animado, `zoom do mapa ${animado ? "sem" : "com"} animação com prefers-reduced-motion: ${reducao}`);
+  await fechar();
+}
+
 // Barra inferior do celular: o texto do primeiro e do último item a pelo menos 12 px das bordas, sem cortar em 320 px.
 for (const lang of ["", "es/", "en/"]) {
   for (const [w, h] of [
