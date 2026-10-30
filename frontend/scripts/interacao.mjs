@@ -162,6 +162,35 @@ for (const [w, h] of [
   await fechar();
 }
 
+// Barra inferior do celular: o texto do primeiro e do último item a pelo menos 12 px das bordas, sem cortar em 320 px.
+for (const lang of ["", "es/", "en/"]) {
+  for (const [w, h] of [
+    [320, 640],
+    [393, 852],
+  ]) {
+    const contexto = await navegador.newContext({ viewport: { width: w, height: h }, isMobile: true, hasTouch: true });
+    await soLocal(contexto, origem);
+    const p = await contexto.newPage();
+    await p.goto(origem + BASE + lang + "cartilha/", { waitUntil: "load" });
+    await p.waitForSelector(".rail .navlist .item");
+    const r = await p.evaluate(() => {
+      const itens = [...document.querySelectorAll(".rail .navlist .item")];
+      const texto = (el) => {
+        const intervalo = document.createRange();
+        intervalo.selectNodeContents(el.querySelector(".short") ?? el);
+        return intervalo.getBoundingClientRect();
+      };
+      const primeiro = texto(itens[0]);
+      const ultimo = texto(itens.at(-1));
+      const cortados = itens.map((el) => el.querySelector(".short")).filter((s) => s && s.scrollWidth > s.clientWidth + 1).map((s) => s.textContent.trim());
+      return { esq: Math.round(primeiro.left), dir: Math.round(innerWidth - ultimo.right), cortados };
+    });
+    if (w === 393) verificar(r.esq >= 12 && r.dir >= 12, `barra inferior a ${w} px (${lang || "pt/"}): texto a ${r.esq} px e ${r.dir} px das bordas (mínimo 12)`);
+    verificar(r.cortados.length === 0, `barra inferior a ${w} px (${lang || "pt/"}) com rótulo cortado: ${r.cortados.join(", ")}`);
+    await contexto.close();
+  }
+}
+
 // Aviso de dados desatualizados só nas telas que exibem índice (Monitoramento, Simulação e Dados).
 {
   const { readFile } = await import("node:fs/promises");

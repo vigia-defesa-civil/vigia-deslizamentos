@@ -872,10 +872,11 @@ astro-island {
     display: none;
   }
 
+  /* Respiro nas pontas: o rótulo do último item ("Contactos" no espanhol) ficava a 5 px da borda a 393 px. */
   .rail .navlist {
     flex-direction: row;
     flex: 1;
-    padding: 0;
+    padding: 0 clamp(4px, 2.6vw, 12px);
     gap: 0;
     min-width: 0;
   }
