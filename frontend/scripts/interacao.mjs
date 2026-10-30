@@ -162,6 +162,27 @@ for (const [w, h] of [
   await fechar();
 }
 
+// Datas sempre com o ano em 4 dígitos (Previsões, faixa de previsão e painel do município).
+for (const [nome, opcoes] of [
+  ["1366", {}],
+  ["320", celular(320, 640)],
+]) {
+  const { pagina: p, fechar } = await abrir("?municipio=4217808", opcoes);
+  await p.evaluate(() => [...document.querySelectorAll(".prevs input[type=radio]")][1]?.click());
+  await p.waitForTimeout(200);
+  if (await p.locator(".prevs-btn").isVisible()) await p.locator(".prevs-btn").tap();
+  const textos = await p.evaluate(() =>
+    [".prevs-lista", ".dayflag", ".side.r .bigsub"].map((s) => document.querySelector(s)?.textContent ?? ""),
+  );
+  const curtas = textos.join(" | ").match(/(?<!\d)\d{2}\/\d{2}\/\d{2}(?!\d)/g) ?? [];
+  verificar(curtas.length === 0, `datas com ano de 2 dígitos a ${nome}: ${curtas.join(", ")}`);
+  const cortados = await p.evaluate(() =>
+    [...document.querySelectorAll(".prevs-lista label")].filter((l) => l.scrollWidth > l.clientWidth + 1).map((l) => l.textContent),
+  );
+  verificar(cortados.length === 0, `linhas das Previsões cortadas a ${nome}: ${cortados.join(", ")}`);
+  await fechar();
+}
+
 // Contatos: sem nome do coordenador, a linha some (nada de "a confirmar" no ar).
 {
   const { pagina: p, fechar } = await abrir("contatos/");

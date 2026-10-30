@@ -555,7 +555,8 @@
 .prevs {
   left: 68px;
   top: 16px;
-  width: 188px;
+  /* Cabe "29/10/2026  +3D": o ano tem 4 dígitos em todo o site. */
+  width: 204px;
   padding: 12px 14px;
   z-index: 4;
 }
@@ -631,8 +632,8 @@
   /* À direita, sob as camadas (botões ou select): no centro do alto ela cobria os botões de camadas. */
   right: 16px;
   top: 72px;
-  /* Não invade as Previsões (16 + 52 + 188 px à esquerda): em mapa estreito quebra a linha. */
-  max-width: calc(100% - 288px);
+  /* Não invade as Previsões (16 + 52 + 204 px à esquerda): em mapa estreito quebra a linha. */
+  max-width: calc(100% - 304px);
   z-index: 4;
   padding: 7px 12px;
   font-family: var(--font-mono);
@@ -739,7 +740,7 @@
 
   .prevs-lista {
     display: none;
-    width: 168px;
+    width: 204px;
     padding: 0 12px 10px;
   }
 
@@ -798,11 +799,6 @@
 
 /* Previsões e camadas lado a lado mesmo em 320 px: os dois mais estreitos. */
 @media (max-width: 380px) {
-  .prevs-lista {
-    width: 146px;
-    padding: 0 10px 8px;
-  }
-
   /* Ao lado das Previsões sobram ~100 px e o campo fica em 16 px (base.css, zoom do iOS): seta desenhada
      em CSS (a nativa ocupa ~20 px) e a fonte de texto do site, mais estreita que a mono, para
      "Satélite"/"Satellite" caberem sem corte. */

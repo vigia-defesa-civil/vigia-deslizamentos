@@ -30,7 +30,7 @@ export default function Previsoes({ lang, dias, d, aoMudar }: Props) {
   // Só passos manuais são anunciados: na reprodução, o leitor de tela ouviria um dia a cada 1,1 s.
   function ir(novo: number) {
     aoMudar(novo);
-    const data = formatarData(dias[novo], "curto");
+    const data = formatarData(dias[novo]);
     const n = diasDesde(hoje, dias[novo]);
     if (n === 0) anunciar(t("Hoje, {N}", { N: data }));
     else if (n > 0) anunciar(t("Previsão para {N}", { N: data }));
@@ -100,7 +100,7 @@ export default function Previsoes({ lang, dias, d, aoMudar }: Props) {
         {dias.map((dia, i) => (
           <label key={dia} className={i === d ? "on" : undefined}>
             <input type="radio" name={nome} checked={i === d} onChange={() => escolher(i)} />
-            {formatarData(dia, "curto")}
+            {formatarData(dia)}
             <small>{t(rotuloDia(dia, hoje))}</small>
           </label>
         ))}
@@ -123,5 +123,5 @@ export default function Previsoes({ lang, dias, d, aoMudar }: Props) {
 /** Faixa sobre o mapa em D1–D3 (RN06). */
 export function FaixaPrevisao({ lang, dia, d }: { lang: Idioma; dia: string; d: number }) {
   if (d === 0) return null;
-  return <div className="dayflag">{tradutor(lang)("Previsão · {N} — valores estimados", { N: formatarData(dia, "curto") })}</div>;
+  return <div className="dayflag">{tradutor(lang)("Previsão · {N} — valores estimados", { N: formatarData(dia) })}</div>;
 }

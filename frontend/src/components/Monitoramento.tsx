@@ -196,7 +196,7 @@ function Indice({ t, indice, classe, dia }: { t: T; indice: number; classe: Nume
       </div>
       <div className="bigsub">
         {dia
-          ? t("índice de risco · {C} · previsão {N}", { C: nomeClasse, N: formatarData(dia, "curto") })
+          ? t("índice de risco · {C} · previsão {N}", { C: nomeClasse, N: formatarData(dia) })
           : t("índice de risco · {C}", { C: nomeClasse })}
       </div>
     </>
