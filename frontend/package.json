@@ -9,7 +9,7 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "gerar:geojson": "node scripts/gerar-geojson.mjs",
-    "test:a11y": "node scripts/axe.mjs"
+    "test:a11y": "node scripts/axe.mjs && node scripts/interacao.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^7.0.0",

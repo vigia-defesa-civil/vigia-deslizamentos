@@ -79,7 +79,6 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
     <div className="mon">
       <Mapa ref={mapa} lang={lang} valores={valores} selecionado={selecionado} onSelecionar={selecionar}>
         <Previsoes lang={lang} dias={dias} d={d} aoMudar={setD} />
-        <FaixaPrevisao lang={lang} dia={dias[d]} d={d} />
         <Legenda lang={lang} />
         <Busca
           lang={lang}
@@ -92,16 +91,20 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
         <div className={toast ? "toast on" : "toast"} aria-hidden="true">
           {toast}
         </div>
-        <p className="float resumo">
-          <b className={nAlerta ? "al" : undefined}>{nAlerta}</b>{" "}
-          {t("de {N} municípios em alerta · maior índice {N}", { N: [String(total), maior === null ? "—" : formatarIndice(maior)] })}
-          <span className="atualizado">
-            <span className="longo">{textoAtualizacao(t, indices.gerado_em)}</span>
-            <span className="curto" aria-hidden="true">
-              {textoAtualizacaoCurto(t, indices.gerado_em)}
+        {/* Até 900 px a faixa de previsão e o resumo empilham no rodapé do mapa, sem um cobrir o outro (RN06). */}
+        <div className="rodape-mapa">
+          <FaixaPrevisao lang={lang} dia={dias[d]} d={d} />
+          <p className="float resumo">
+            <b className={nAlerta ? "al" : undefined}>{nAlerta}</b>{" "}
+            {t("de {N} municípios em alerta · maior índice {N}", { N: [String(total), maior === null ? "—" : formatarIndice(maior)] })}
+            <span className="atualizado">
+              <span className="longo">{textoAtualizacao(t, indices.gerado_em)}</span>
+              <span className="curto" aria-hidden="true">
+                {textoAtualizacaoCurto(t, indices.gerado_em)}
+              </span>
             </span>
-          </span>
-        </p>
+          </p>
+        </div>
       </Mapa>
       {selecionado && (
         <Painel

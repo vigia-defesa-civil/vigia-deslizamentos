@@ -671,14 +671,9 @@
     max-height: min(220px, max(48px, 100cqh - 130px));
   }
 
-  /* No alto cobria o zoom e as camadas: desce para cima do resumo, na mesma coluna. */
+  /* No alto cobria o zoom e as camadas: desce para cima do resumo, na mesma coluna (.rodape-mapa). */
   .dayflag {
-    top: auto;
-    bottom: 68px;
-    left: 72px;
-    right: 16px;
-    max-width: none;
-    text-align: center;
+    text-align: left;
     pointer-events: none;
   }
 
@@ -722,10 +717,6 @@
     bottom: 68px;
     max-height: calc(100% - 76px);
   }
-
-  .dayflag {
-    right: 216px;
-  }
 }
 
 /* Previsões e camadas lado a lado mesmo em 320 px: os dois mais estreitos. */
@@ -750,9 +741,8 @@
     background-repeat: no-repeat;
   }
 
-  /* O resumo quebra em duas linhas; a faixa, menor, fica entre ele e os botões das Previsões, sem cobri-los. */
+  /* A faixa, menor, cabe acima do resumo sem chegar aos botões das Previsões. */
   .dayflag {
-    bottom: 84px;
     padding: 5px 8px;
     font-size: 11px;
     letter-spacing: 0.02em;
