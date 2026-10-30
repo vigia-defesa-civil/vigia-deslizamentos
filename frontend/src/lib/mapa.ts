@@ -189,3 +189,43 @@ export const classesDoRotulo = (selecionado: boolean, valor: Valor): { sel: bool
   sel: selecionado,
   alerta: valor ? emAlerta(valor.indice) : false,
 });
+
+/**
+ * Ordem do rótulo quando dois disputam o mesmo lugar (maior fica): o selecionado, depois a classe mais alta,
+ * depois o maior índice. Sem dados (null) fica abaixo de qualquer classe; fora dos dados (undefined), por último.
+ */
+export function ordemRotulo(selecionado: boolean, valor: Valor): number {
+  if (selecionado) return 1e9;
+  if (valor === undefined) return -1;
+  if (valor === null) return 0;
+  return valor.classe * 1e4 + Math.min(9999, Math.round(valor.indice * 1000)) + 1;
+}
+
+export interface CaixaRotulo {
+  id: string;
+  ordem: number;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+/**
+ * Rótulos que ficam à vista: na ordem, cada um entra se não encostar (com `margem` px) em nenhum que já entrou.
+ * Caixas vazias (rótulo escondido pelo CSS, como de longe) não disputam lugar e continuam "visíveis".
+ */
+export function rotulosVisiveis(caixas: readonly CaixaRotulo[], margem = 4): Set<string> {
+  const visiveis = new Set<string>();
+  const postas: CaixaRotulo[] = [];
+  for (const c of [...caixas].sort((a, b) => b.ordem - a.ordem)) {
+    if (!c.w || !c.h) {
+      visiveis.add(c.id);
+      continue;
+    }
+    const encosta = postas.some((p) => c.x < p.x + p.w + margem && p.x < c.x + c.w + margem && c.y < p.y + p.h + margem && p.y < c.y + c.h + margem);
+    if (encosta) continue;
+    postas.push(c);
+    visiveis.add(c.id);
+  }
+  return visiveis;
+}

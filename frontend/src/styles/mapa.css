@@ -120,6 +120,12 @@
   display: none;
 }
 
+/* Rótulo que encostaria num de ordem maior (MapaLeaflet › arrumarRotulos): o nome continua no polígono
+   (aria-label), na busca e aparece ao selecionar. */
+.mapa .leaflet-tooltip.encoberto {
+  visibility: hidden;
+}
+
 /* Rótulos: tooltips permanentes do Leaflet no centro de cada polígono */
 .mapa .leaflet-tooltip.mlabel {
   display: flex;

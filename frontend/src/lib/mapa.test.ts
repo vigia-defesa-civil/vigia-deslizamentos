@@ -4,7 +4,7 @@ import exemplo from "../fixtures/indices.exemplo.json";
 import geojsonBruto from "../data/municipios.geojson?raw";
 import { FEICOES } from "./municipios";
 import type { Indices } from "./tipos";
-import { classesDoRotulo, destacar, limites, pontoInterno, municipiosMonitorados, valoresDoDia, mensagemSelecao, passoDia, posicoes, rotuloAria, rotuloDia, rotulosDeLonge, type FeicaoMunicipio } from "./mapa";
+import { classesDoRotulo, destacar, ordemRotulo, rotulosVisiveis, limites, pontoInterno, municipiosMonitorados, valoresDoDia, mensagemSelecao, passoDia, posicoes, rotuloAria, rotuloDia, rotulosDeLonge, type FeicaoMunicipio } from "./mapa";
 
 const pt = tradutor("pt");
 const es = tradutor("es");
@@ -149,5 +149,42 @@ describe("pontoInterno", () => {
     const [lat, lon] = pontoInterno(feicao(true, u));
     // dentro de uma das pernas do "U": x em (0,1) ou (2,3), y em (1,3), ou na base (y em (0,1))
     expect((lon > 0 && lon < 1) || (lon > 2 && lon < 3) || (lat > 0 && lat < 1)).toBe(true);
+  });
+});
+
+describe("rótulos sem sobreposição", () => {
+  const caixa = (id: string, ordem: number, x: number, y: number, w = 80, h = 20) => ({ id, ordem, x, y, w, h });
+
+  it("ordemRotulo: selecionado, depois classe mais alta, depois maior índice; sem dados por último", () => {
+    const sel = ordemRotulo(true, { indice: 0.1, classe: 1 });
+    const c6 = ordemRotulo(false, { indice: 2.7, classe: 6 });
+    const c5alto = ordemRotulo(false, { indice: 2.5, classe: 5 });
+    const c5baixo = ordemRotulo(false, { indice: 1.9, classe: 5 });
+    const semDados = ordemRotulo(false, null);
+    expect(sel).toBeGreaterThan(c6);
+    expect(c6).toBeGreaterThan(c5alto);
+    expect(c5alto).toBeGreaterThan(c5baixo);
+    expect(c5baixo).toBeGreaterThan(semDados);
+    expect(ordemRotulo(false, undefined)).toBeLessThan(semDados);
+  });
+
+  it("rotulosVisiveis esconde o de menor ordem quando dois se tocam", () => {
+    const v = rotulosVisiveis([caixa("a", 1, 0, 0), caixa("b", 5, 40, 10), caixa("c", 3, 300, 0)]);
+    expect([...v].sort()).toEqual(["b", "c"]);
+  });
+
+  it("rotulosVisiveis mantém a margem entre rótulos e ignora caixas vazias (rótulo escondido pelo CSS)", () => {
+    expect(rotulosVisiveis([caixa("a", 2, 0, 0), caixa("b", 1, 82, 0)], 4).has("b")).toBe(false);
+    expect(rotulosVisiveis([caixa("a", 2, 0, 0), caixa("b", 1, 90, 0)], 4).has("b")).toBe(true);
+    expect(rotulosVisiveis([caixa("a", 2, 0, 0, 0, 0), caixa("b", 1, 0, 0)]).has("b")).toBe(true);
+  });
+
+  it("rotulosVisiveis com os 27: nenhum par visível se sobrepõe e o de maior ordem sempre fica", () => {
+    const caixas = Array.from({ length: 27 }, (_, i) => caixa(`m${i}`, i, (i % 6) * 50, Math.floor(i / 6) * 15));
+    const v = rotulosVisiveis(caixas);
+    expect(v.has("m26")).toBe(true);
+    const vis = caixas.filter((c) => v.has(c.id));
+    for (const a of vis)
+      for (const b of vis) if (a !== b) expect(a.x + a.w <= b.x || b.x + b.w <= a.x || a.y + a.h <= b.y || b.y + b.h <= a.y).toBe(true);
   });
 });

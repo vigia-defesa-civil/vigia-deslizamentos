@@ -106,6 +106,53 @@ for (const [w, h] of [
   await fechar();
 }
 
+// Rótulos: com os 27 municípios em alerta, nenhum par de rótulos à vista se sobrepõe (de longe e aproximado),
+// e o de maior índice aparece.
+{
+  const { readFile } = await import("node:fs/promises");
+  const { DIST } = await import("./servidor.mjs");
+  const dados = JSON.parse(await readFile(`${DIST}data/indices.json`, "utf8"));
+  dados.municipios.forEach((m, i) => {
+    for (const dia of m.dias) Object.assign(dia, { indice: 1.9 + i * 0.03, classe: 5 });
+  });
+  const maior = dados.municipios.at(-1).nome;
+  for (const [nome, opcoes] of [
+    ["1366", {}],
+    ["393", celular(393, 852)],
+  ]) {
+    const contexto = await navegador.newContext({ viewport: { width: 1366, height: 900 }, ...opcoes });
+    await soLocal(contexto, origem);
+    await contexto.route("**/data/indices.json", (rota) => rota.fulfill({ json: dados }));
+    const p = await contexto.newPage();
+    await p.goto(origem + BASE, { waitUntil: "load" });
+    await p.waitForSelector(".mapa .mun");
+    await p.waitForTimeout(500);
+    const sobrepostos = () =>
+      p.evaluate(() => {
+        const r = [...document.querySelectorAll(".mapa .leaflet-tooltip.mlabel, .mapa .leaflet-tooltip.ctxl")]
+          .filter((el) => getComputedStyle(el).display !== "none" && getComputedStyle(el).visibility !== "hidden")
+          .map((el) => [el.textContent.trim(), el.getBoundingClientRect()]);
+        const pares = [];
+        for (let i = 0; i < r.length; i++)
+          for (let j = i + 1; j < r.length; j++) {
+            const [a, ca] = r[i];
+            const [b, cb] = r[j];
+            if (ca.left < cb.right && cb.left < ca.right && ca.top < cb.bottom && cb.top < ca.bottom) pares.push(`${a.slice(0, 14)} × ${b.slice(0, 14)}`);
+          }
+        return { pares, visiveis: r.map(([t]) => t) };
+      });
+    const longe = await sobrepostos();
+    verificar(longe.pares.length === 0, `rótulos sobrepostos de longe a ${nome}: ${longe.pares.slice(0, 4).join("; ")}`);
+    verificar(longe.visiveis.some((t) => t.startsWith(maior)), `rótulo do maior índice (${maior}) escondido a ${nome}`);
+    await p.locator(".mapa").focus();
+    await p.keyboard.press("Equal");
+    await p.waitForTimeout(700);
+    const perto = await sobrepostos();
+    verificar(perto.pares.length === 0, `rótulos sobrepostos aproximado a ${nome}: ${perto.pares.slice(0, 4).join("; ")}`);
+    await contexto.close();
+  }
+}
+
 // Foco do município: com clique de mouse (inclusive vindo de ?municipio=), nenhum contorno nem realce de toque;
 // com teclado, o tracejado segue o contorno do polígono.
 {

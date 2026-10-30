@@ -5,7 +5,7 @@ import { MapContainer, Marker, Polygon, TileLayer, Tooltip, useMap } from "react
 import { tradutor, type T } from "../i18n";
 import { CLASSES, infoClasse, SEM_DADOS } from "../lib/classes";
 import { formatarIndice } from "../lib/formato";
-import { CAMADA_NEUTRA, classesDoRotulo, limites, posicoes, pontoInterno, rotulosDeLonge, rotuloAria, type Camada, type FeicaoMunicipio, type LatLon, type Valor } from "../lib/mapa";
+import { CAMADA_NEUTRA, classesDoRotulo, limites, ordemRotulo, posicoes, pontoInterno, rotulosDeLonge, rotulosVisiveis, rotuloAria, type Camada, type FeicaoMunicipio, type LatLon, type Valor } from "../lib/mapa";
 import { FEICOES } from "../lib/municipios";
 import { semMovimento } from "../lib/movimento";
 import type { GrauSetor, Setor } from "../lib/setores";
@@ -42,6 +42,18 @@ function iconeConta(n: number): DivIcon {
 }
 
 const id = (n: number) => `hachura-${n}`;
+
+/** Esconde os rótulos que encostam num de ordem maior (lib/mapa › rotulosVisiveis). Vizinhos têm a menor ordem. */
+function arrumarRotulos(mapa: MapaL) {
+  const els = [...mapa.getContainer().querySelectorAll<HTMLElement>(".leaflet-tooltip.mlabel, .leaflet-tooltip.ctxl")];
+  for (const el of els) el.classList.remove("encoberto");
+  const caixas = els.map((el, i) => {
+    const r = el.getBoundingClientRect();
+    return { id: String(i), ordem: Number(el.dataset.ordem ?? -10), x: r.left, y: r.top, w: r.width, h: r.height };
+  });
+  const visiveis = rotulosVisiveis(caixas);
+  els.forEach((el, i) => el.classList.toggle("encoberto", !visiveis.has(String(i))));
+}
 
 // Gota azul-marinho com miolo branco (protótipo: est.js); a ponta fica na coordenada da estação.
 const ICONE_PINO = divIcon({
@@ -137,6 +149,7 @@ function Municipio({ t, feicao, pos, valor, selecionado, onSelecionar, rotuloMun
     const classes = classesDoRotulo(selecionado, valor);
     rotulo?.classList.toggle("sel", classes.sel);
     rotulo?.classList.toggle("alerta", classes.alerta);
+    if (rotulo) rotulo.dataset.ordem = String(ordemRotulo(selecionado, valor));
     if (selecionado) {
       // bringToFront move o <path> no DOM e o foco do teclado (Enter no município) se perderia. O foco volta
       // visível só se já era (teclado); depois de um clique, volta sem o tracejado.
@@ -286,6 +299,26 @@ export default function MapaLeaflet({
       mapa.off("zoomend", marcar);
     };
   }, [mapa]);
+
+  // Rótulos que se tocam: fica o de maior ordem. Refaz ao mudar o zoom, o tamanho do mapa, os valores (dia) e a
+  // seleção; arrastar move todos juntos e não muda nada. O quadro seguinte espera o Leaflet reposicionar.
+  useEffect(() => {
+    if (!mapa) return;
+    let quadro = 0;
+    const arrumar = () => {
+      cancelAnimationFrame(quadro);
+      quadro = requestAnimationFrame(() => arrumarRotulos(mapa));
+    };
+    arrumar();
+    mapa.on("zoomend", arrumar);
+    const observador = new ResizeObserver(arrumar);
+    observador.observe(mapa.getContainer());
+    return () => {
+      cancelAnimationFrame(quadro);
+      mapa.off("zoomend", arrumar);
+      observador.disconnect();
+    };
+  }, [mapa, valores, selecionado, longeAtual]);
 
   // O Leaflet só remede o container no resize da janela; quando a página muda a altura do mapa
   // (faixa de aviso que aparece depois), o tamanho antigo faria o fitBounds passar da borda.
