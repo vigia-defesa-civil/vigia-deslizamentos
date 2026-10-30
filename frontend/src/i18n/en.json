@@ -173,7 +173,7 @@
 "{M} poderá entrar em alerta.": "{M} may go on alert.",
 "Com {N} mm em {N} o índice subiria para {N} (classe {C}).": "With {N} mm in {N} the index would rise to {N} (class {C}).",
 "Com {N} mm em {N} o índice ficaria em {N} (classe {C}).": "With {N} mm in {N} the index would be {N} (class {C}).",
-"Abaixo do nível de alerta": "Below alert level",
+"{M} ficaria sem alerta": "{M} would not be on alert",
 "Abaixo do nível de alerta.": "Below alert level.",
 "Com {N} mm em {N}, {M} ficaria na classe {C} ({N}).": "With {N} mm in {N}, {M} would be in class {C} ({N}).",
 "Se essa sua previsão se concretizar, o município poderá entrar em": "If your forecast comes true, the municipality may enter a",

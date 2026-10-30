@@ -150,16 +150,18 @@ describe("avisoSimulacao (RN04: sempre condicional)", () => {
     expect(avisoSimulacao(t, { ...base, atual: 1.9, simulado: 1.2 }).texto).toBe("Com 60 mm em 48h o índice ficaria em 1,20 (classe moderado).");
   });
 
-  it("ok: abaixo do nível de alerta", () => {
+  it("ok: sem alerta, no mesmo termo do Monitoramento e em tom condicional (RN04)", () => {
     expect(avisoSimulacao(t, { ...base, atual: 1.5, simulado: 0.66 })).toEqual({
       tipo: "ok",
-      titulo: "Abaixo do nível de alerta",
+      titulo: "Ibirama ficaria sem alerta",
       texto: "Com 60 mm em 48h, Ibirama ficaria na classe muito baixo (0,66).",
     });
   });
 
   it("traduz para o espanhol", () => {
     expect(avisoSimulacao(tradutor("es"), { ...base, atual: 0.8, simulado: 1.2 }).titulo).toBe("Ibirama podría entrar en alerta");
+    expect(avisoSimulacao(tradutor("es"), { ...base, atual: 1.5, simulado: 0.66 }).titulo).toBe("Ibirama quedaría sin alerta");
+    expect(avisoSimulacao(tradutor("en"), { ...base, atual: 1.5, simulado: 0.66 }).titulo).toBe("Ibirama would not be on alert");
   });
 });
 

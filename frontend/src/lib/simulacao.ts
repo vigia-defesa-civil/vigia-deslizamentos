@@ -119,7 +119,7 @@ export function avisoSimulacao(t: T, { nome, atual, simulado, chuva_mm, horas }:
     case "ok":
       return {
         tipo: "ok",
-        titulo: t("Abaixo do nível de alerta"),
+        titulo: t("{M} ficaria sem alerta", { M: nome }),
         texto: t("Com {N} mm em {N}, {M} ficaria na classe {C} ({N}).", { N: [...periodo, N], M: nome, C }),
       };
   }
