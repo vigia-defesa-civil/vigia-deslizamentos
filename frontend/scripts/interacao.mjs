@@ -43,7 +43,7 @@ for (const [nome, opcoes] of [
   const r = await p.evaluate(() => {
     const caixa = (s) => document.querySelector(s)?.getBoundingClientRect();
     const f = caixa(".dayflag");
-    const outros = [".resumo"].map((s) => [s, caixa(s)]).filter(([, c]) => c && c.width);
+    const outros = [".resumo", ".prevs", ".zoom", ".layers", ".layers-sel", ".busca .go"].map((s) => [s, caixa(s)]).filter(([, c]) => c && c.width);
     const cobre = outros.filter(([, c]) => f && !(c.right <= f.left || c.left >= f.right || c.bottom <= f.top || c.top >= f.bottom)).map(([s]) => s);
     const texto = document.querySelector(".dayflag");
     return { existe: !!f, cobre, cortada: texto ? texto.scrollHeight > texto.clientHeight + 1 : false };
@@ -52,6 +52,58 @@ for (const [nome, opcoes] of [
   verificar(r.cobre.length === 0, `faixa de previsão sob ${r.cobre.join(", ")} a ${nome}`);
   verificar(!r.cortada, `faixa de previsão com texto cortado a ${nome}`);
   await fecharP();
+}
+
+// Celular: Previsões recolhidas num botão com a data, zoom escondido (pinça) e controles cobrindo no máximo 25% do mapa.
+for (const [w, h] of [
+  [360, 780],
+  [393, 852],
+  [430, 932],
+]) {
+  const { pagina: p, fechar } = await abrir("", celular(w, h));
+  const medida = await p.evaluate(() => {
+    const m = document.querySelector(".mapa").getBoundingClientRect();
+    const area = (s) => {
+      const r = document.querySelector(s)?.getBoundingClientRect();
+      if (!r || !r.width) return 0;
+      const x = Math.max(0, Math.min(r.right, m.right) - Math.max(r.left, m.left));
+      const y = Math.max(0, Math.min(r.bottom, m.bottom) - Math.max(r.top, m.top));
+      return x * y;
+    };
+    const total = [".prevs", ".zoom", ".layers-sel", ".leg", ".busca", ".resumo", ".dayflag"].reduce((s, x) => s + area(x), 0);
+    const zoom = document.querySelector(".zoom");
+    return { pct: Math.round((100 * total) / (m.width * m.height)), zoomVisivel: !!zoom && getComputedStyle(zoom).display !== "none" };
+  });
+  verificar(medida.pct <= 25, `controles cobrem ${medida.pct}% do mapa a ${w} px (máximo 25%)`);
+  verificar(!medida.zoomVisivel, `botões de zoom visíveis no celular a ${w} px`);
+  const botao = p.locator(".prevs-btn");
+  const lista = p.locator(".prevs-lista");
+  if (!(await botao.count())) {
+    verificar(false, `sem o botão das Previsões a ${w} px`);
+    await fechar();
+    continue;
+  }
+  verificar((await botao.isVisible()) && !(await lista.isVisible()), `Previsões não começam recolhidas a ${w} px`);
+  verificar(/\d{2}\/\d{2}/.test((await botao.textContent()) ?? ""), `botão das Previsões sem a data a ${w} px`);
+  await botao.tap();
+  verificar((await lista.isVisible()) && (await botao.getAttribute("aria-expanded")) === "true", `Previsões não abrem ao tocar a ${w} px`);
+  await p.locator(".prevs-lista label").nth(2).tap();
+  await p.waitForTimeout(150);
+  const dia = await p.evaluate(() => document.querySelectorAll(".prevs-lista input")[2]?.checked);
+  verificar(dia && !(await lista.isVisible()), `escolher um dia não fecha as Previsões a ${w} px`);
+  verificar(await p.locator(".dayflag").isVisible(), `faixa de previsão ausente depois de escolher +2 dias a ${w} px`);
+  await botao.tap();
+  await p.keyboard.press("Escape");
+  verificar(!(await lista.isVisible()), `Esc não fecha as Previsões a ${w} px`);
+  await fechar();
+}
+
+// Desktop: a lista das Previsões fica sempre aberta, sem o botão.
+{
+  const { pagina: p, fechar } = await abrir("");
+  verificar((await p.locator(".prevs-lista").isVisible()) && !(await p.locator(".prevs-btn").isVisible()), "Previsões recolhidas no desktop");
+  verificar(await p.locator(".zoom").isVisible(), "zoom escondido no desktop");
+  await fechar();
 }
 
 // Foco do município: com clique de mouse (inclusive vindo de ?municipio=), nenhum contorno nem realce de toque;

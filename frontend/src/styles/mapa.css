@@ -541,7 +541,11 @@
   color: var(--muted);
 }
 
-/* Previsões */
+/* Previsões. No desktop a lista fica sempre aberta; até 900 px recolhe no botão .prevs-btn (com a data). */
+.prevs-btn {
+  display: none;
+}
+
 .prevs {
   left: 68px;
   top: 16px;
@@ -691,8 +695,50 @@
 
   .prevs {
     left: 64px;
+    width: auto;
+    padding: 0;
+  }
+
+  .prevs-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 10px 0 12px;
+    border: none;
+    border-radius: inherit;
+    background: none;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .prevs-btn small {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .prevs-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .prevs.aberta .prevs-btn svg {
+    transform: rotate(180deg);
+  }
+
+  .prevs-lista {
+    display: none;
     width: 168px;
-    padding: 10px 12px;
+    padding: 0 12px 10px;
+  }
+
+  .prevs.aberta .prevs-lista {
+    display: block;
   }
 
   .mapa .leaflet-tooltip.mlabel {
@@ -707,6 +753,19 @@
   .leg {
     bottom: 76px;
     max-height: calc(100% - 76px - 120px);
+  }
+}
+
+/* Tela de toque estreita: o zoom é a pinça, e o cadeado da legenda só serve a quem abre a legenda com o mouse
+   por cima (no toque, a faixa abre e o X recolhe). As Previsões encostam na borda. */
+@media (max-width: 900px) and (pointer: coarse) {
+  .zoom,
+  .leg .lockb {
+    display: none;
+  }
+
+  .prevs {
+    left: 16px;
   }
 }
 
@@ -733,9 +792,9 @@
 
 /* Previsões e camadas lado a lado mesmo em 320 px: os dois mais estreitos. */
 @media (max-width: 380px) {
-  .prevs {
+  .prevs-lista {
     width: 146px;
-    padding: 8px 10px;
+    padding: 0 10px 8px;
   }
 
   /* Ao lado das Previsões sobram ~100 px e o campo fica em 16 px (base.css, zoom do iOS): seta desenhada
