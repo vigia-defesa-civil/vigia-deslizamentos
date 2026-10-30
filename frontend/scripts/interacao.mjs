@@ -162,6 +162,33 @@ for (const [w, h] of [
   await fechar();
 }
 
+// Aviso de dados desatualizados só nas telas que exibem índice (Monitoramento, Simulação e Dados).
+{
+  const { readFile } = await import("node:fs/promises");
+  const { DIST } = await import("./servidor.mjs");
+  const antigo = { ...JSON.parse(await readFile(`${DIST}data/indices.json`, "utf8")), gerado_em: "2020-01-01T09:00:00+00:00" };
+  const contexto = await navegador.newContext({ viewport: { width: 1366, height: 900 } });
+  await soLocal(contexto, origem);
+  await contexto.route("**/data/indices.json", (rota) => rota.fulfill({ json: antigo }));
+  for (const [tela, deve] of [
+    ["", true],
+    ["simulacao/", true],
+    ["dados/", true],
+    ["areas-de-risco/", false],
+    ["cartilha/", false],
+    ["contatos/", false],
+  ]) {
+    const p = await contexto.newPage();
+    await p.goto(origem + BASE + tela, { waitUntil: "load" });
+    await p.waitForSelector(".hdr .stamp .dot, .hdr .dot", { timeout: 30_000 }).catch(() => {});
+    await p.waitForTimeout(400);
+    const tem = await p.getByText("Dados desatualizados").count();
+    verificar(Boolean(tem) === deve, `aviso de dados desatualizados ${deve ? "ausente" : "presente"} em /${tela}`);
+    await p.close();
+  }
+  await contexto.close();
+}
+
 // Datas sempre com o ano em 4 dígitos (Previsões, faixa de previsão e painel do município).
 for (const [nome, opcoes] of [
   ["1366", {}],

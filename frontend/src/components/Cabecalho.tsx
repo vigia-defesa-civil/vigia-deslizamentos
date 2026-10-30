@@ -4,7 +4,7 @@ import { atributoLang, tradutor } from "../i18n";
 import { carregar, desatualizado, lerIndices, type Resultado } from "../lib/dados";
 import { formatarData, formatarDataHora } from "../lib/formato";
 import { lerPreferencias, salvarPreferencias, type Idioma } from "../lib/preferencias";
-import { rota, rotaComEstado } from "../lib/telas";
+import { mostraIndice, rota, rotaComEstado } from "../lib/telas";
 import type { Indices } from "../lib/tipos";
 import JanelaTelegram, { DiscoTelegram } from "./JanelaTelegram";
 import PainelAcessibilidade from "./PainelAcessibilidade";
@@ -105,7 +105,7 @@ export default function Cabecalho({ lang, tela }: Props) {
           )}
         </p>
       </header>
-      {indices?.ok && desatualizado(indices.dados.gerado_em, agora) && (
+      {indices?.ok && mostraIndice(tela) && desatualizado(indices.dados.gerado_em, agora) && (
         <div className="faixa-aviso" role="status">
           <TriangleAlert aria-hidden="true" />
           {t("Dados desatualizados: a última atualização foi em {N}. Os valores podem não refletir a situação atual.", {

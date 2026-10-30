@@ -17,6 +17,10 @@ export const TELAS: readonly Tela[] = [
   { rota: "contatos", nome: "Contatos", curto: "Contatos" },
 ];
 
+/** Telas que exibem índice de risco: só nelas o aviso de dados desatualizados (RNF04) faz sentido. */
+const COM_INDICE = new Set(["", "simulacao", "dados"]);
+export const mostraIndice = (tela: string): boolean => COM_INDICE.has(tela);
+
 /** URL da tela no idioma: o espanhol fica em /es/ e o inglês em /en/. */
 export function rota(tela: string, lang: Idioma, base: string = import.meta.env.BASE_URL): string {
   const partes = [base, lang === "pt" ? "" : lang, tela].map((p) => p.replace(/^\/+|\/+$/g, "")).filter(Boolean);
