@@ -42,6 +42,18 @@
   stroke-width: 5px;
 }
 
+/* Foco só com teclado, e no contorno do município (o tracejado abaixo). O <svg> dos polígonos (tabindex -1,
+   MapaLeaflet) recebia o anel padrão do Chrome quando ganhava foco por script: um retângulo escuro em volta
+   da caixa dos polígonos. O realce de toque pintava a mesma caixa no celular. */
+.mapa {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mapa .leaflet-overlay-pane svg:focus,
+.mapa .mun:focus:not(:focus-visible) {
+  outline: none;
+}
+
 /* Depois de .sel, e tracejado: no selecionado o foco não se confunde com a seleção. */
 .mapa .mun:focus-visible {
   outline: none;

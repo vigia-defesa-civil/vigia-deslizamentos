@@ -138,11 +138,13 @@ function Municipio({ t, feicao, pos, valor, selecionado, onSelecionar, rotuloMun
     rotulo?.classList.toggle("sel", classes.sel);
     rotulo?.classList.toggle("alerta", classes.alerta);
     if (selecionado) {
-      // bringToFront move o <path> no DOM e o foco do teclado (Enter no município) se perderia.
+      // bringToFront move o <path> no DOM e o foco do teclado (Enter no município) se perderia. O foco volta
+      // visível só se já era (teclado); depois de um clique, volta sem o tracejado.
       const comFoco = document.activeElement === el;
+      const visivel = comFoco && el.matches(":focus-visible");
       fundo.current?.bringToFront();
       hachura.current?.bringToFront();
-      if (comFoco) el.focus();
+      if (comFoco) el.focus({ preventScroll: true, focusVisible: visivel } as FocusOptions);
     }
   }, [t, ibge, nome, valor, n, selecionado, interativo, rotuloMunicipio]);
 
