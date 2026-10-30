@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { marcaClasse } from "../lib/graficos";
-import { TELAS } from "../lib/telas";
+import { AJUDA, TELAS } from "../lib/telas";
 import EN from "./en.json";
 import ES from "./es.json";
 import { RE_CLASSE, tradutor } from "./index";
@@ -86,7 +86,7 @@ describe("dicionário", () => {
     // Frases montadas no código: o título "VIGIA · {tela}" (Base.astro), o aviso "{opção} ativado" (PainelAcessibilidade)
     // e as setas de classe "↑ {C}"/"↓ {C}" (lib/graficos › marcaClasse, traduzidas pelo modelo com {C}).
     const dinamica = (f: string) =>
-      TELAS.some((t) => f === `VIGIA · ${t.nome}`) ||
+      [...TELAS, AJUDA].some((t) => f === `VIGIA · ${t.nome}`) ||
       (f.endsWith(" ativado") && codigo.includes(`"${f.slice(0, -" ativado".length)}"`)) ||
       f === "↑ {C}" ||
       f === "↓ {C}";

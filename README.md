@@ -242,7 +242,7 @@ A RADIAN divide um sistema de apoio à decisão para desastres naturais em duas 
 
 | Bloco RADIAN | No VIGIA |
 |---|---|
-| Sistema de Interface do Usuário | 6 telas, idiomas PT/ES/EN, acessibilidade e contatos de emergência |
+| Sistema de Interface do Usuário | 6 telas e a página de Ajuda, idiomas PT/ES/EN, acessibilidade e contatos de emergência |
 | Sistemas Cognitivos — Análise e Tomada de Decisão | Mapa de risco, painel do município, previsões D0–D3, simulação, dados da análise e cartilha (FAQ) |
 | Sistemas Cognitivos — Supervisão da Execução de Decisões | Geração e envio de alertas pelo Telegram |
 | Sistemas de Gerenciamento de Dados e Conhecimento | Banco SQLite (índices calculados e inscritos do bot), malhas IBGE e estações |
@@ -315,6 +315,7 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 | Áreas de risco | `/areas-de-risco` | Setores de risco geológico do SGB e ocorrências por município; estações do INMET como camada opcional |
 | Cartilha | `/cartilha` | Sinais de perigo, o que fazer antes/durante/depois, mochila de emergência, "não faça". Cada seção cita suas fontes oficiais: Defesa Civil Nacional (MDR), Serviço Geológico do Brasil (SGB), Defesa Civil de SC, Ministério das Comunicações, Defesa Civil do Paraná e SP Sempre Alerta |
 | Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e Defesa Civil de cada município |
+| Ajuda | `/ajuda` | Dicas de uso de cada tela e do bot; vídeo tutorial (opcional, carregado só ao clicar) com legendas e transcrição. Fica no rail do desktop e no "?" do topo no celular, fora da barra inferior |
 
 Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram".
 
@@ -340,6 +341,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RF11** — Levar o usuário ao bot do Telegram, onde ele escolhe os municípios (`/start`), consulta a situação (`/status`) e cancela (`/parar`).
 - **RF12** — Enviar aviso aos inscritos quando um município atingir índice ≥ 1,00.
 - **RF13** — Oferecer português, espanhol e inglês, tema claro ou escuro (sem escolha, segue o sistema) e paleta de cores para daltonismo, lembrando a escolha do usuário.
+- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo só é carregado (via youtube-nocookie.com) quando o usuário pede; sem o ID do vídeo (`PUBLIC_AJUDA_VIDEO_ID`) ou sem a transcrição, a página mostra só as dicas.
 
 ### Requisitos não funcionais
 
@@ -347,7 +349,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RNF02 — Responsividade:** funcionar de 320 px até desktop sem rolagem lateral.
 - **RNF03 — Desempenho:** página principal carregada em até 2,5 s em conexão 4G; simulação e troca de dia em até 500 ms.
 - **RNF04 — Disponibilidade:** se a atualização falhar, exibir o último índice válido com data e hora.
-- **RNF05 — Privacidade (LGPD):** o site não coleta dados pessoais; o bot guarda só o identificador do chat e os municípios escolhidos, apagados com `/parar` ou quando o usuário bloqueia o bot.
+- **RNF05 — Privacidade (LGPD):** o site não coleta dados pessoais; o bot guarda só o identificador do chat e os municípios escolhidos, apagados com `/parar` ou quando o usuário bloqueia o bot. Vídeos incorporados só carregam depois de um clique, pelo domínio sem cookies do YouTube.
 - **RNF06 — Segurança:** acesso somente por HTTPS e nenhum token ou chave exposto no frontend.
 - **RNF07 — Manutenibilidade:** parâmetros de cada município em configuração, para incluir municípios sem alterar o código.
 
@@ -379,7 +381,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **Hospedagem do backend:** GitHub Actions (pipeline) e Cloudflare Workers (bot)
 - **Arquitetura de referência:** RADIAN
 - **Idiomas:** Português, Espanhol e Inglês
-- **Acessibilidade:** verificação com axe-core (WCAG 2.1 A e AA, temas claro e escuro) em todo PR, no job `a11y` do CI
+- **Acessibilidade:** verificação com axe-core (WCAG 2.1 A e AA, temas claro e escuro, a 1366 e a 320 px, sem depender dos tiles externos) e testes de interação no navegador (`scripts/interacao.mjs`: foco, sobreposições no mapa, celular) em todo PR, no job `a11y` do CI
 
 > **Sobre a escolha do backend:** o GitHub Pages serve apenas conteúdo estático, e o bot com inscrição por usuário exige um banco de inscritos e algo que responda ao Telegram a qualquer hora. A solução sem servidor próprio é o Worker, que responde por webhook e guarda os inscritos no D1, e o Actions, que roda o pipeline por agendamento. Python foi escolhido por concentrar as bibliotecas adequadas ao tipo de processamento da metodologia (séries horárias, decaimento exponencial, agregação de ensemble) e por ter a biblioteca de bot mais madura para o caso de uso.
 
@@ -413,7 +415,7 @@ vigia-deslizamentos/
 │   └── migrations/          # Schema do D1
 ├── frontend/
 │   ├── src/
-│   │   ├── pages/[...lang]/ # As 6 telas, geradas em PT (/), ES (/es/) e EN (/en/)
+│   │   ├── pages/[...lang]/ # As 6 telas e a Ajuda, geradas em PT (/), ES (/es/) e EN (/en/)
 │   │   ├── layouts/         # Layout Astro comum (menu, cabeçalho, tema)
 │   │   ├── components/      # Componentes React das telas
 │   │   ├── lib/             # Regras e formatação das telas, com testes
@@ -424,7 +426,7 @@ vigia-deslizamentos/
 │   │   └── fixtures/        # Dados de exemplo do npm run dev e dos testes
 │   ├── public/data/         # JSON publicados: índices, históricos, contatos, estações,
 │   │                        # ocorrências e setores de risco
-│   └── scripts/             # Geração do GeoJSON e verificação com axe-core
+│   └── scripts/             # Geração do GeoJSON, axe-core e testes de interação no navegador
 └── docs/
     ├── contratos-de-dados.md  # Formato dos arquivos trocados entre backend, bot e site
     ├── indices.schema.json    # JSON Schema do indices.json

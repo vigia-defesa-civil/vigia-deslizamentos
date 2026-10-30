@@ -1,0 +1,172 @@
+/* Página de Ajuda: mesmos cartões, cores e tipografia das telas Contatos e Cartilha. */
+
+.ajuda {
+  min-height: 100%;
+  padding: 24px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--surface-100);
+}
+
+.aj-top h1 {
+  margin: 4px 0;
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--ink-brand);
+}
+
+.aj-top p {
+  max-width: 640px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+.aj-video h2,
+.aj-fim h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--ink-brand);
+}
+
+.aj-quadro {
+  max-width: 720px;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--nav-900);
+}
+
+.aj-quadro iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.aj-capa {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: 0;
+  background: none;
+  color: var(--on-nav);
+  text-align: center;
+}
+
+.aj-capa svg {
+  width: 56px;
+  height: 56px;
+  color: var(--accent);
+}
+
+.aj-capa b {
+  font-size: 17px;
+}
+
+.aj-capa small {
+  max-width: 420px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--nav-muted);
+}
+
+.aj-transcricao {
+  max-width: 720px;
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--ink);
+}
+
+.aj-transcricao summary {
+  min-height: 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.aj-transcricao p {
+  margin: 8px 0 0;
+}
+
+.aj-dicas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+.aj-sec {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: var(--surface-000);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.aj-sec h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--ink-brand);
+}
+
+.aj-sec ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink);
+}
+
+.aj-ir,
+.aj-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-brand);
+}
+
+.aj-fim p {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+.aj-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 6px;
+}
+
+@media (pointer: coarse) {
+  .aj-ir,
+  .aj-links a {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ajuda {
+    padding: 20px 16px 28px;
+  }
+
+  .aj-dicas {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

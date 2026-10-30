@@ -17,6 +17,12 @@ export const TELAS: readonly Tela[] = [
   { rota: "contatos", nome: "Contatos", curto: "Contatos" },
 ];
 
+/** Ajuda: fora da barra inferior do celular (6 itens já enchem 320 px); fica no rail e no "?" do topo. */
+export const AJUDA: Tela = { rota: "ajuda", nome: "Ajuda", curto: "Ajuda" };
+
+/** Tela pela rota, incluindo a Ajuda (título da página e seletor de idioma). */
+export const telaPorRota = (r: string): Tela | undefined => [...TELAS, AJUDA].find((x) => x.rota === r);
+
 /** Telas que exibem índice de risco: só nelas o aviso de dados desatualizados (RNF04) faz sentido. */
 const COM_INDICE = new Set(["", "simulacao", "dados"]);
 export const mostraIndice = (tela: string): boolean => COM_INDICE.has(tela);

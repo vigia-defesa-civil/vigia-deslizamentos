@@ -15,3 +15,6 @@ export const botTelegram = (nome: string | undefined = import.meta.env.PUBLIC_TE
 /** Link do bot; com `ibge`, o bot já sugere aquele município. */
 export const linkTelegram = (bot: string, ibge?: string): string =>
   `https://t.me/${bot}${ibge ? `?start=${ibge}` : ""}`;
+
+/** ID do vídeo tutorial da página de Ajuda (PUBLIC_AJUDA_VIDEO_ID). Vazio: a página mostra só as dicas. */
+export const videoAjuda = (id: string | undefined = import.meta.env.PUBLIC_AJUDA_VIDEO_ID): string => (id ?? "").trim();

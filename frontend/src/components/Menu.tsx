@@ -1,6 +1,7 @@
 import {
   BookOpen,
   ChartLine,
+  CircleHelp,
   CloudRain,
   Map as IconeMapa,
   Menu as IconeMenu,
@@ -12,7 +13,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { tradutor } from "../i18n";
 import type { Idioma } from "../lib/preferencias";
-import { TELAS, rota } from "../lib/telas";
+import { AJUDA, TELAS, rota } from "../lib/telas";
 import PainelAcessibilidade from "./PainelAcessibilidade";
 
 const ICONES: Record<string, LucideIcon> = {
@@ -91,6 +92,14 @@ export default function Menu({ lang, tela }: Props) {
         })}
       </ul>
       <div className="foot">
+        {/* Ajuda no rail do desktop; no celular (foot escondido), o "?" do cabeçalho. */}
+        <a href={rota(AJUDA.rota, lang)} className={`item${tela === AJUDA.rota ? " on" : ""}`} aria-current={tela === AJUDA.rota ? "page" : undefined}>
+          <CircleHelp aria-hidden="true" />
+          <span className="full">{t(AJUDA.nome)}</span>
+          <em className="tip" aria-hidden="true">
+            {t(AJUDA.nome)}
+          </em>
+        </a>
         <button type="button" className="item" onClick={() => setAcessibilidade(true)}>
           <PersonStanding aria-hidden="true" />
           <span className="full">{t("Acessibilidade")}</span>

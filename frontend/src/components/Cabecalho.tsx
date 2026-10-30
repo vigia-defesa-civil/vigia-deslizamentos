@@ -1,10 +1,10 @@
-import { Globe, PersonStanding, TriangleAlert } from "lucide-react";
+import { CircleHelp, Globe, PersonStanding, TriangleAlert } from "lucide-react";
 import { useEffect, useState } from "react";
 import { atributoLang, tradutor } from "../i18n";
 import { carregar, desatualizado, lerIndices, type Resultado } from "../lib/dados";
 import { formatarData, formatarDataHora } from "../lib/formato";
 import { lerPreferencias, salvarPreferencias, type Idioma } from "../lib/preferencias";
-import { mostraIndice, rota, rotaComEstado } from "../lib/telas";
+import { AJUDA, mostraIndice, rota, rotaComEstado } from "../lib/telas";
 import type { Indices } from "../lib/tipos";
 import JanelaTelegram, { DiscoTelegram } from "./JanelaTelegram";
 import PainelAcessibilidade from "./PainelAcessibilidade";
@@ -89,6 +89,15 @@ export default function Cabecalho({ lang, tela }: Props) {
         >
           <PersonStanding aria-hidden="true" />
         </button>
+        {/* Só no celular (estrutura.css): no desktop a Ajuda está no rail. */}
+        <a
+          className="hbtn ajudab"
+          href={rota(AJUDA.rota, lang)}
+          aria-label={t(AJUDA.nome)}
+          aria-current={tela === AJUDA.rota ? "page" : undefined}
+        >
+          <CircleHelp aria-hidden="true" />
+        </a>
         <p className="status">
           {!indices && t("Carregando os dados…")}
           {indices?.ok && (

@@ -146,6 +146,11 @@ export default function Cartilha({ lang }: Props) {
           <h1>{t("Deslizamento: como se proteger")}</h1>
           <p>{t("Em perigo agora? Saia do local e ligue {N}.", { N: EMERGENCIA })}</p>
           <p>{t("Aprenda a ver os sinais e o que fazer. É rápido: toque nos cartões.")}</p>
+          <p>
+            <a className="ajuda-link" href={rota("ajuda", lang)}>
+              {t("Como usar o VIGIA")}
+            </a>
+          </p>
         </div>
         <a className="sos" href={rota("contatos", lang)}>
           <Phone aria-hidden="true" />

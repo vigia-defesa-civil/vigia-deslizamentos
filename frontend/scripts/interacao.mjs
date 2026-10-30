@@ -162,6 +162,60 @@ for (const [w, h] of [
   await fechar();
 }
 
+// Ajuda: sem ID de vídeo, só as dicas (nenhuma área de vídeo, nada do YouTube); "?" no topo do celular,
+// item no rail do desktop e link no topo da Cartilha.
+for (const lang of ["", "es/", "en/"]) {
+  const contexto = await navegador.newContext({ viewport: { width: 1366, height: 900 } });
+  const externas = await soLocal(contexto, origem);
+  const p = await contexto.newPage();
+  await p.goto(origem + BASE + lang + "ajuda/", { waitUntil: "load" });
+  await p.waitForSelector(".ajuda h1", { timeout: 30_000 });
+  await p.waitForTimeout(300);
+  const r = await p.evaluate(() => ({
+    h1: document.querySelector(".ajuda h1")?.textContent ?? "",
+    secoes: document.querySelectorAll(".aj-sec").length,
+    video: document.querySelectorAll(".aj-video, iframe").length,
+    rail: !!document.querySelector('.rail .foot a[href$="/ajuda/"][aria-current="page"]'),
+    topo: getComputedStyle(document.querySelector(".hbtn.ajudab")).display,
+  }));
+  verificar(r.h1.length > 0 && r.secoes === 7, `Ajuda (${lang || "pt/"}) sem título ou sem as 7 seções de dicas: ${JSON.stringify(r)}`);
+  verificar(r.video === 0, `Ajuda (${lang || "pt/"}) com área de vídeo sem ID configurado`);
+  verificar(!externas.some((u) => /youtube|ytimg|googlevideo/.test(u)), `Ajuda (${lang || "pt/"}) pediu algo ao YouTube: ${externas.filter((u) => /youtube/.test(u)).join(", ")}`);
+  verificar(r.rail && r.topo === "none", `Ajuda no desktop (${lang || "pt/"}): item no rail ${r.rail}, "?" do topo ${r.topo}`);
+  await contexto.close();
+}
+for (const [w, h] of [
+  [320, 640],
+  [360, 780],
+  [393, 852],
+  [430, 932],
+]) {
+  for (const lang of ["", "es/"]) {
+    const { pagina: p, fechar } = await abrir(lang + "cartilha/", celular(w, h));
+    await p.waitForSelector(".hbtn.ajudab");
+    const r = await p.evaluate(() => {
+      const caixas = [".brand", ".tghdr", ".hdr .lang", ".a11yb", ".ajudab"].map((s) => [s, document.querySelector(s).getBoundingClientRect()]);
+      const topo = caixas[0][1].top;
+      const fora = caixas.filter(([, c]) => c.right > innerWidth || c.left < 0 || c.width === 0).map(([s]) => s);
+      const outraLinha = caixas.filter(([, c]) => c.top > topo + 30).map(([s]) => s);
+      const pares = [];
+      for (let i = 0; i < caixas.length; i++)
+        for (let j = i + 1; j < caixas.length; j++) {
+          const [a, ca] = caixas[i];
+          const [b, cb] = caixas[j];
+          if (ca.left < cb.right - 0.5 && cb.left < ca.right - 0.5 && ca.top < cb.bottom && cb.top < ca.bottom) pares.push(`${a}×${b}`);
+        }
+      const ajuda = document.querySelector(".ajudab");
+      const link = document.querySelector('#conteudo a[href$="/ajuda/"]');
+      return { fora, outraLinha, pares, nome: ajuda.getAttribute("aria-label"), href: ajuda.getAttribute("href"), cartilha: !!link && link.getBoundingClientRect().width > 0 };
+    });
+    verificar(r.fora.length === 0 && r.outraLinha.length === 0 && r.pares.length === 0, `topo a ${w} px (${lang || "pt/"}) com o "?": fora ${r.fora}, outra linha ${r.outraLinha}, sobrepostos ${r.pares}`);
+    verificar(!!r.nome && r.href?.endsWith("/ajuda/"), `"?" do topo sem nome ou sem link para a Ajuda a ${w} px (${lang || "pt/"})`);
+    verificar(r.cartilha, `Cartilha sem o link para a Ajuda a ${w} px (${lang || "pt/"})`);
+    await fechar();
+  }
+}
+
 // Movimento reduzido: o zoom por teclado (+/−), duplo clique e pinça também fica sem animação (o Leaflet só cria
 // o .leaflet-proxy com a animação de zoom ligada).
 for (const [reducao, animado] of [

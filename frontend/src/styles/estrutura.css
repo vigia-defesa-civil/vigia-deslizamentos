@@ -172,9 +172,16 @@ astro-island {
   padding: 0;
 }
 
-.hbtn.a11yb svg {
+.hbtn.a11yb svg,
+.hbtn.ajudab svg {
   width: 20px;
   height: 20px;
+}
+
+/* Ajuda: no desktop fica no rail (Menu); o "?" do topo é só do celular. */
+.hbtn.ajudab {
+  display: none;
+  padding: 0;
 }
 
 .tgdisc {
@@ -847,6 +854,10 @@ astro-island {
     display: none;
   }
 
+  .hbtn.ajudab {
+    display: flex;
+  }
+
   /* Os mapas medem a área visível do conteúdo (100cqh), já sem cabeçalho, aviso de dados e barra inferior. */
   #conteudo {
     container-type: size;
@@ -961,17 +972,23 @@ astro-island {
   }
 }
 
-/* Com PT, ES e EN o globo não cabe na primeira linha. */
-@media (max-width: 420px) {
+/* Com PT, ES, EN e o "?" da Ajuda, o globo não cabe na primeira linha. */
+@media (max-width: 460px) {
   .lang .lg {
     display: none;
+  }
+
+  /* Idiomas com 36 px (acima do mínimo de 24 px): o "?" da Ajuda cabe na primeira linha. */
+  .lang a {
+    min-width: 36px;
+    padding: 0 4px;
   }
 }
 
 @media (max-width: 380px) {
   .hdr {
     gap: 6px 4px;
-    padding: 8px 10px;
+    padding: 8px;
   }
 
   /* Com PT, ES e EN a primeira linha não cabia (o botão de acessibilidade descia): sai o círculo da marca e os
@@ -980,9 +997,14 @@ astro-island {
     display: none;
   }
 
-  .lang a {
+  /* Com o "?" da Ajuda, os botões do topo ficam com 40 px e os idiomas com 34 px (acima do mínimo de 24 px)
+     para caber numa linha. */
+  .hbtn {
     min-width: 40px;
-    padding: 0 4px;
+  }
+
+  .lang a {
+    min-width: 34px;
   }
 }
 
