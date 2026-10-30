@@ -35,11 +35,12 @@ URL_IBGE = "https://servicodados.ibge.gov.br/api/v1/localidades/microrregioes/{c
 COMMIT_MALHA = "c39dfb040bfd466fe2a476bafed00749c5c42f16"
 URL_MALHA = f"https://raw.githubusercontent.com/tbrugz/geodata-br/{COMMIT_MALHA}/geojson/geojs-42-mun.json"
 
-FONTE_LIMIAR_PROVISORIA = (
-    "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios "
+#: Parâmetro de demonstração escolhido pela equipe, não valor do GeoRisk nem do Cemaden (README › Limiar crítico).
+FONTE_LIMIAR_DEMONSTRACAO = (
+    "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios "
     "de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)"
 )
-LIMIAR_PROVISORIO_MM = 100
+LIMIAR_DEMONSTRACAO_MM = 100
 MV_H = 24
 TIMEOUT_S = 30
 
@@ -122,8 +123,8 @@ def mesclar(
             por_ibge[ibge] = {
                 "ibge": ibge,
                 "nome": bruto["nome"],
-                "limiar_mm": LIMIAR_PROVISORIO_MM,
-                "fonte_limiar": FONTE_LIMIAR_PROVISORIA,
+                "limiar_mm": LIMIAR_DEMONSTRACAO_MM,
+                "fonte_limiar": FONTE_LIMIAR_DEMONSTRACAO,
                 "mv_h": MV_H,
                 "pontos": [ponto_do_municipio(ibge, geometrias[ibge])],
                 "microrregiao": microrregiao,

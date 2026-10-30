@@ -8,7 +8,7 @@
       "ibge": "4206900",
       "nome": "Ibirama",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -156,7 +156,7 @@
       "ibge": "4214003",
       "nome": "Presidente Getúlio",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -304,7 +304,7 @@
       "ibge": "4209151",
       "nome": "José Boiteux",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -452,7 +452,7 @@
       "ibge": "4205100",
       "nome": "Dona Emma",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -600,7 +600,7 @@
       "ibge": "4219408",
       "nome": "Witmarsum",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -748,7 +748,7 @@
       "ibge": "4219358",
       "nome": "Vitor Meireles",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -896,7 +896,7 @@
       "ibge": "4200200",
       "nome": "Agrolândia",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -1044,7 +1044,7 @@
       "ibge": "4200309",
       "nome": "Agronômica",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -1192,7 +1192,7 @@
       "ibge": "4201802",
       "nome": "Atalanta",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -1340,7 +1340,7 @@
       "ibge": "4201901",
       "nome": "Aurora",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -1488,7 +1488,7 @@
       "ibge": "4202859",
       "nome": "Braço do Trombudo",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -1636,7 +1636,7 @@
       "ibge": "4204194",
       "nome": "Chapadão do Lageado",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -1784,7 +1784,7 @@
       "ibge": "4207403",
       "nome": "Imbuia",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -1932,7 +1932,7 @@
       "ibge": "4208500",
       "nome": "Ituporanga",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -2080,7 +2080,7 @@
       "ibge": "4209508",
       "nome": "Laurentino",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -2228,7 +2228,7 @@
       "ibge": "4209904",
       "nome": "Lontras",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -2376,7 +2376,7 @@
       "ibge": "4210852",
       "nome": "Mirim Doce",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -2524,7 +2524,7 @@
       "ibge": "4212700",
       "nome": "Petrolândia",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -2672,7 +2672,7 @@
       "ibge": "4213708",
       "nome": "Pouso Redondo",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -2820,7 +2820,7 @@
       "ibge": "4214102",
       "nome": "Presidente Nereu",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -2968,7 +2968,7 @@
       "ibge": "4214508",
       "nome": "Rio do Campo",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -3116,7 +3116,7 @@
       "ibge": "4214607",
       "nome": "Rio do Oeste",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -3264,7 +3264,7 @@
       "ibge": "4214805",
       "nome": "Rio do Sul",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -3412,7 +3412,7 @@
       "ibge": "4215307",
       "nome": "Salete",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -3560,7 +3560,7 @@
       "ibge": "4217808",
       "nome": "Taió",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -3708,7 +3708,7 @@
       "ibge": "4218608",
       "nome": "Trombudo Central",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
@@ -3856,7 +3856,7 @@
       "ibge": "4219200",
       "nome": "Vidal Ramos",
       "limiar_mm": 100,
-      "fonte_limiar": "VIGIA, limiar provisório de 100 mm definido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
       "mv_h": 24,
       "dias": [
         {
