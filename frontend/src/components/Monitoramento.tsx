@@ -207,7 +207,7 @@ function ListaVariaveis({ t, efr_mm, limiar_mm, razao, barra, n_membros }: { t: 
   const linhas: [string, string, boolean][] = [
     [t("Chuva efetiva antecedente"), `${formatarMm(efr_mm)} mm`, true],
     [t("Limiar crítico do município"), `${formatarMm(limiar_mm)} mm`, false],
-    [t("Razão chuva / limiar"), formatarRazao(razao), true],
+    [t("Chuva efetiva / limiar"), formatarRazao(razao), true],
     [t("Membros de ensemble"), String(n_membros), false],
   ];
   return (

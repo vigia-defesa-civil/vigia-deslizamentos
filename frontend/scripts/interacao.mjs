@@ -153,6 +153,15 @@ for (const [w, h] of [
   }
 }
 
+// Coerência entre telas: mesmos nomes para a mesma coisa.
+{
+  const { pagina: p, fechar } = await abrir("?municipio=4217808");
+  await p.waitForSelector(".side.r .vars");
+  const painel = await p.locator(".side.r").innerText();
+  verificar(painel.includes("Chuva efetiva / limiar") && !painel.includes("Razão chuva"), "Monitoramento não usa \"Chuva efetiva / limiar\", como a tela Dados");
+  await fechar();
+}
+
 // Contatos: sem nome do coordenador, a linha some (nada de "a confirmar" no ar).
 {
   const { pagina: p, fechar } = await abrir("contatos/");
