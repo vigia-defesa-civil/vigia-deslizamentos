@@ -52,7 +52,7 @@ export default function Previsoes({ lang, dias, d, aoMudar }: Props) {
     anunciar(t(tocando ? "Previsões pausadas" : "Reproduzindo as previsões"));
   }
 
-  // Até 900 px a lista fica recolhida num botão com a data (mapa.css); no desktop, sempre aberta.
+  // A lista começa recolhida num botão com a data (mapa.css), no desktop e no celular; escolher um dia fecha.
   function escolher(i: number) {
     ir(i);
     if (!aberta) return;

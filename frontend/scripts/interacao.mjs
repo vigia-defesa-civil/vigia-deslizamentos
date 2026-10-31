@@ -112,10 +112,21 @@ await caso("celular", async () => {
 
 // Desktop: a lista das Previsões fica sempre aberta, sem o botão.
 await caso("previsoes-desktop", async () => {
-  {
-    const { pagina: p, fechar } = await abrir("");
-    verificar((await p.locator(".prevs-lista").isVisible()) && !(await p.locator(".prevs-btn").isVisible()), "Previsões recolhidas no desktop");
-    verificar(await p.locator(".zoom").isVisible(), "zoom escondido no desktop");
+  // Desktop (1366 e 1920): Previsões começam recolhidas no botão com a data, como no celular.
+  for (const [w, h] of [
+    [1366, 768],
+    [1920, 1080],
+  ]) {
+    const { pagina: p, fechar } = await abrir("", { viewport: { width: w, height: h } });
+    const botao = p.locator(".prevs-btn");
+    const lista = p.locator(".prevs-lista");
+    verificar((await botao.isVisible()) && !(await lista.isVisible()), `Previsões não começam recolhidas a ${w} px`);
+    verificar(await p.locator(".zoom").isVisible(), `zoom escondido no desktop a ${w} px`);
+    await botao.click();
+    verificar((await lista.isVisible()) && (await botao.getAttribute("aria-expanded")) === "true", `Previsões não abrem ao clicar a ${w} px`);
+    await p.keyboard.press("Escape");
+    const foco = await p.evaluate(() => document.activeElement?.classList.contains("prevs-btn"));
+    verificar(!(await lista.isVisible()) && foco, `Esc não fecha as Previsões nem devolve o foco ao botão a ${w} px`);
     await fechar();
   }
 });
@@ -405,7 +416,7 @@ await caso("datas", async () => {
     const { pagina: p, fechar } = await abrir("?municipio=4217808", opcoes);
     await p.evaluate(() => [...document.querySelectorAll(".prevs input[type=radio]")][1]?.click());
     await p.waitForTimeout(200);
-    if (await p.locator(".prevs-btn").isVisible()) await p.locator(".prevs-btn").tap();
+    if (await p.locator(".prevs-btn").isVisible()) await p.locator(".prevs-btn").click();
     const textos = await p.evaluate(() =>
       [".prevs-lista", ".dayflag", ".side.r .bigsub"].map((s) => document.querySelector(s)?.textContent ?? ""),
     );
