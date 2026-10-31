@@ -1,5 +1,5 @@
 import "../styles/monitoramento.css";
-import { Check, CloudRain, Share2, TriangleAlert } from "lucide-react";
+import { Check, CloudRain, Share2, TriangleAlert, X } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { tradutor, type T } from "../i18n";
 import { emAlerta, infoClasse, type NumeroClasse } from "../lib/classes";
@@ -37,9 +37,20 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
     carregar("indices.json", lerIndices).then((r) => {
       setCarga(r);
       // ?municipio= vem dos links de Áreas de risco ("Ver o índice de {M} em Monitoramento").
-      if (r.ok) setSelecionado(selecaoDaBusca(r.dados, location.search, NOMES));
+      if (r.ok) setSelecionado(selecaoDaBusca(location.search, NOMES));
     });
   }, []);
+
+  // Esc fecha o painel do município, se nenhum menu aberto (Previsões, idioma, busca, diálogo) usar a tecla antes.
+  useEffect(() => {
+    if (!selecionado) return;
+    const esc = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || document.querySelector(".prevs.aberta, .lang.aberto, .busca.open, dialog[open]")) return;
+      fecharPainel();
+    };
+    document.addEventListener("keydown", esc);
+    return () => document.removeEventListener("keydown", esc);
+  });
 
   useEffect(() => {
     if (!toast) return;
@@ -62,6 +73,16 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
     history.replaceState(null, "", `${location.pathname}?${q}${location.hash}`);
     anunciar(mensagemSelecao(t, nome(ibge), valores[ibge]));
   };
+
+  // Sem município, sem painel: o mapa volta a ocupar a largura toda. O foco que estava no painel vai para o mapa.
+  function fecharPainel() {
+    const noPainel = !!document.activeElement?.closest(".mon .side.r");
+    setSelecionado(undefined);
+    const q = new URLSearchParams(location.search);
+    q.delete("municipio");
+    history.replaceState(null, "", `${location.pathname}${q.size ? `?${q}` : ""}${location.hash}`);
+    if (noPainel) document.querySelector<HTMLElement>(".mon .mapa")?.focus();
+  }
 
   async function compartilhar(texto: string, aviso: string) {
     const url = location.href;
@@ -116,6 +137,7 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
           d={d}
           aoCompartilhar={compartilhar}
           aoTelegram={() => setTelegram(true)}
+          aoFechar={fecharPainel}
         />
       )}
       <JanelaTelegram lang={lang} aberto={telegram} aoFechar={() => setTelegram(false)} ibge={selecionado} />
@@ -132,15 +154,19 @@ interface PropsPainel {
   d: number;
   aoCompartilhar: (texto: string, aviso: string) => void;
   aoTelegram: () => void;
+  aoFechar: () => void;
 }
 
-function Painel({ t, lang, indices, ibge, nome, d, aoCompartilhar, aoTelegram }: PropsPainel) {
+function Painel({ t, lang, indices, ibge, nome, d, aoCompartilhar, aoTelegram, aoFechar }: PropsPainel) {
   const estado = estadoMunicipio(indices, ibge);
   const municipio = estado.estado === "ok" ? estado.municipio : undefined;
   const dia = municipio?.dias.find((x) => x.d === d);
 
   return (
     <aside className="side r" aria-label={t("Município selecionado")}>
+      <button type="button" className="fechar" aria-label={t("Fechar o painel de {M}", { M: nome })} title={t("Fechar")} onClick={aoFechar}>
+        <X aria-hidden="true" />
+      </button>
       <div>
         <span className="lbl">{t("Município selecionado")}</span>
         <h2 className="mname">{nome}</h2>

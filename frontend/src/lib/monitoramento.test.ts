@@ -41,11 +41,11 @@ describe("variaveis", () => {
 describe("selecaoDaBusca", () => {
   const conhecidos = new Map([["4214805", "Rio do Sul"]]);
   it("mantém município conhecido, mesmo sem dados", () => {
-    expect(selecaoDaBusca(indices, "?municipio=4214805", conhecidos)).toBe("4214805");
+    expect(selecaoDaBusca("?municipio=4214805", conhecidos)).toBe("4214805");
   });
-  it("desconhecido ou ausente: município inicial", () => {
-    expect(selecaoDaBusca(indices, "?municipio=1", conhecidos)).toBe("4214003");
-    expect(selecaoDaBusca(indices, "", conhecidos)).toBe("4214003");
+  it("desconhecido ou ausente: nenhum selecionado (o site abre com o mapa inteiro)", () => {
+    expect(selecaoDaBusca("?municipio=1", conhecidos)).toBeUndefined();
+    expect(selecaoDaBusca("", conhecidos)).toBeUndefined();
   });
 });
 

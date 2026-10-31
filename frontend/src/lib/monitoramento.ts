@@ -47,10 +47,13 @@ export function variaveis(m: Pick<Municipio, "limiar_mm">, dia: Pick<Dia, "efr_m
   return { efr_mm: dia.efr_mm, limiar_mm: m.limiar_mm, razao, barra: Math.min(100, razao * 100), n_membros: dia.n_membros };
 }
 
-/** `?municipio=<ibge>` se é um município conhecido (com ou sem índice); senão, o inicial. */
-export function selecaoDaBusca(indices: Indices, busca: string, conhecidos: ReadonlyMap<string, string>): string | undefined {
+/**
+ * `?municipio=<ibge>` se é um município conhecido (com ou sem índice). Sem o parâmetro (ou desconhecido), nenhum:
+ * o site abre com o mapa inteiro e sem painel, e não lembra o último município entre visitas.
+ */
+export function selecaoDaBusca(busca: string, conhecidos: ReadonlyMap<string, string>): string | undefined {
   const ibge = new URLSearchParams(busca).get("municipio");
-  return ibge && conhecidos.has(ibge) ? ibge : municipioInicial(indices);
+  return ibge && conhecidos.has(ibge) ? ibge : undefined;
 }
 
 /** RN11: data e hora da última atualização (`gerado_em`), no horário de Brasília. */

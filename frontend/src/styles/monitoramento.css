@@ -9,7 +9,37 @@
 }
 
 .side.r {
+  position: relative;
   width: 330px;
+}
+
+/* Fecha o painel (também com Esc): o mapa volta a ocupar a largura toda. */
+.side.r .fechar {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--muted);
+}
+
+.side.r .fechar:hover {
+  background: var(--surface-050);
+  color: var(--ink);
+}
+
+.side.r .fechar svg {
+  width: 20px;
+  height: 20px;
+}
+
+.side.r .mname {
+  padding-right: 40px;
 }
 
 .mname {

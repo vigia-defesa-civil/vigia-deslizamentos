@@ -152,6 +152,9 @@ await caso("rotulos", async () => {
       const p = await contexto.newPage();
       await p.goto(origem + BASE, { waitUntil: "load" });
       await p.waitForSelector(".mapa .mun");
+      // Mede o estado assentado: fontes carregadas (mudam a largura dos rótulos) e rede parada.
+      await p.evaluate(() => document.fonts.ready);
+      await p.waitForLoadState("networkidle");
       await p.waitForTimeout(500);
       const sobrepostos = () =>
         p.evaluate(() => {
@@ -184,7 +187,7 @@ await caso("rotulos", async () => {
 // limpa o resultado, volta o mapa para "Agora" e avisa o leitor de tela.
 await caso("simulacao", async () => {
   {
-    const { pagina: p, fechar } = await abrir("simulacao/?municipio=4211058");
+    const { pagina: p, fechar } = await abrir("simulacao/?municipio=4210852");
     await p.waitForSelector(".sim .go .btn.pri");
     await p.waitForTimeout(300);
     const estado = () =>
@@ -317,6 +320,61 @@ await caso("topo", async () => {
       await fechar();
     }
   }
+});
+
+// Abertura: sem ?municipio=, nenhum município selecionado e sem painel (o mapa ocupa a largura); o painel abre ao
+// clicar e fecha com X e Esc; ?municipio= continua abrindo com o município; a Simulação não escolhe sozinha.
+await caso("abertura", async () => {
+  const estado = (p) =>
+    p.evaluate(() => {
+      const mapa = document.querySelector(".mon .mapwrap")?.getBoundingClientRect();
+      const conteudo = document.querySelector("#conteudo")?.getBoundingClientRect();
+      return {
+        painel: !!document.querySelector(".mon .side.r"),
+        selecionado: document.querySelectorAll(".mapa .mun.sel").length,
+        larguraToda: !!mapa && !!conteudo && Math.abs(mapa.width - conteudo.width) < 2,
+        url: location.search,
+      };
+    });
+  for (const [nome, opcoes] of [
+    ["1366", { viewport: { width: 1366, height: 768 } }],
+    ["393", celular(393, 852)],
+  ]) {
+    const { pagina: p, fechar } = await abrir("", opcoes);
+    const r = await estado(p);
+    verificar(!r.painel && r.selecionado === 0 && r.larguraToda, `abertura a ${nome} px com município ou painel: ${JSON.stringify(r)}`);
+    await fechar();
+  }
+  const { pagina: p, fechar } = await abrir("");
+  await p.locator('path.mun[aria-label*="Taió"]').click();
+  await p.waitForTimeout(200);
+  const aberto = await estado(p);
+  verificar(aberto.painel && aberto.selecionado === 1 && aberto.url.includes("municipio="), `clicar num município não abriu o painel: ${JSON.stringify(aberto)}`);
+  const x = p.locator(".mon .side.r .fechar");
+  if (await x.count()) await x.click();
+  await p.waitForTimeout(200);
+  const fechouX = await estado(p);
+  verificar(!fechouX.painel && fechouX.selecionado === 0 && fechouX.larguraToda && !fechouX.url.includes("municipio="), `o X não fechou o painel: ${JSON.stringify(fechouX)}`);
+  await p.locator('path.mun[aria-label*="Taió"]').click();
+  await p.waitForTimeout(200);
+  await p.keyboard.press("Escape");
+  await p.waitForTimeout(200);
+  const fechouEsc = await estado(p);
+  verificar(!fechouEsc.painel && fechouEsc.selecionado === 0, `Esc não fechou o painel: ${JSON.stringify(fechouEsc)}`);
+  await fechar();
+  const { pagina: q, fechar: fecharQ } = await abrir("?municipio=4217808");
+  const link = await estado(q);
+  verificar(link.painel && link.selecionado === 1, `?municipio= não abriu o município: ${JSON.stringify(link)}`);
+  await fecharQ();
+  const { pagina: s, fechar: fecharS } = await abrir("simulacao/");
+  await s.waitForSelector("#sim-mun");
+  const sim = await s.evaluate(() => ({
+    valor: document.querySelector("#sim-mun").value,
+    selecionado: document.querySelectorAll(".mapa .mun.sel").length,
+    simular: document.querySelector(".sim .go .btn.pri").disabled,
+  }));
+  verificar(sim.valor === "" && sim.selecionado === 0 && sim.simular, `Simulação abre com município escolhido: ${JSON.stringify(sim)}`);
+  await fecharS();
 });
 
 // Coerência entre telas: mesmos nomes para a mesma coisa.
