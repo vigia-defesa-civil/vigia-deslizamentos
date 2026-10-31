@@ -22,8 +22,10 @@ A barra inferior do celular já tem 6 itens e cabe justa em 320 px (medido em PT
 ## Conteúdo
 
 1. **Título e uma frase:** "Como usar o VIGIA". O VIGIA é um sistema acadêmico de apoio à decisão e não emite alerta oficial (RN04).
-2. **Vídeo tutorial (opcional), no topo:**
-   - Capa estática do próprio site (imagem local com o botão "Assistir ao tutorial (N min)"). Nada do YouTube carrega antes do clique.
+2. **Quadro do vídeo tutorial, sempre no topo (revisão de 31/10/2026):**
+   - Quadro 16:9 com a capa `frontend/public/ajuda/capa-mapa.jpg`, uma captura do próprio mapa do VIGIA, sem os tiles do mapa base (só os polígonos do projeto, sem crédito de terceiros).
+   - **Sem ID ou sem transcrição:** a capa mostra o ▶ e "Vídeo tutorial em produção", sem nada para clicar.
+   - **Com ID e transcrição:** a capa vira o botão "Assistir ao tutorial". Nada do YouTube carrega antes do clique. Abaixo do quadro, o link "Legendas e transcrição" leva ao texto.
    - Ao clicar, troca a capa por um `<iframe>` de `https://www.youtube-nocookie.com/embed/<ID>?cc_load_policy=1&hl=<idioma>&cc_lang_pref=<idioma>&rel=0`. Assim, nenhum cookie de terceiro entra antes do consentimento por ação do usuário (RNF05).
    - Legendas em PT, ES e EN no próprio vídeo (`cc_load_policy=1` liga as legendas por padrão).
    - **Transcrição** em texto logo abaixo, num `<details>` aberto por padrão, no idioma da página (WCAG 1.2.1 e 1.2.2).
@@ -40,9 +42,8 @@ A barra inferior do celular já tem 6 itens e cabe justa em 320 px (medido em PT
 
 ## Configuração do vídeo
 
-- `frontend/src/lib/config.ts` ganha `ajuda.videoId: string`, vazio (`""`) por padrão. O valor vem de `PUBLIC_AJUDA_VIDEO_ID`, sem segredo (RNF06).
-- **`videoId` vazio:** a página não renderiza a área do vídeo nem a transcrição. Não sobra caixa vazia nem texto do tipo "em breve". O título vem seguido das dicas.
-- Transcrições: `frontend/src/conteudo/ajuda/transcricao.{pt,es,en}.md`. Só aparecem com `videoId` preenchido.
+- **Onde fica o ID:** a constante `VIDEO_AJUDA_ID` em `frontend/src/lib/config.ts`, vazia (`""`) por padrão. É o trecho depois de `watch?v=` no link do YouTube. A variável `PUBLIC_AJUDA_VIDEO_ID`, se definida no build, vale por cima. Não é segredo (RNF06).
+- **Transcrições:** `frontend/src/conteudo/ajuda/transcricao.{pt,es,en}.md`, texto simples, um parágrafo por bloco. O vídeo só fica clicável com o ID **e** a transcrição do idioma (WCAG 1.2.1); sem um dos dois, o quadro mostra "Vídeo tutorial em produção".
 
 ## Requisitos
 

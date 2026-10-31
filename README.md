@@ -315,7 +315,7 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 | Áreas de risco | `/areas-de-risco` | Setores de risco geológico do SGB e ocorrências por município; estações do INMET como camada opcional |
 | Cartilha | `/cartilha` | Sinais de perigo, o que fazer antes/durante/depois, mochila de emergência, "não faça". Cada seção cita suas fontes oficiais: Defesa Civil Nacional (MDR), Serviço Geológico do Brasil (SGB), Defesa Civil de SC, Ministério das Comunicações, Defesa Civil do Paraná e SP Sempre Alerta |
 | Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e Defesa Civil de cada município |
-| Ajuda | `/ajuda` | Dicas de uso de cada tela e do bot; vídeo tutorial (opcional, carregado só ao clicar) com legendas e transcrição. Fica no rail do desktop e no "?" do topo no celular, fora da barra inferior |
+| Ajuda | `/ajuda` | Quadro do vídeo tutorial no topo (capa do mapa; carrega só ao clicar, com legendas e transcrição) e dicas de uso de cada tela e do bot. Fica no rail do desktop e no "?" do topo no celular, fora da barra inferior |
 
 Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram".
 
@@ -341,7 +341,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RF11** — Levar o usuário ao bot do Telegram, onde ele escolhe os municípios (`/start`), consulta a situação (`/status`) e cancela (`/parar`).
 - **RF12** — Enviar aviso aos inscritos quando um município atingir índice ≥ 1,00.
 - **RF13** — Oferecer português, espanhol e inglês, tema claro ou escuro (sem escolha, segue o sistema) e paleta de cores para daltonismo, lembrando a escolha do usuário.
-- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo só é carregado (via youtube-nocookie.com) quando o usuário pede; sem o ID do vídeo (`PUBLIC_AJUDA_VIDEO_ID`) ou sem a transcrição, a página mostra só as dicas.
+- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo só é carregado (via youtube-nocookie.com) quando o usuário pede; sem o ID do vídeo (`VIDEO_AJUDA_ID` em `frontend/src/lib/config.ts`) ou sem a transcrição, o quadro mostra a capa com "Vídeo tutorial em produção".
 
 ### Requisitos não funcionais
 

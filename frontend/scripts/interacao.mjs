@@ -343,12 +343,29 @@ await caso("ajuda", async () => {
     const r = await p.evaluate(() => ({
       h1: document.querySelector(".ajuda h1")?.textContent ?? "",
       secoes: document.querySelectorAll(".aj-sec").length,
-      video: document.querySelectorAll(".aj-video, iframe").length,
+      // Sem ID: quadro 16:9 com a capa e "em produção", sem botão nem iframe.
+      quadro: (() => {
+        const q = document.querySelector(".aj-quadro");
+        if (!q) return null;
+        const c = q.getBoundingClientRect();
+        const img = q.querySelector("img");
+        return {
+          proporcao: Math.round((c.width / c.height) * 100) / 100,
+          capa: !!img && img.complete && img.naturalWidth > 0,
+          texto: q.textContent.trim(),
+          interativo: q.querySelectorAll("button, iframe, a").length,
+          noTopo: !!document.querySelector(".ajuda .aj-top + .aj-video"),
+        };
+      })(),
       rail: !!document.querySelector('.rail .foot a[href$="/ajuda/"][aria-current="page"]'),
       topo: getComputedStyle(document.querySelector(".hbtn.ajudab")).display,
     }));
     verificar(r.h1.length > 0 && r.secoes === 7, `Ajuda (${lang || "pt/"}) sem título ou sem as 7 seções de dicas: ${JSON.stringify(r)}`);
-    verificar(r.video === 0, `Ajuda (${lang || "pt/"}) com área de vídeo sem ID configurado`);
+    const EM_PRODUCAO = { "": "Vídeo tutorial em produção", "es/": "Video tutorial en producción", "en/": "Video tutorial in production" }[lang];
+    verificar(
+      !!r.quadro && Math.abs(r.quadro.proporcao - 1.78) < 0.03 && r.quadro.capa && r.quadro.texto.includes(EM_PRODUCAO) && r.quadro.interativo === 0 && r.quadro.noTopo,
+      `Ajuda (${lang || "pt/"}) sem o quadro 16:9 "em produção" no topo: ${JSON.stringify(r.quadro)}`,
+    );
     verificar(!externas.some((u) => /youtube|ytimg|googlevideo/.test(u)), `Ajuda (${lang || "pt/"}) pediu algo ao YouTube: ${externas.filter((u) => /youtube/.test(u)).join(", ")}`);
     verificar(r.rail && r.topo === "none", `Ajuda no desktop (${lang || "pt/"}): item no rail ${r.rail}, "?" do topo ${r.topo}`);
     await contexto.close();

@@ -8,12 +8,13 @@ import type { Idioma } from "../lib/preferencias";
 import { rota } from "../lib/telas";
 
 const URL_README = "https://github.com/vigia-defesa-civil/vigia-deslizamentos#readme";
+const CAPA = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}ajuda/capa-mapa.jpg`;
 
 // Transcrição do vídeo por idioma (texto simples, um parágrafo por bloco). Vazia: o vídeo não entra (WCAG 1.2.1).
 const TRANSCRICOES = import.meta.glob<string>("../conteudo/ajuda/transcricao.*.md", { query: "?raw", import: "default", eager: true });
 const transcricao = (lang: Idioma) => TRANSCRICOES[`../conteudo/ajuda/transcricao.${lang}.md`] ?? "";
 
-/** Página de Ajuda: vídeo tutorial (só com ID e transcrição) e dicas de uso de cada tela. */
+/** Página de Ajuda: o quadro do vídeo tutorial no topo e as dicas de uso de cada tela. */
 export default function Ajuda({ lang, videoId = videoAjuda() }: { lang: Idioma; videoId?: string }) {
   const t = tradutor(lang);
   const texto = transcricao(lang);
@@ -24,7 +25,7 @@ export default function Ajuda({ lang, videoId = videoAjuda() }: { lang: Idioma; 
         <h1>{t("Como usar o VIGIA")}</h1>
         <p>{t("O VIGIA é um sistema acadêmico de apoio à decisão. Não emite alerta oficial e não substitui o Cemaden nem a Defesa Civil.")}</p>
       </header>
-      {mostrarVideo(videoId, texto) && <Video t={t} lang={lang} id={videoId} transcricao={texto} />}
+      <Video t={t} lang={lang} id={videoId} transcricao={texto} />
       <section className="aj-dicas" aria-labelledby="aj-dicas-t">
         <h2 id="aj-dicas-t" className="sr-only">
           {t("Dicas de uso")}
@@ -63,10 +64,14 @@ export default function Ajuda({ lang, videoId = videoAjuda() }: { lang: Idioma; 
   );
 }
 
-/** Capa local com botão; o player do YouTube (sem cookies) só carrega depois do clique (RNF05). */
+/**
+ * Quadro 16:9 com a capa (o mapa do VIGIA). Sem ID ou sem transcrição: "Vídeo tutorial em produção", sem nada para
+ * clicar. Com os dois: botão ▶; o player do YouTube (sem cookies) só carrega depois do clique (RNF05).
+ */
 function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; transcricao: string }) {
   const [tocando, setTocando] = useState(false);
   const quadro = useRef<HTMLIFrameElement>(null);
+  const pronto = mostrarVideo(id, transcricao);
   useEffect(() => {
     if (tocando) quadro.current?.focus();
   }, [tocando]);
@@ -74,7 +79,14 @@ function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; t
     <section className="aj-video" aria-labelledby="aj-video-t">
       <h2 id="aj-video-t">{t("Tutorial em vídeo")}</h2>
       <div className="aj-quadro">
-        {tocando ? (
+        {!tocando && <img className="aj-capa-img" src={CAPA} alt="" width={1205} height={677} loading="eager" decoding="async" />}
+        {!pronto ? (
+          <div className="aj-capa aj-producao">
+            <CirclePlay aria-hidden="true" />
+            <b>{t("Vídeo tutorial em produção")}</b>
+            <small>{t("Enquanto isso, as dicas abaixo mostram como usar cada tela.")}</small>
+          </div>
+        ) : tocando ? (
           <iframe
             ref={quadro}
             src={urlDoVideo(id, lang)}
@@ -91,12 +103,19 @@ function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; t
           </button>
         )}
       </div>
-      <details className="aj-transcricao" open>
-        <summary>{t("Transcrição do vídeo")}</summary>
-        {paragrafos(transcricao).map((p) => (
-          <p key={p}>{p}</p>
-        ))}
-      </details>
+      {pronto && (
+        <>
+          <p className="aj-legendas">
+            <a href="#aj-transcricao">{t("Legendas e transcrição")}</a>
+          </p>
+          <details id="aj-transcricao" className="aj-transcricao" open>
+            <summary>{t("Transcrição do vídeo")}</summary>
+            {paragrafos(transcricao).map((p) => (
+              <p key={p}>{p}</p>
+            ))}
+          </details>
+        </>
+      )}
     </section>
   );
 }

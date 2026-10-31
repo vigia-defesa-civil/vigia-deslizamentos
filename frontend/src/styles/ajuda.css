@@ -32,11 +32,35 @@
 }
 
 .aj-quadro {
+  position: relative;
   max-width: 720px;
   aspect-ratio: 16 / 9;
   border-radius: 12px;
   overflow: hidden;
   background: var(--nav-900);
+}
+
+/* Capa: o mapa do VIGIA, escurecido para o texto por cima ter contraste. */
+.aj-capa-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+}
+
+.aj-legendas {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.aj-legendas a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  font-weight: 600;
+  color: var(--ink-brand);
 }
 
 .aj-quadro iframe {
@@ -47,6 +71,7 @@
 }
 
 .aj-capa {
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import EN from "../i18n/en.json";
 import ES from "../i18n/es.json";
 import { mostrarVideo, paragrafos, SECOES_AJUDA, urlDoVideo } from "./ajuda";
-import { videoAjuda } from "./config";
+import { VIDEO_AJUDA_ID, videoAjuda } from "./config";
 import { TELAS } from "./telas";
 
 describe("página de Ajuda", () => {
@@ -31,7 +31,8 @@ describe("página de Ajuda", () => {
     expect(paragrafos("<!-- nota -->\n\nPrimeiro\nainda o primeiro.\n\n\nSegundo.\n")).toEqual(["Primeiro ainda o primeiro.", "Segundo."]);
   });
 
-  it("o ID do vídeo começa vazio na configuração", () => {
+  it("o ID do vídeo começa vazio na configuração (VIDEO_AJUDA_ID) e a variável de build vale por cima", () => {
+    expect(VIDEO_AJUDA_ID).toBe("");
     expect(videoAjuda(undefined)).toBe("");
     expect(videoAjuda(" abc ")).toBe("abc");
   });

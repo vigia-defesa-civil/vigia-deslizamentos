@@ -16,5 +16,11 @@ export const botTelegram = (nome: string | undefined = import.meta.env.PUBLIC_TE
 export const linkTelegram = (bot: string, ibge?: string): string =>
   `https://t.me/${bot}${ibge ? `?start=${ibge}` : ""}`;
 
-/** ID do vídeo tutorial da página de Ajuda (PUBLIC_AJUDA_VIDEO_ID). Vazio: a página mostra só as dicas. */
-export const videoAjuda = (id: string | undefined = import.meta.env.PUBLIC_AJUDA_VIDEO_ID): string => (id ?? "").trim();
+/**
+ * ID do vídeo tutorial da página de Ajuda (o trecho depois de "watch?v=" no YouTube). Preencha aqui quando o vídeo
+ * for publicado, junto com a transcrição em src/conteudo/ajuda/transcricao.{pt,es,en}.md. Vazio, a Ajuda mostra
+ * a capa com "Vídeo tutorial em produção". PUBLIC_AJUDA_VIDEO_ID, se definida no build, vale por cima.
+ */
+export const VIDEO_AJUDA_ID = "";
+
+export const videoAjuda = (id: string | undefined = import.meta.env.PUBLIC_AJUDA_VIDEO_ID): string => (id || VIDEO_AJUDA_ID).trim();
