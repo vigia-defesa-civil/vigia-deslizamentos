@@ -476,5 +476,13 @@
 "O painel oficial da Defesa Civil de SC abre em nova aba.": "The official SC Civil Defense dashboard opens in a new tab.",
 "No bot, /start escolhe os municípios, /status mostra a situação e /parar cancela.": "In the bot, /start picks the municipalities, /status shows the situation and /parar cancels.",
 "O bot guarda só o identificador do chat e os municípios escolhidos, e apaga tudo com /parar.": "The bot stores only the chat ID and the chosen municipalities, and deletes everything with /parar.",
-"Os valores mudaram. Simule de novo para ver o resultado.": "The values changed. Simulate again to see the result."
+"Os valores mudaram. Simule de novo para ver o resultado.": "The values changed. Simulate again to see the result.",
+"Telefone geral da prefeitura": "City hall main phone",
+"Defesa Civil municipal": "Municipal Civil Defense",
+"Emergência": "Emergency",
+"site oficial": "official website",
+"consultado em {N}": "checked on {N}",
+"Como chegar ao endereço de {M} no Google Maps (abre em nova aba)": "Directions to the {M} address on Google Maps (opens in new tab)",
+"Copiar telefone de {M}": "Copy {M} phone number",
+"Contatos sem o selo Verificado vêm do site oficial da prefeitura ou da Defesa Civil municipal, na data indicada. Confira antes de ir.": "Contacts without the Verified badge come from the official city hall or municipal Civil Defense website, on the date shown. Check before you go."
 }

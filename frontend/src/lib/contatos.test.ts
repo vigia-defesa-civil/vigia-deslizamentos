@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import contatos from "../fixtures/contatos.exemplo.json";
 import { tradutor } from "../i18n";
 import { lerContatos } from "./dados";
-import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, urlComoChegar } from "./contatos";
+import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, mostraEmergencia, urlComoChegar } from "./contatos";
 
 const pt = tradutor("pt");
 const verificados = (() => {
@@ -45,6 +45,15 @@ describe("links de telefone e site", () => {
   it("site sem esquema ganha https://", () => {
     expect(hrefSite("www.defesacivilibirama.com.br")).toBe("https://www.defesacivilibirama.com.br");
     expect(hrefSite("http://exemplo.sc.gov.br")).toBe("http://exemplo.sc.gov.br");
+  });
+});
+
+describe("números de emergência no cartão", () => {
+  it("aparecem quando o cartão não tem telefone da própria Defesa Civil", () => {
+    expect(mostraEmergencia({ ...ibirama, verificado: false, telefone_de: "prefeitura" })).toBe(true);
+    expect(mostraEmergencia({ ...ibirama, verificado: false, telefone: null, telefone_de: null })).toBe(true);
+    expect(mostraEmergencia({ ...ibirama, verificado: false, telefone_de: "defesa_civil" })).toBe(false);
+    expect(mostraEmergencia(ibirama)).toBe(false);
   });
 });
 

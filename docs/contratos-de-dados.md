@@ -170,7 +170,7 @@ Estações automáticas do INMET na região, geradas uma vez por script (`backen
 
 ## `frontend/public/data/contatos.json`
 
-Contatos da Defesa Civil de cada município, levantados com as prefeituras e versionados. O site só exibe os itens com `verificado: true`. A raiz é uma lista de objetos:
+Contatos de cada município, versionados. O site exibe os itens com `verificado: true` (confirmados com a prefeitura) e os que trazem `fonte` e `consultado_em` (tirados do site oficial, RN09); os demais ficam de fora. A raiz é uma lista de objetos:
 
 | Campo | Tipo | Descrição |
 |---|---|---|
@@ -181,7 +181,10 @@ Contatos da Defesa Civil de cada município, levantados com as prefeituras e ver
 | `telefone` | string ou nulo | Telefone de exibição, ex.: "(47) 98838-5645" |
 | `email` | string ou nulo | E-mail |
 | `endereco` | string ou nulo | Endereço completo, usado no "Como chegar" |
-| `site` | string ou nulo | Site da prefeitura, exibido quando não há telefone |
+| `site` | string ou nulo | Site da prefeitura ou da Defesa Civil municipal |
+| `fonte` | string ou nulo | Página oficial (https, `*.sc.gov.br` ou `*.atende.net`) de onde vieram os dados; obrigatória sem `verificado` |
+| `consultado_em` | data ou nulo | Dia da consulta à fonte (`AAAA-MM-DD`); obrigatória sem `verificado` |
+| `telefone_de` | `"defesa_civil"`, `"prefeitura"` ou nulo | De quem é o telefone. Sem telefone da Defesa Civil, o cartão mostra também o 199 e o 193 |
 
 ## `bot.json`
 

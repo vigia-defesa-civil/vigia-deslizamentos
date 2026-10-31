@@ -1,4 +1,5 @@
 import { urlDados } from "./config";
+import { dataValida } from "./periodo";
 import type { Contato, Dia, Estacao, Indices, Municipio, Ocorrencia } from "./tipos";
 
 // Em execução só se confere schema_version e a presença dos campos usados;
@@ -70,7 +71,9 @@ export const lerEstacoes = (json: unknown) => lerLista<Estacao>(json, CAMPOS_EST
 /** Só os contatos confirmados com a prefeitura (RN09). */
 export function lerContatos(json: unknown): Resultado<Contato[]> {
   const r = lerLista<Contato>(json, CAMPOS_CONTATO, "contatos.json");
-  return r.ok ? { ok: true, dados: r.dados.filter((c) => c.verificado === true) } : r;
+  // RN09: verificado com a prefeitura, ou com a página oficial de onde veio e a data da consulta.
+  const temFonte = (c: Contato) => typeof c.fonte === "string" && c.fonte !== "" && dataValida(c.consultado_em);
+  return r.ok ? { ok: true, dados: r.dados.filter((c) => c.verificado === true || temFonte(c)) } : r;
 }
 
 /** RNF04: mais de 12 h desde `gerado_em` (aviso de dados desatualizados). */

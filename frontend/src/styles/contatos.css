@@ -259,6 +259,21 @@
   align-self: flex-start;
 }
 
+/* RN09: de onde veio o contato e quando foi consultado. */
+.cfonte {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cfonte a {
+  color: var(--ink-brand);
+}
+
+.cc dd.emerg-cc {
+  font-size: 14px;
+}
+
 .cnote {
   font-size: 12px;
   color: var(--muted);

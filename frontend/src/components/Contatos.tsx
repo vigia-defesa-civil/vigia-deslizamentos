@@ -2,7 +2,8 @@ import "../styles/contatos.css";
 import { Bell, Copy, ExternalLink, Globe, Mail, MapPin, MessageCircle, Phone, Route, User } from "lucide-react";
 import { useEffect, useState, type ChangeEvent } from "react";
 import { tradutor } from "../i18n";
-import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, urlComoChegar } from "../lib/contatos";
+import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, mostraEmergencia, urlComoChegar } from "../lib/contatos";
+import { formatarData } from "../lib/formato";
 import { carregar, lerContatos, type Resultado } from "../lib/dados";
 import type { Idioma } from "../lib/preferencias";
 import type { Contato } from "../lib/tipos";
@@ -27,7 +28,7 @@ const URL_PAINEL_SC = "https://monitoramento.defesacivil.sc.gov.br/mapa";
 
 const semMovimento = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/** Contatos (RF12): números de emergência e a Defesa Civil de cada município (só verificados, RN09). */
+/** Contatos (RF12): números de emergência e o contato de cada município, verificado ou do site oficial com a fonte (RN09). */
 export default function Contatos({ lang, municipios }: Props) {
   const t = tradutor(lang);
   const [carga, setCarga] = useState<Resultado<Contato[]>>();
@@ -135,12 +136,13 @@ export default function Contatos({ lang, municipios }: Props) {
 
       <div className="cgrid">
         {contatos.map((c) => {
-          const whatsapp = c.telefone ? hrefWhatsApp(c.telefone) : null;
+          // WhatsApp só em número verificado com a prefeitura: nos demais não se sabe se o celular tem WhatsApp.
+          const whatsapp = c.verificado && c.telefone ? hrefWhatsApp(c.telefone) : null;
           return (
             <article key={c.ibge} id={`cc-${c.ibge}`} className={filtro.esmaecidos.includes(c.ibge) ? "cc dim" : "cc"} aria-labelledby={`cc-t-${c.ibge}`}>
               <h2 id={`cc-t-${c.ibge}`}>
                 {c.nome}
-                <span className="tag ok">{t("verificado")}</span>
+                {c.verificado && <span className="tag ok">{t("verificado")}</span>}
               </h2>
               <dl>
                 {/* Sem nome confirmado, a linha inteira sai: nada de "a confirmar" no ar. */}
@@ -166,6 +168,7 @@ export default function Contatos({ lang, municipios }: Props) {
                       <a className="ph" href={hrefTelefone(c.telefone)}>
                         {c.telefone}
                       </a>
+                      <small>{t(c.telefone_de === "prefeitura" ? "Telefone geral da prefeitura" : "Defesa Civil municipal")}</small>
                     </dd>
                   </>
                 )}
@@ -189,8 +192,24 @@ export default function Contatos({ lang, municipios }: Props) {
                     <dd>{c.endereco}</dd>
                   </>
                 )}
-                {/* Com telefone, o botão do site dá lugar ao WhatsApp (celular) ou ao "Copiar telefone" (fixo): o site fica na lista. */}
-                {c.telefone && c.site && (
+                {mostraEmergencia(c) && (
+                  <>
+                    <dt>
+                      <Phone aria-hidden="true" />
+                      <span className="sr-only">{t("Emergência")}</span>
+                    </dt>
+                    <dd className="emerg-cc">
+                      <a className="ph" href="tel:199">
+                        199
+                      </a>{" "}
+                      {t("Defesa Civil")} · <a className="ph" href="tel:193">
+                        193
+                      </a>{" "}
+                      {t("Bombeiros")}
+                    </dd>
+                  </>
+                )}
+                {c.site && (
                   <>
                     <dt>
                       <Globe aria-hidden="true" />
@@ -211,7 +230,11 @@ export default function Contatos({ lang, municipios }: Props) {
                   href={urlComoChegar(c)}
                   target="_blank"
                   rel="noopener"
-                  aria-label={t("Como chegar à Defesa Civil de {M} no Google Maps (abre em nova aba)", { M: c.nome })}
+                  aria-label={
+                    c.verificado
+                      ? t("Como chegar à Defesa Civil de {M} no Google Maps (abre em nova aba)", { M: c.nome })
+                      : t("Como chegar ao endereço de {M} no Google Maps (abre em nova aba)", { M: c.nome })
+                  }
                 >
                   <Route aria-hidden="true" />
                   {t("Como chegar")}
@@ -228,7 +251,12 @@ export default function Contatos({ lang, municipios }: Props) {
                     {t("Abrir WhatsApp")}
                   </a>
                 ) : c.telefone ? (
-                  <button type="button" className="btn" aria-label={t("Copiar telefone da Defesa Civil de {M}", { M: c.nome })} onClick={() => copiar(c)}>
+                  <button
+                    type="button"
+                    className="btn"
+                    aria-label={c.verificado ? t("Copiar telefone da Defesa Civil de {M}", { M: c.nome }) : t("Copiar telefone de {M}", { M: c.nome })}
+                    onClick={() => copiar(c)}
+                  >
                     <Copy aria-hidden="true" />
                     {copiado === c.ibge ? t("Copiado") : t("Copiar telefone")}
                   </button>
@@ -241,12 +269,25 @@ export default function Contatos({ lang, municipios }: Props) {
                   )
                 )}
               </div>
+              {!c.verificado && c.fonte && c.consultado_em && (
+                <p className="cfonte">
+                  {t("Fonte:")}{" "}
+                  <a href={c.fonte} target="_blank" rel="noopener">
+                    {t("site oficial")}
+                    <span className="sr-only"> {t("(abre em nova aba)")}</span>
+                  </a>{" "}
+                  · {t("consultado em {N}", { N: formatarData(c.consultado_em) })}
+                </p>
+              )}
             </article>
           );
         })}
       </div>
 
-      <p className="cnote">{t('"Como chegar" abre o Google Maps.')}</p>
+      <p className="cnote">
+        {t('"Como chegar" abre o Google Maps.')}{" "}
+        {t("Contatos sem o selo Verificado vêm do site oficial da prefeitura ou da Defesa Civil municipal, na data indicada. Confira antes de ir.")}
+      </p>
     </div>
   );
 }

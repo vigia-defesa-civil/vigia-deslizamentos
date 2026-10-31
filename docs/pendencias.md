@@ -30,7 +30,7 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 
 ## Dados e documentação
 
-- ⚪ **Contatos:** o endereço de Ibirama foi corrigido (o antigo era de uma escola) e segue com `verificado: true` em `frontend/public/data/contatos.json`. Presidente Getúlio também passou a `verificado: true` com o telefone (47) 99754-0438, confirmado pelo time; faltam e-mail e endereço. Os outros quatro municípios têm dados preliminares, tirados de fontes oficiais, com `verificado: false`: falta confirmar por telefone com cada prefeitura (RN09), completar os campos `null` e trocar para `true`.
+- ⚪ **Contatos:** o endereço de Ibirama foi corrigido (o antigo era de uma escola) e segue com `verificado: true` em `frontend/public/data/contatos.json`. Presidente Getúlio também passou a `verificado: true` com o telefone (47) 99754-0438, confirmado pelo time; faltam e-mail e endereço. Os outros 25 municípios aparecem com os dados do site oficial da prefeitura ou da Defesa Civil municipal, consultados em 31/10/2026 (`fonte` e `consultado_em`), sem o selo: falta confirmar por telefone com cada prefeitura (RN09) para trocar para `verificado: true`. Taió não publica telefone; em Braço do Trombudo o número do site, "(47) 9 3386-5851", tem formato inválido e ficou de fora; as caixas de nota fiscal de Taió e Salete não foram usadas como e-mail.
 - ⚪ **Atualizar ocorrências:** quando o Atlas publicar uma versão nova, trocar URL_ATLAS e rodar o gerar_ocorrencias.
 - ⚪ **Atualizar setores do SGB:** quando o SGB publicar mapeamento novo na região, rodar `gerar_setores_risco`.
 - ⚪ **README:** completar a citação da RADIAN ("autoria e ano a completar"); o repositório da UFSC exige VPN.
@@ -60,7 +60,7 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 ## Ampliação para os 27 municípios
 
 - ⚪ **Limiar dos 27 municípios:** todos com 100 mm de demonstração; trocar quando houver limiar oficial, validar com o time, por município ou por região.
-- ⚪ **Contatos dos 21 municípios novos:** levantar e confirmar com cada prefeitura (RN09).
+- ⚪ **Contatos dos 27 municípios:** os dados do site oficial já estão no ar com a fonte e a data; falta confirmar com cada prefeitura (RN09) e refazer a consulta quando os sites mudarem.
 - ⚪ **Prazo total de coleta:** com o Open-Meteo degradado, 111 chamadas × até 92 s podem passar do `timeout-minutes: 60`; limitar o tempo total da coleta e marcar os restantes como sem dados.
 - ⚪ **Avisos agrupados por chat:** se quem segue os 27 receber mensagens demais num evento regional, juntar os avisos de uma execução numa só mensagem.
 
