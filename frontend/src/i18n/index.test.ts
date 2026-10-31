@@ -106,6 +106,18 @@ describe("dicionário", () => {
     expect(faltando).toEqual([]);
   });
 
+  it("WCAG 2.5.3: o nome acessível dos botões dos Contatos contém o texto visível, em ES e EN", () => {
+    const PARES: [string, string][] = [
+      ["Copiar telefone", "Copiar telefone de {M}"],
+      ["Copiar telefone", "Copiar telefone da Defesa Civil de {M}"],
+      ["Como chegar", "Como chegar ao endereço de {M} no Google Maps (abre em nova aba)"],
+      ["Como chegar", "Como chegar à Defesa Civil de {M} no Google Maps (abre em nova aba)"],
+      ["Abrir WhatsApp", "Abrir WhatsApp da Defesa Civil de {M} (abre em nova aba)"],
+    ];
+    for (const d of [ES, EN] as Record<string, string>[])
+      for (const [visivel, nome] of PARES) expect(d[nome].toLowerCase(), nome).toContain(d[visivel].toLowerCase());
+  });
+
   it("nomes e rótulos curtos das telas existem em es.json", () => {
     const frases = TELAS.flatMap((t) => [t.nome, t.curto, `VIGIA · ${t.nome}`]);
     expect(frases.filter((f) => !(f in ES))).toEqual([]);
