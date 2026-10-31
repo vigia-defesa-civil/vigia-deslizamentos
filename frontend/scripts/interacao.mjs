@@ -260,6 +260,65 @@ await caso("painel", async () => {
   }
 });
 
+// Topo: no desktop sem o botão de acessibilidade (está no rail); idioma num seletor único "PT ▾" que abre por
+// teclado; região como subtítulo do logo; "Situação de dd/mm/aaaa" em fonte de texto, sempre à vista (RN11).
+await caso("topo", async () => {
+  const SITUACAO = { "": /^Situação de \d{2}\/\d{2}\/\d{4}$/, "es/": /^Situación del \d{2}\/\d{2}\/\d{4}$/, "en/": /^Status on \d{2}\/\d{2}\/\d{4}$/ };
+  for (const lang of ["", "es/", "en/"]) {
+    for (const [w, h, mob] of [
+      [1366, 768, false],
+      [1920, 1080, false],
+      [393, 852, true],
+    ]) {
+      const { pagina: p, fechar } = await abrir(lang, mob ? celular(w, h, 2) : { viewport: { width: w, height: h } });
+      await p.waitForSelector(".hdr .status .dot", { timeout: 30_000 });
+      const r = await p.evaluate(() => {
+        const vis = (s) => {
+          const el = document.querySelector(s);
+          if (!el) return false;
+          const c = el.getBoundingClientRect();
+          return c.width > 0 && c.height > 0 && getComputedStyle(el).visibility !== "hidden" && c.right <= innerWidth && c.bottom <= innerHeight;
+        };
+        const status = document.querySelector(".hdr .status");
+        return {
+          a11y: vis(".hdr .a11yb"),
+          regiao: !!document.querySelector(".hdr .region"),
+          subtitulo: document.querySelector(".brand small")?.textContent ?? "",
+          subtituloVisivel: vis(".brand small"),
+          seletor: document.querySelector(".hdr .lang .langb span[lang]")?.textContent?.trim() ?? "",
+          situacao: status?.textContent?.trim() ?? "",
+          situacaoVisivel: vis(".hdr .status"),
+          mono: /mono/i.test(getComputedStyle(status).fontFamily),
+        };
+      });
+      const onde = `${w} px (${lang || "pt/"})`;
+      verificar(r.a11y === mob, `botão de acessibilidade do topo ${mob ? "ausente no celular" : "ainda no desktop"} a ${onde}`);
+      verificar(!r.regiao && (mob || (r.subtituloVisivel && /Alto Vale do Itajaí, SC/.test(r.subtitulo))), `região fora do subtítulo do logo a ${onde}: ${JSON.stringify(r.subtitulo)}`);
+      verificar(/^(PT|ES|EN)$/.test(r.seletor.replace(/\s+/g, "")), `seletor de idioma não é "PT ▾" a ${onde}: ${JSON.stringify(r.seletor)}`);
+      verificar(SITUACAO[lang].test(r.situacao) && r.situacaoVisivel && !r.mono, `data da situação a ${onde}: ${JSON.stringify(r)}`);
+      if (!mob && (await p.locator(".hdr .lang .langb").count())) {
+        // Seletor de idioma por teclado: Enter abre, Esc fecha e devolve o foco.
+        const botao = p.locator(".hdr .lang .langb");
+        await botao.focus();
+        await p.keyboard.press("Enter");
+        const aberto = await p.evaluate(() => ({
+          expandido: document.querySelector(".hdr .lang .langb")?.getAttribute("aria-expanded"),
+          links: [...document.querySelectorAll(".hdr .lang-menu a[hreflang]")].filter((a) => a.getBoundingClientRect().width > 0).length,
+          atual: document.querySelector('.hdr .lang-menu a[aria-current="true"]')?.getAttribute("hreflang"),
+        }));
+        verificar(aberto.expandido === "true" && aberto.links === 3 && !!aberto.atual, `seletor de idioma não abre com Enter a ${onde}: ${JSON.stringify(aberto)}`);
+        await p.keyboard.press("Escape");
+        const fechou = await p.evaluate(() => ({
+          foco: document.activeElement?.classList.contains("langb"),
+          links: [...document.querySelectorAll(".hdr .lang-menu a")].filter((a) => a.getBoundingClientRect().width > 0).length,
+        }));
+        verificar(fechou.foco && fechou.links === 0, `Esc não fecha o seletor de idioma a ${onde}: ${JSON.stringify(fechou)}`);
+      }
+      await fechar();
+    }
+  }
+});
+
 // Coerência entre telas: mesmos nomes para a mesma coisa.
 await caso("termos", async () => {
   {

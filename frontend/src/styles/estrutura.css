@@ -101,12 +101,12 @@ astro-island {
   flex-shrink: 0;
 }
 
+/* RN11: "Situação de dd/mm/aaaa", em fonte de texto e sempre à vista. */
 .hdr .status {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--nav-muted);
   white-space: nowrap;
 }

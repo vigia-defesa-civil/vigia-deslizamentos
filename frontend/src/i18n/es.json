@@ -338,7 +338,7 @@
 "estável": "estable",
 "choveu nas últimas 24h": "llovió en las últimas 24h",
 "sem dados": "sin datos",
-"dia-alvo {N}": "día objetivo {N}",
+"Situação de {N}": "Situación del {N}",
 "Dados desatualizados: a última atualização foi em {N}. Os valores podem não refletir a situação atual.": "Datos desactualizados: la última actualización fue el {N}. Los valores pueden no reflejar la situación actual.",
 "Não foi possível carregar os dados.": "No se pudieron cargar los datos.",
 "Não foi possível copiar o link.": "No se pudo copiar el enlace.",

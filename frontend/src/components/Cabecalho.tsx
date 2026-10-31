@@ -159,7 +159,7 @@ export default function Cabecalho({ lang, tela }: Props) {
           {indices?.ok && (
             <>
               <span className="dot" aria-hidden="true" />
-              {t("dia-alvo {N}", { N: formatarData(indices.dados.dia_alvo_d0) })}
+              {t("Situação de {N}", { N: formatarData(indices.dados.dia_alvo_d0) })}
             </>
           )}
           {indices && !indices.ok && (
