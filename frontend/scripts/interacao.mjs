@@ -198,6 +198,57 @@ await caso("simulacao", async () => {
   }
 });
 
+// Painel do município a 1366 e 1920 px: "Sem alerta"/"Em alerta" e a classe nunca partem no meio, e os botões
+// "Compartilhar"/"Simular chuva" ficam numa linha. Os 27 municípios passam pelas 7 classes, em PT, ES e EN.
+await caso("painel", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const { DIST } = await import("./servidor.mjs");
+  const dados = JSON.parse(await readFile(`${DIST}data/indices.json`, "utf8"));
+  const INDICE = [0.2, 0.5, 0.8, 1.2, 2.0, 3.0, 3.6];
+  dados.municipios.forEach((m, i) => {
+    for (const d of m.dias) Object.assign(d, { indice: INDICE[i % 7], classe: (i % 7) + 1 });
+  });
+  for (const lang of ["", "es/", "en/"]) {
+    for (const [w, h] of [
+      [1366, 768],
+      [1920, 1080],
+    ]) {
+      const contexto = await navegador.newContext({ viewport: { width: w, height: h } });
+      await soLocal(contexto, origem);
+      await contexto.route("**/data/indices.json", (rota) => rota.fulfill({ json: dados }));
+      const p = await contexto.newPage();
+      const ruins = [];
+      for (const m of dados.municipios) {
+        await p.goto(`${origem}${BASE}${lang}?municipio=${m.ibge}`, { waitUntil: "load" });
+        await p.waitForSelector(".side.r .acts .btn", { timeout: 30_000 });
+        const r = await p.evaluate(() => {
+          // Linhas de texto do elemento (só os nós de texto: o ícone ao lado não conta), com 4 px de tolerância.
+          const linhas = (el) => {
+            const topos = [];
+            const nos = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+            for (let n = nos.nextNode(); n; n = nos.nextNode()) {
+              if (!n.textContent.trim()) continue;
+              const intervalo = document.createRange();
+              intervalo.selectNodeContents(n);
+              for (const c of intervalo.getClientRects()) if (c.width > 1) topos.push(c.top);
+            }
+            return new Set(topos.map((t) => Math.round(t / 6))).size;
+          };
+          const pedacos = [...document.querySelectorAll(".side.r .pill > span")];
+          const botoes = [...document.querySelectorAll(".side.r .acts .btn")];
+          return {
+            pill: pedacos.length >= 2 && pedacos.every((s) => linhas(s) === 1),
+            botoes: botoes.every((b) => linhas(b) === 1),
+          };
+        });
+        if (!r.pill || !r.botoes) ruins.push(`${m.nome}${r.pill ? "" : " (alerta/classe)"}${r.botoes ? "" : " (botões)"}`);
+      }
+      verificar(ruins.length === 0, `painel a ${w} px (${lang || "pt/"}) com texto partido: ${ruins.slice(0, 6).join(", ")}`);
+      await contexto.close();
+    }
+  }
+});
+
 // Coerência entre telas: mesmos nomes para a mesma coisa.
 await caso("termos", async () => {
   {

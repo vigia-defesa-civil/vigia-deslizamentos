@@ -19,10 +19,12 @@
   margin: 6px 0 10px;
 }
 
+/* "Sem alerta" e "classe …" quebram só entre si, nunca no meio (em ES e EN a classe é mais longa). */
 .pill {
   display: inline-flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 2px 8px;
   border: 1px solid var(--line);
   background: var(--surface-050);
   border-radius: var(--radius-md);
@@ -40,6 +42,11 @@
 .pill svg {
   width: 16px;
   height: 16px;
+}
+
+.pill .pill-t,
+.pill .mono {
+  white-space: nowrap;
 }
 
 .pill .mono {
@@ -106,6 +113,13 @@
 
 .acts .btn {
   flex: 1;
+}
+
+/* No painel lateral do desktop, "Compartilhar" e "Simular chuva" numa linha; no celular podem quebrar. */
+@media (min-width: 901px) {
+  .acts .btn {
+    white-space: nowrap;
+  }
 }
 
 .toast {

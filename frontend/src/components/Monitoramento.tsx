@@ -188,7 +188,7 @@ function Indice({ t, indice, classe, dia }: { t: T; indice: number; classe: Nume
     <>
       <span className={alerta ? "pill al" : "pill"}>
         {alerta ? <TriangleAlert aria-hidden="true" /> : <Check aria-hidden="true" />}
-        {t(alerta ? "Em alerta" : "Sem alerta")} <span className="mono">{t("classe {C}", { C: nomeClasse })}</span>
+        <span className="pill-t">{t(alerta ? "Em alerta" : "Sem alerta")}</span> <span className="mono">{t("classe {C}", { C: nomeClasse })}</span>
       </span>
       <div className="bigidx">
         <SeloClasse classe={classe} grande />
