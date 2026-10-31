@@ -208,44 +208,97 @@ astro-island {
   margin-left: -1px;
 }
 
+/* Idioma: botão discreto "PT ▾" (Cabecalho › SeletorIdioma); em destaque no topo fica só o Telegram. */
 .lang {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--nav-700);
-  border-radius: var(--radius-md);
-  background: var(--nav-800);
-  overflow: hidden;
+  position: relative;
   flex: none;
 }
 
-.lang .lg {
-  width: 16px;
-  height: 16px;
-  margin: 0 4px 0 8px;
-  color: var(--nav-muted);
-}
-
-.lang a {
-  display: grid;
-  place-items: center;
-  min-width: 44px;
-  height: 44px;
-  padding: 0 8px;
+.langb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: none;
   color: var(--on-nav);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.06em;
+}
+
+.langb:hover,
+.lang.aberto .langb {
+  background: var(--nav-800);
+  border-color: var(--nav-700);
+}
+
+.langb svg {
+  width: 16px;
+  height: 16px;
+  color: var(--nav-muted);
+}
+
+.langb .seta {
+  width: 14px;
+  height: 14px;
+}
+
+.lang.aberto .langb .seta {
+  transform: rotate(180deg);
+}
+
+.lang-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 30;
+  min-width: 168px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface-000);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-float);
+}
+
+.lang-menu[hidden] {
+  display: none;
+}
+
+.lang-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  font-size: 14px;
   text-decoration: none;
 }
 
-.lang a abbr {
-  text-decoration: none;
+.lang-menu a b {
+  width: 22px;
+  font-family: var(--font-mono);
+  font-size: 12px;
 }
 
-.lang a[aria-current] {
+.lang-menu a:hover {
+  background: var(--surface-050);
+}
+
+.lang-menu a[aria-current] {
   background: var(--accent);
   color: var(--on-accent);
+}
+
+.lang-menu :focus-visible {
+  outline-color: var(--focus);
 }
 
 /* RNF04: aviso de dados desatualizados */
@@ -979,18 +1032,8 @@ astro-island {
   }
 }
 
-/* Com PT, ES, EN e o "?" da Ajuda, o globo não cabe na primeira linha. */
+/* Espaços de 6 px: com o "?" da Ajuda, a primeira linha do topo cabe. */
 @media (max-width: 460px) {
-  .lang .lg {
-    display: none;
-  }
-
-  /* Idiomas com 36 px (acima do mínimo de 24 px) e espaços de 6 px: o "?" da Ajuda cabe na primeira linha. */
-  .lang a {
-    min-width: 36px;
-    padding: 0 4px;
-  }
-
   .hdr {
     column-gap: 6px;
   }
@@ -1008,15 +1051,6 @@ astro-island {
     display: none;
   }
 
-  /* Com o "?" da Ajuda, os botões do topo ficam com 40 px e os idiomas com 34 px (acima do mínimo de 24 px)
-     para caber numa linha. */
-  .hbtn {
-    min-width: 40px;
-  }
-
-  .lang a {
-    min-width: 34px;
-  }
 }
 
 /* Carregando / falha ao carregar um arquivo de dados */
