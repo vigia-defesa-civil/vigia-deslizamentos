@@ -83,8 +83,10 @@ function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; t
         {!pronto ? (
           <div className="aj-capa aj-producao">
             <CirclePlay aria-hidden="true" />
-            <b>{t("Vídeo tutorial em produção")}</b>
-            <small>{t("Enquanto isso, as dicas abaixo mostram como usar cada tela.")}</small>
+            <span className="aj-painel">
+              <b>{t("Vídeo tutorial em produção")}</b>
+              <small>{t("Enquanto isso, as dicas abaixo mostram como usar cada tela.")}</small>
+            </span>
           </div>
         ) : tocando ? (
           <iframe
@@ -98,8 +100,10 @@ function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; t
         ) : (
           <button type="button" className="aj-capa" onClick={() => setTocando(true)}>
             <CirclePlay aria-hidden="true" />
-            <b>{t("Assistir ao tutorial")}</b>
-            <small>{t("Abre um vídeo do YouTube, com legendas. Nada do YouTube carrega antes de você tocar.")}</small>
+            <span className="aj-painel">
+              <b>{t("Assistir ao tutorial")}</b>
+              <small>{t("Abre um vídeo do YouTube, com legendas. Nada do YouTube carrega antes de você tocar.")}</small>
+            </span>
           </button>
         )}
       </div>
