@@ -97,7 +97,7 @@ function SeletorIdioma({ lang, tela }: Props) {
   );
 }
 
-/** Marca, região, Telegram, idioma, acessibilidade, o carimbo dia-alvo (RN11) e o aviso de dados desatualizados (RNF04). */
+/** Marca com a região no subtítulo, Telegram, idioma, acessibilidade, o carimbo dia-alvo (RN11) e o aviso de dados desatualizados (RNF04). */
 export default function Cabecalho({ lang, tela }: Props) {
   const t = tradutor(lang);
   const [telegram, setTelegram] = useState(false);
@@ -121,12 +121,11 @@ export default function Cabecalho({ lang, tela }: Props) {
           </div>
           <div>
             <b>VIGIA</b>
-            <small>{t("Deslizamentos")}</small>
+            {/* A região deixou de ser um selo: é o subtítulo do logo. */}
+            <small>
+              {t("Deslizamentos")} · {t("Alto Vale do Itajaí, SC")}
+            </small>
           </div>
-        </div>
-        <div className="region">
-          <span className="lbl">{t("Região")}</span>
-          <strong>{t("Alto Vale do Itajaí, SC")}</strong>
         </div>
         <button
           type="button"

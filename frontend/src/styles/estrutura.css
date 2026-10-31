@@ -86,40 +86,16 @@ astro-island {
   line-height: 16px;
 }
 
+/* Subtítulo "Deslizamentos · Alto Vale do Itajaí, SC": texto discreto, em fonte de texto. */
 .brand small {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.16em;
+  font-size: 12px;
   color: var(--nav-muted);
-  text-transform: uppercase;
-  margin-top: 3px;
-}
-
-.region {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 12px;
-  border: 1px solid var(--nav-700);
-  border-radius: var(--radius-md);
-  background: var(--nav-800);
+  margin-top: 4px;
   white-space: nowrap;
-  min-width: 0;
 }
 
-.region .lbl {
-  color: var(--nav-muted);
-}
-
-.region strong {
-  font-weight: 600;
-  font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Quem cede espaço é a região (reticências), não o botão. */
+/* O Telegram, único botão em destaque, vai para a direita e não encolhe. */
 .hdr .tghdr {
   margin-left: auto;
   flex-shrink: 0;
@@ -874,14 +850,7 @@ astro-island {
 }
 
 /* ---------- celular ---------- */
-/* Entre 901 e 1300 px os itens não cabem numa linha: sai a região (como no celular) e, mais estreito, o
-   texto do Telegram. Antes o carimbo passava da tela e o botão encolhia sob o próprio texto. */
-@media (max-width: 1300px) {
-  .hdr .region {
-    display: none;
-  }
-}
-
+/* Até 1040 px o texto do Telegram sai: antes o carimbo passava da tela e o botão encolhia sob o próprio texto. */
 @media (max-width: 1040px) {
   .hdr .tghdr > span:not(.tgdisc) {
     display: none;
