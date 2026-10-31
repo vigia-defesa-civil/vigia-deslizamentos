@@ -24,7 +24,7 @@ function verificar(ok, mensagem) {
   if (!ok) falhas.push(mensagem);
 }
 
-const celular = (width, height) => ({ viewport: { width, height }, isMobile: true, hasTouch: true });
+const celular = (width, height, deviceScaleFactor = 1) => ({ viewport: { width, height }, isMobile: true, hasTouch: true, deviceScaleFactor });
 
 // RN06: com um dia de previsão, a faixa "valores estimados" fica inteira à vista, sem o resumo por cima.
 for (const [nome, opcoes] of [
@@ -190,8 +190,14 @@ for (const [w, h] of [
   [393, 852],
   [430, 932],
 ]) {
-  for (const lang of ["", "es/"]) {
-    const { pagina: p, fechar } = await abrir(lang + "cartilha/", celular(w, h));
+  for (const [lang, tela] of [
+    ["", "cartilha/"],
+    ["es/", "cartilha/"],
+    ["", "ajuda/"],
+    ["en/", "ajuda/"],
+  ]) {
+    // Densidade 2, como num celular: com 1, o arredondamento escondia 1 px que faltava a 393 px.
+    const { pagina: p, fechar } = await abrir(lang + tela, celular(w, h, 2));
     await p.waitForSelector(".hbtn.ajudab");
     const r = await p.evaluate(() => {
       const caixas = [".brand", ".tghdr", ".hdr .lang", ".a11yb", ".ajudab"].map((s) => [s, document.querySelector(s).getBoundingClientRect()]);
@@ -209,9 +215,9 @@ for (const [w, h] of [
       const link = document.querySelector('#conteudo a[href$="/ajuda/"]');
       return { fora, outraLinha, pares, nome: ajuda.getAttribute("aria-label"), href: ajuda.getAttribute("href"), cartilha: !!link && link.getBoundingClientRect().width > 0 };
     });
-    verificar(r.fora.length === 0 && r.outraLinha.length === 0 && r.pares.length === 0, `topo a ${w} px (${lang || "pt/"}) com o "?": fora ${r.fora}, outra linha ${r.outraLinha}, sobrepostos ${r.pares}`);
+    verificar(r.fora.length === 0 && r.outraLinha.length === 0 && r.pares.length === 0, `topo a ${w} px (${lang || "pt/"}${tela}) com o "?": fora ${r.fora}, outra linha ${r.outraLinha}, sobrepostos ${r.pares}`);
     verificar(!!r.nome && r.href?.endsWith("/ajuda/"), `"?" do topo sem nome ou sem link para a Ajuda a ${w} px (${lang || "pt/"})`);
-    verificar(r.cartilha, `Cartilha sem o link para a Ajuda a ${w} px (${lang || "pt/"})`);
+    if (tela === "cartilha/") verificar(r.cartilha, `Cartilha sem o link para a Ajuda a ${w} px (${lang || "pt/"})`);
     await fechar();
   }
 }

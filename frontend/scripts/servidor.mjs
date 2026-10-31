@@ -50,15 +50,18 @@ export async function servir() {
   return { servidor, origem: `http://127.0.0.1:${servidor.address().port}` };
 }
 
+// As fontes do site passam: sem elas, a fonte de reserva é mais estreita e o teste de layout erraria a largura.
+const FONTES = /^https:\/\/fonts\.(googleapis|gstatic)\.com\//;
+
 /**
- * Corta toda requisição fora do servidor local (tiles do mapa, CDN): o teste não depende da rede nem fica
- * lento quando um servidor de tiles demora. Devolve a lista das URLs externas pedidas.
+ * Corta toda requisição fora do servidor local, menos as fontes (tiles do mapa, CDN): o teste não fica lento
+ * nem falha quando um servidor de tiles demora. Devolve a lista das URLs externas cortadas.
  */
 export async function soLocal(contexto, origem) {
   const externas = [];
   await contexto.route("**/*", (rota) => {
     const url = rota.request().url();
-    if (url.startsWith(origem) || url.startsWith("data:")) return rota.continue();
+    if (url.startsWith(origem) || url.startsWith("data:") || FONTES.test(url)) return rota.continue();
     externas.push(url);
     return rota.abort("blockedbyclient");
   });

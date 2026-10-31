@@ -978,10 +978,14 @@ astro-island {
     display: none;
   }
 
-  /* Idiomas com 36 px (acima do mínimo de 24 px): o "?" da Ajuda cabe na primeira linha. */
+  /* Idiomas com 36 px (acima do mínimo de 24 px) e espaços de 6 px: o "?" da Ajuda cabe na primeira linha. */
   .lang a {
     min-width: 36px;
     padding: 0 4px;
+  }
+
+  .hdr {
+    column-gap: 6px;
   }
 }
 
