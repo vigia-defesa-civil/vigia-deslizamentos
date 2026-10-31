@@ -3,7 +3,6 @@ import type { T } from "../i18n";
 import { classe, CLASSE_CRITICA, CLASSES, emAlerta, infoClasse, LIMIAR_ALERTA } from "./classes";
 import { estadoMunicipio } from "./dados";
 import { formatarIndice } from "./formato";
-import { municipioInicial } from "./monitoramento";
 import type { IndiceClasse, Indices, Municipio } from "./tipos";
 
 export type Horas = 24 | 48 | 72;
@@ -57,10 +56,11 @@ function municipiosEmAlerta(valores: Record<string, IndiceClasse>): { ibges: str
   return { ibges, total: ibges.length };
 }
 
-/** `?municipio=<ibge>` se esse município tem dados; senão, o de maior índice no D0. */
+/** `?municipio=<ibge>` se esse município tem dados; senão, nenhum. */
 export function municipioDaBusca(indices: Indices, busca: string): string | undefined {
   const ibge = new URLSearchParams(busca).get("municipio");
-  return ibge && estadoMunicipio(indices, ibge).estado === "ok" ? ibge : municipioInicial(indices);
+  // Sem ?municipio= válido, nenhum: o usuário escolhe (a Simulação não herda seleção).
+  return ibge && estadoMunicipio(indices, ibge).estado === "ok" ? ibge : undefined;
 }
 
 /** Fim da escala do resultado: 0 a 4. */

@@ -95,10 +95,10 @@ describe("municipioDaBusca", () => {
     expect(municipioDaBusca(indices, "?municipio=4209151")).toBe("4209151");
   });
 
-  it("sem parâmetro, desconhecido ou sem dados: o de maior índice no D0", () => {
-    expect(municipioDaBusca(indices, "")).toBe("4214003");
-    expect(municipioDaBusca(indices, "?municipio=123")).toBe("4214003");
-    expect(municipioDaBusca({ ...indices, municipios_sem_dados: ["4209151"] }, "?municipio=4209151")).toBe("4214003");
+  it("sem parâmetro, desconhecido ou sem dados: nenhum município (o usuário escolhe)", () => {
+    expect(municipioDaBusca(indices, "")).toBeUndefined();
+    expect(municipioDaBusca(indices, "?municipio=123")).toBeUndefined();
+    expect(municipioDaBusca({ ...indices, municipios_sem_dados: ["4209151"] }, "?municipio=4209151")).toBeUndefined();
   });
 });
 

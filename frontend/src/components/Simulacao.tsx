@@ -146,6 +146,11 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
             {t("Município")}
           </label>
           <select id="sim-mun" value={ibge} onChange={(e) => mudar(() => setIbge(e.target.value))}>
+            {!ibge && (
+              <option value="" disabled>
+                {t("Escolha um município")}
+              </option>
+            )}
             {municipios.map((m) => (
               <option key={m.ibge} value={m.ibge}>
                 {m.nome}
@@ -202,7 +207,7 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
           {t("Aplicar a mesma chuva aos {N} municípios (chuva regional)", { N: String(municipios.length) })}
         </label>
         <div className="go">
-          <button type="button" className="btn pri" onClick={rodar}>
+          <button type="button" className="btn pri" disabled={!ibge} onClick={rodar}>
             <CloudRain aria-hidden="true" />
             {t("Simular")}
           </button>

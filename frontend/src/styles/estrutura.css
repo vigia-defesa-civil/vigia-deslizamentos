@@ -508,6 +508,16 @@ astro-island {
   background: var(--accent-hover);
 }
 
+/* Desativado (ex.: Simular sem município escolhido). */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn.pri:disabled:hover {
+  background: var(--accent);
+}
+
 .btn svg {
   width: 16px;
   height: 16px;
