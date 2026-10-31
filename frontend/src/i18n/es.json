@@ -476,5 +476,6 @@
 "Escolha o seu município para ver a Defesa Civil local.": "Elige tu municipio para ver la Defensa Civil local.",
 "O painel oficial da Defesa Civil de SC abre em nova aba.": "El panel oficial de la Defensa Civil de SC se abre en una pestaña nueva.",
 "No bot, /start escolhe os municípios, /status mostra a situação e /parar cancela.": "En el bot, /start elige los municipios, /status muestra la situación y /parar cancela.",
-"O bot guarda só o identificador do chat e os municípios escolhidos, e apaga tudo com /parar.": "El bot guarda solo el identificador del chat y los municipios elegidos, y borra todo con /parar."
+"O bot guarda só o identificador do chat e os municípios escolhidos, e apaga tudo com /parar.": "El bot guarda solo el identificador del chat y los municipios elegidos, y borra todo con /parar.",
+"Os valores mudaram. Simule de novo para ver o resultado.": "Los valores cambiaron. Simula de nuevo para ver el resultado."
 }
