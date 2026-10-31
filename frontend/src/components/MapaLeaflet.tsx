@@ -303,7 +303,8 @@ export default function MapaLeaflet({
   }, [mapa]);
 
   // Rótulos que se tocam: fica o de maior ordem. Refaz ao mudar o zoom, o tamanho do mapa, os valores (dia) e a
-  // seleção; arrastar move todos juntos e não muda nada. O quadro seguinte espera o Leaflet reposicionar.
+  // seleção. Também no "resize" e no "moveend" do Leaflet: é quando ele termina de reposicionar os rótulos depois de
+  // remedir o mapa (abrir ou fechar o painel do município muda a largura). O quadro seguinte espera o Leaflet.
   useEffect(() => {
     if (!mapa) return;
     let quadro = 0;
@@ -312,12 +313,16 @@ export default function MapaLeaflet({
       quadro = requestAnimationFrame(() => arrumarRotulos(mapa));
     };
     arrumar();
-    mapa.on("zoomend", arrumar);
+    mapa.on("zoomend resize moveend", arrumar);
     const observador = new ResizeObserver(arrumar);
     observador.observe(mapa.getContainer());
+    // A fonte do site chega depois do primeiro desenho e muda a largura dos rótulos.
+    document.fonts?.ready.then(arrumar);
+    document.fonts?.addEventListener("loadingdone", arrumar);
     return () => {
       cancelAnimationFrame(quadro);
-      mapa.off("zoomend", arrumar);
+      document.fonts?.removeEventListener("loadingdone", arrumar);
+      mapa.off("zoomend resize moveend", arrumar);
       observador.disconnect();
     };
   }, [mapa, valores, selecionado, longeAtual]);
