@@ -178,6 +178,13 @@ astro-island {
   height: 20px;
 }
 
+/* Acessibilidade e Ajuda: no desktop ficam no rail (Menu); no topo, só no celular. */
+@media (min-width: 901px) {
+  .hbtn.a11yb {
+    display: none;
+  }
+}
+
 /* Ajuda: no desktop fica no rail (Menu); o "?" do topo é só do celular. */
 .hbtn.ajudab {
   display: none;
