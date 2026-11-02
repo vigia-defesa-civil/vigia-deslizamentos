@@ -2,7 +2,7 @@ import "../styles/contatos.css";
 import { Bell, Copy, ExternalLink, Globe, Mail, MapPin, MessageCircle, Phone, Route, User } from "lucide-react";
 import { useEffect, useState, type ChangeEvent } from "react";
 import { tradutor } from "../i18n";
-import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, mostraEmergencia, urlComoChegar } from "../lib/contatos";
+import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, mostraEmergencia, porNome, urlComoChegar } from "../lib/contatos";
 import { formatarData } from "../lib/formato";
 import { carregar, lerContatos, type Resultado } from "../lib/dados";
 import type { Idioma } from "../lib/preferencias";
@@ -47,7 +47,7 @@ export default function Contatos({ lang, municipios }: Props) {
   }, [escolhido]);
 
   // Sem a lista carregada não se sabe se o município tem contato: nada de aviso "sem contato verificado".
-  const contatos = carga?.ok ? carga.dados : [];
+  const contatos = carga?.ok ? porNome(carga.dados) : [];
   const filtrar = (ibge: string, nome: string) => (carga?.ok ? filtrarContatos(t, contatos, ibge, nome) : filtrarContatos(t, [], "", ""));
   const filtro = filtrar(escolhido, municipios.find((m) => m.ibge === escolhido)?.nome ?? "");
 
@@ -142,7 +142,6 @@ export default function Contatos({ lang, municipios }: Props) {
             <article key={c.ibge} id={`cc-${c.ibge}`} className={filtro.esmaecidos.includes(c.ibge) ? "cc dim" : "cc"} aria-labelledby={`cc-t-${c.ibge}`}>
               <h2 id={`cc-t-${c.ibge}`}>
                 {c.nome}
-                {c.verificado && <span className="tag ok">{t("verificado")}</span>}
               </h2>
               <dl>
                 {/* Sem nome confirmado, a linha inteira sai: nada de "a confirmar" no ar. */}
@@ -269,7 +268,7 @@ export default function Contatos({ lang, municipios }: Props) {
                   )
                 )}
               </div>
-              {!c.verificado && c.fonte && c.consultado_em && (
+              {c.fonte && c.consultado_em && (
                 <p className="cfonte">
                   {t("Fonte:")}{" "}
                   <a href={c.fonte} target="_blank" rel="noopener">
@@ -286,7 +285,7 @@ export default function Contatos({ lang, municipios }: Props) {
 
       <p className="cnote">
         {t('"Como chegar" abre o Google Maps.')}{" "}
-        {t("Contatos sem o selo Verificado vêm do site oficial da prefeitura ou da Defesa Civil municipal, na data indicada. Confira antes de ir.")}
+        {t("Os contatos vêm do site oficial da prefeitura ou da Defesa Civil municipal, na data indicada em cada cartão. Confira antes de ir.")}
       </p>
     </div>
   );

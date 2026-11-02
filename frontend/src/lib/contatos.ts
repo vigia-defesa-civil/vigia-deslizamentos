@@ -20,6 +20,9 @@ export function hrefWhatsApp(telefone: string): string | null {
   return /^[1-9]\d9\d{8}$/.test(digitos) ? `https://wa.me/55${digitos}` : null;
 }
 
+/** Cópia em ordem alfabética pelo nome (pt-BR): cartões e o seletor "Seu município". */
+export const porNome = <C extends { nome: string }>(lista: readonly C[]): C[] => [...lista].sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
+
 /** Sem telefone da própria Defesa Civil, o cartão mostra também o 199 e o 193 (RN09). */
 export const mostraEmergencia = (c: Contato): boolean => !c.verificado && c.telefone_de !== "defesa_civil";
 

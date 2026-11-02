@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import contatos from "../fixtures/contatos.exemplo.json";
 import { tradutor } from "../i18n";
 import { lerContatos } from "./dados";
-import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, mostraEmergencia, urlComoChegar } from "./contatos";
+import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, mostraEmergencia, porNome, urlComoChegar } from "./contatos";
 
 const pt = tradutor("pt");
 const verificados = (() => {
@@ -45,6 +45,14 @@ describe("links de telefone e site", () => {
   it("site sem esquema ganha https://", () => {
     expect(hrefSite("www.defesacivilibirama.com.br")).toBe("https://www.defesacivilibirama.com.br");
     expect(hrefSite("http://exemplo.sc.gov.br")).toBe("http://exemplo.sc.gov.br");
+  });
+});
+
+describe("ordem alfabética", () => {
+  it("porNome ordena pelo nome em português (acentos no lugar certo), sem mudar a lista original", () => {
+    const lista = [{ nome: "Taió" }, { nome: "Agronômica" }, { nome: "Ibirama" }, { nome: "Agrolândia" }, { nome: "Águas" }];
+    expect(porNome(lista).map((x) => x.nome)).toEqual(["Agrolândia", "Agronômica", "Águas", "Ibirama", "Taió"]);
+    expect(lista[0].nome).toBe("Taió");
   });
 });
 

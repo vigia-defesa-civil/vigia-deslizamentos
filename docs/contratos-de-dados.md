@@ -170,20 +170,20 @@ Estações automáticas do INMET na região, geradas uma vez por script (`backen
 
 ## `frontend/public/data/contatos.json`
 
-Contatos de cada município, versionados. O site exibe os itens com `verificado: true` (confirmados com a prefeitura) e os que trazem `fonte` e `consultado_em` (tirados do site oficial, RN09); os demais ficam de fora. A raiz é uma lista de objetos:
+Contatos de cada município, versionados. O site exibe, em ordem alfabética, os itens que trazem `fonte` e `consultado_em` (tirados do site oficial da prefeitura ou da Defesa Civil municipal, RN09) ou `verificado: true`; os demais ficam de fora. A raiz é uma lista de objetos:
 
 | Campo | Tipo | Descrição |
 |---|---|---|
 | `ibge` | string | Município |
 | `nome` | string | Nome do município |
-| `verificado` | booleano | Se o contato foi confirmado com a prefeitura |
+| `verificado` | booleano | Se a equipe confirmou o contato com a prefeitura. Só nesses o cartão mostra o botão de WhatsApp |
 | `responsavel` | string ou nulo | Coordenador(a) municipal de Defesa Civil |
 | `telefone` | string ou nulo | Telefone de exibição, ex.: "(47) 98838-5645" |
 | `email` | string ou nulo | E-mail |
 | `endereco` | string ou nulo | Endereço completo, usado no "Como chegar" |
 | `site` | string ou nulo | Site da prefeitura ou da Defesa Civil municipal |
-| `fonte` | string ou nulo | Página oficial (https, `*.sc.gov.br` ou `*.atende.net`) de onde vieram os dados; obrigatória sem `verificado` |
-| `consultado_em` | data ou nulo | Dia da consulta à fonte (`AAAA-MM-DD`); obrigatória sem `verificado` |
+| `fonte` | string ou nulo | Página oficial (https, `*.sc.gov.br` ou `*.atende.net`) de onde vieram os dados, exibida em todos os cartões |
+| `consultado_em` | data ou nulo | Dia da consulta à fonte (`AAAA-MM-DD`) |
 | `telefone_de` | `"defesa_civil"`, `"prefeitura"` ou nulo | De quem é o telefone. Sem telefone da Defesa Civil, o cartão mostra também o 199 e o 193 |
 
 ## `bot.json`

@@ -580,21 +580,27 @@ await caso("contatos", async () => {
     // Defesa Civil, o 199 e o 193 no cartão; WhatsApp só nos verificados.
     const r = await p.evaluate(() => {
       const cartoes = [...document.querySelectorAll(".cgrid .cc")];
-      const semFonte = cartoes.filter((c) => !c.querySelector(".tag.ok") && !c.querySelector(".cfonte a[href^='https://']")).map((c) => c.querySelector("h2")?.textContent);
-      const taio = cartoes.find((c) => c.querySelector("h2")?.textContent?.startsWith("Taió"));
+      const nome = (c) => c.querySelector("h2")?.textContent?.trim() ?? "";
+      const nomes = cartoes.map(nome);
+      const opcoes = [...document.querySelectorAll("#filtro-municipio option")].map((o) => o.textContent.trim()).filter((t, i) => i > 0);
+      const ordenado = (l) => l.join("|") === [...l].sort((a, b) => a.localeCompare(b, "pt-BR")).join("|");
+      const taio = cartoes.find((c) => nome(c).startsWith("Taió"));
       return {
         total: cartoes.length,
-        selos: cartoes.filter((c) => c.querySelector(".tag.ok")).length,
-        semFonte,
+        primeiro: nomes[0],
+        ordem: ordenado(nomes) && ordenado(opcoes),
+        selos: document.querySelectorAll(".cgrid .tag").length,
+        semFonte: cartoes.filter((c) => !c.querySelector(".cfonte a[href^='https://']")).map(nome),
         datas: cartoes.filter((c) => /\d{2}\/\d{2}\/\d{4}/.test(c.querySelector(".cfonte")?.textContent ?? "")).length,
         taio: taio ? [...taio.querySelectorAll("a[href^='tel:']")].map((a) => a.getAttribute("href")) : null,
-        whatsapp: cartoes.filter((c) => c.querySelector("a[href*='wa.me']") && !c.querySelector(".tag.ok")).length,
+        whatsapp: cartoes.filter((c) => c.querySelector("a[href*='wa.me']")).map(nome).sort(),
       };
     });
-    verificar(r.total === 27 && r.selos === 2, `Contatos com ${r.total} cartões e ${r.selos} selos (esperado 27 e 2)`);
-    verificar(r.semFonte.length === 0 && r.datas === 25, `cartões sem fonte ou sem data: ${r.semFonte.join(", ")} (com data: ${r.datas})`);
+    verificar(r.total === 27 && r.selos === 0, `Contatos com ${r.total} cartões e ${r.selos} selos (esperado 27 e 0)`);
+    verificar(r.ordem && r.primeiro === "Agrolândia", `cartões ou seletor fora da ordem alfabética (primeiro: ${r.primeiro})`);
+    verificar(r.semFonte.length === 0 && r.datas === 27, `cartões sem fonte ou sem data: ${r.semFonte.join(", ")} (com data: ${r.datas})`);
     verificar(JSON.stringify(r.taio) === JSON.stringify(["tel:199", "tel:193"]), `cartão de Taió sem 199 e 193: ${JSON.stringify(r.taio)}`);
-    verificar(r.whatsapp === 0, `WhatsApp em ${r.whatsapp} cartões não verificados`);
+    verificar(JSON.stringify(r.whatsapp) === JSON.stringify(["Ibirama", "Presidente Getúlio"]), `WhatsApp fora de Ibirama e Presidente Getúlio: ${JSON.stringify(r.whatsapp)}`);
     await fechar();
   }
 });

@@ -170,24 +170,6 @@
   color: var(--ink-brand);
 }
 
-.cc .tag {
-  margin-left: auto;
-  padding: 4px 7px;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 11px;
-  line-height: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.cc .tag.ok {
-  background: var(--surface-050);
-  color: var(--status-ok);
-  border: 1px solid var(--line);
-}
-
 .cc dl {
   display: grid;
   grid-template-columns: 22px 1fr;

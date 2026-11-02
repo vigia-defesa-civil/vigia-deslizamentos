@@ -1,31 +1,5 @@
 [
   {
-    "ibge": "4206900",
-    "nome": "Ibirama",
-    "verificado": true,
-    "responsavel": null,
-    "telefone": "(47) 98838-5645",
-    "email": "defesacivil@ibirama.sc.gov.br",
-    "endereco": "R. L Müler, 309-237 — Centro, Ibirama/SC, 89140-000",
-    "site": "www.defesacivilibirama.com.br",
-    "fonte": null,
-    "consultado_em": null,
-    "telefone_de": "defesa_civil"
-  },
-  {
-    "ibge": "4214003",
-    "nome": "Presidente Getúlio",
-    "verificado": true,
-    "responsavel": null,
-    "telefone": "(47) 99754-0438",
-    "email": null,
-    "endereco": null,
-    "site": "pdc.presidentegetulio.sc.gov.br",
-    "fonte": null,
-    "consultado_em": null,
-    "telefone_de": "defesa_civil"
-  },
-  {
     "ibge": "4200200",
     "nome": "Agrolândia",
     "verificado": false,
@@ -115,6 +89,19 @@
     "fonte": "https://donaemma.sc.gov.br/",
     "consultado_em": "2026-10-31",
     "telefone_de": "prefeitura"
+  },
+  {
+    "ibge": "4206900",
+    "nome": "Ibirama",
+    "verificado": true,
+    "responsavel": null,
+    "telefone": "(47) 98838-5645",
+    "email": "defesacivil@ibirama.sc.gov.br",
+    "endereco": "R. L Müler, 309-237 — Centro, Ibirama/SC, 89140-000",
+    "site": "www.defesacivilibirama.com.br",
+    "fonte": "https://ibirama.atende.net/subportal/diretoria-de-protecao-e-defesa-civil",
+    "consultado_em": "2026-10-31",
+    "telefone_de": "defesa_civil"
   },
   {
     "ibge": "4207403",
@@ -219,6 +206,19 @@
     "fonte": "https://pousoredondo.sc.gov.br/",
     "consultado_em": "2026-10-31",
     "telefone_de": "prefeitura"
+  },
+  {
+    "ibge": "4214003",
+    "nome": "Presidente Getúlio",
+    "verificado": true,
+    "responsavel": null,
+    "telefone": "(47) 99754-0438",
+    "email": null,
+    "endereco": null,
+    "site": "pdc.presidentegetulio.sc.gov.br",
+    "fonte": "https://pdc.presidentegetulio.sc.gov.br/",
+    "consultado_em": "2026-10-31",
+    "telefone_de": "defesa_civil"
   },
   {
     "ibge": "4214102",

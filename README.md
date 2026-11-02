@@ -363,7 +363,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RN06** — Previsões (D1–D3) aparecem sempre marcadas como valores estimados.
 - **RN07** — A simulação usa a mesma equação do subíndice, trocando a chuva prevista pela chuva informada: (EfR × 0,5^((h − 24) ÷ MV) + chuva) ÷ limiar, em que h é o período escolhido (24, 48 ou 72 h) e o EfR do D0 decai pela meia-vida até o fim do período (com 24 h, fica (EfR + chuva) ÷ limiar). Ela não altera dados reais e não dispara alertas.
 - **RN08** — O aviso do bot não se repete enquanto o município permanecer na mesma classe.
-- **RN09** — Os números de emergência (199, 193, 192) aparecem sempre. Para cada município, o card mostra os contatos publicados no site oficial da prefeitura ou da Defesa Civil municipal, com o link da fonte e a data da consulta. O selo "Verificado" só aparece quando a equipe confirmou o contato diretamente com a prefeitura. Sem contato oficial da Defesa Civil, o card mostra o telefone geral da prefeitura e os números de emergência.
+- **RN09** — Os números de emergência (199, 193, 192) aparecem sempre. Os 27 municípios têm um card, em ordem alfabética, com os contatos publicados no site oficial da prefeitura ou da Defesa Civil municipal, o link dessa fonte e a data da consulta. Sem contato oficial da Defesa Civil, o card mostra o telefone geral da prefeitura e os números de emergência.
 - **RN10** — O VIGIA não incorpora sites oficiais: o painel da Defesa Civil de SC aparece só como link, na tela Contatos, com o crédito da fonte.
 - **RN11** — Dia-alvo e horário da última atualização ficam sempre visíveis.
 
