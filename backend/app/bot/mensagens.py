@@ -208,7 +208,7 @@ def texto_do_aviso(aviso: Aviso, site_url: str) -> str:
 
     Classes em alerta (4 a 7) levam índice, chuva, validade, "O que fazer",
     telefones de emergência, link do site e a ressalva da RN04. Classes abaixo
-    do alerta (1 a 3), que a regra de aviso não envia, levam o formato curto
+    do alerta (1 a 3), que só aparecem no `/simular`, levam o formato curto
     "sem alerta". Campo do cálculo ausente no `aviso` (`None`) tem a linha
     omitida: nada é inventado.
     """

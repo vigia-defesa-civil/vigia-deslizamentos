@@ -38,4 +38,10 @@ export type BotJson = {
     rodape: string;
     sem_inscricao: string;
   };
+  simulacao: null | {
+    mensagens: Record<string, string[]>;
+    fim: string;
+    municipio_invalido: string;
+    pausa_s: number;
+  };
 };

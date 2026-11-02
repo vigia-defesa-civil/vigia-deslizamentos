@@ -61,6 +61,7 @@ jobs:
           INMET_TOKEN: ${{ secrets.INMET_TOKEN }}
           SITE_URL: ${{ vars.SITE_URL }}
           VIGIA_WORKER_URL: ${{ vars.VIGIA_WORKER_URL }}
+          VIGIA_SIMULACAO: ${{ vars.VIGIA_SIMULACAO }}
           GITHUB_REPO: ${{ github.repository }}
           DB_PATH: ../estado/vigia.db
           BOT_JSON_PATH: ../estado/bot.json

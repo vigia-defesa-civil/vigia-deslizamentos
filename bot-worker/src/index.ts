@@ -32,13 +32,14 @@ async function tratarInscritos(requisicao: Request, env: Env, caminho: string): 
 async function tratarTelegram(
   requisicao: Request,
   env: Env,
+  ctx: ExecutionContext,
 ): Promise<Response> {
   const recebido = requisicao.headers.get("X-Telegram-Bot-Api-Secret-Token");
   if (!segredoConfere(recebido, env.TELEGRAM_WEBHOOK_SEGREDO)) {
     return new Response("Não autorizado", { status: 401 });
   }
   try {
-    await tratarAtualizacao(await requisicao.json(), env);
+    await tratarAtualizacao(await requisicao.json(), env, ctx);
   } catch (erro) {
     // Sempre 200 para o Telegram não reenviar a mesma atualização em laço.
     console.error(`falha ao tratar atualização: ${erro instanceof Error ? erro.name : "erro"}`);
@@ -47,11 +48,10 @@ async function tratarTelegram(
 }
 
 export default {
-  // `_ctx` fica na assinatura padrão do Worker, mesmo sem uso.
-  async fetch(requisicao: Request, env: Env, _ctx: ExecutionContext): Promise<Response> {
+  async fetch(requisicao: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const { pathname } = new URL(requisicao.url);
     if (pathname === "/telegram" && requisicao.method === "POST") {
-      return tratarTelegram(requisicao, env);
+      return tratarTelegram(requisicao, env, ctx);
     }
     if (pathname === "/inscritos" || pathname.startsWith("/inscritos/")) {
       return tratarInscritos(requisicao, env, pathname);
