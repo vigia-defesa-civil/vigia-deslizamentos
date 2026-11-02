@@ -146,7 +146,7 @@ export default function Dados({ lang, nomes }: { lang: Idioma; nomes: readonly N
     <div className="dados">
       <div className="ttl">
         <div>
-          <span className="lbl">{t("Dados da análise · dia-alvo {N}", { N: formatarData(indices.dia_alvo_d0) })}</span>
+          <span className="lbl">{t("Dados da análise · Situação de {N}", { N: formatarData(indices.dia_alvo_d0) })}</span>
           <h1>{titulo}</h1>
           <p>
             {personalizado

@@ -389,6 +389,18 @@ await caso("termos", async () => {
     verificar(painel.includes("Chuva efetiva / limiar") && !painel.includes("Razão chuva"), "Monitoramento não usa \"Chuva efetiva / limiar\", como a tela Dados");
     await fechar();
   }
+  // A tela Dados usa o mesmo termo do topo ("Situação de …"), não "dia-alvo".
+  for (const [lang, termo] of [
+    ["", "Situação de"],
+    ["es/", "Situación del"],
+    ["en/", "Status on"],
+  ]) {
+    const { pagina: p, fechar } = await abrir(lang + "dados/");
+    await p.waitForSelector(".dados .lbl", { timeout: 30_000 }).catch(() => {});
+    const rotulo = (await p.locator(".dados .lbl").first().textContent()) ?? "";
+    verificar(rotulo.includes(termo) && !/dia-alvo|día objetivo|target day/i.test(rotulo), `Dados (${lang || "pt/"}) com "${rotulo}" (esperado "${termo} …")`);
+    await fechar();
+  }
 });
 
 // Ajuda: sem ID de vídeo, só as dicas (nenhuma área de vídeo, nada do YouTube); "?" no topo do celular,
@@ -436,6 +448,8 @@ await caso("ajuda", async () => {
     [360, 780],
     [393, 852],
     [430, 932],
+    [600, 900],
+    [768, 1024],
   ]) {
     for (const [lang, tela] of [
       ["", "cartilha/"],
@@ -448,8 +462,6 @@ await caso("ajuda", async () => {
       await p.waitForSelector(".hbtn.ajudab");
       const r = await p.evaluate(() => {
         const caixas = [".brand", ".tghdr", ".hdr .lang", ".a11yb", ".ajudab"].map((s) => [s, document.querySelector(s).getBoundingClientRect()]);
-    [600, 900],
-    [768, 1024],
         const topo = caixas[0][1].top;
         const fora = caixas.filter(([, c]) => c.right > innerWidth || c.left < 0 || c.width === 0).map(([s]) => s);
         const outraLinha = caixas.filter(([, c]) => c.top > topo + 30).map(([s]) => s);
@@ -469,6 +481,53 @@ await caso("ajuda", async () => {
       if (tela === "cartilha/") verificar(r.cartilha, `Cartilha sem o link para a Ajuda a ${w} px (${lang || "pt/"})`);
       await fechar();
     }
+  }
+});
+
+// Ajuda: vídeo centralizado (até 960 px, 16:9; no celular, largura toda); cartões de dicas do mesmo tamanho em
+// 3/2/1 colunas, "Ir para…" na base e o último cartão sozinho centralizado.
+await caso("ajuda-layout", async () => {
+  for (const [w, h, colunas] of [
+    [1366, 900, 3],
+    [800, 1000, 2],
+    [393, 852, 1],
+  ]) {
+    const { pagina: p, fechar } = await abrir("ajuda/", { viewport: { width: w, height: h } });
+    await p.waitForSelector(".aj-sec");
+    const r = await p.evaluate(() => {
+      const caixa = (el) => el.getBoundingClientRect();
+      const grade = caixa(document.querySelector(".aj-dicas"));
+      const cartoes = [...document.querySelectorAll(".aj-sec")].map(caixa);
+      const links = [...document.querySelectorAll(".aj-sec")].map((c) => {
+        const l = c.querySelector(".aj-ir");
+        return l ? Math.round(caixa(c).bottom - caixa(l).bottom) : null;
+      }).filter((x) => x !== null);
+      const quadro = caixa(document.querySelector(".aj-quadro"));
+      const pagina = caixa(document.querySelector(".ajuda"));
+      const estilo = getComputedStyle(document.querySelector(".ajuda"));
+      const internoEsq = pagina.left + parseFloat(estilo.paddingLeft);
+      const internoDir = pagina.right - parseFloat(estilo.paddingRight);
+      const ultimo = cartoes.at(-1);
+      return {
+        cartoes: cartoes.length,
+        colunas: cartoes.filter((c) => Math.abs(c.top - cartoes[0].top) < 2).length,
+        alturas: new Set(cartoes.map((c) => Math.round(c.height))).size,
+        larguras: new Set(cartoes.map((c) => Math.round(c.width))).size,
+        links: new Set(links).size,
+        ultimoCentro: Math.round(ultimo.left + ultimo.width / 2 - (grade.left + grade.width / 2)),
+        quadro: { w: Math.round(quadro.width), proporcao: Math.round((quadro.width / quadro.height) * 100) / 100, centro: Math.round(quadro.left + quadro.width / 2 - (internoEsq + internoDir) / 2), cheio: Math.round(internoDir - internoEsq - quadro.width) },
+      };
+    });
+    const onde = `${w} px`;
+    verificar(r.colunas === colunas, `Ajuda a ${onde}: ${r.colunas} colunas de dicas (esperado ${colunas})`);
+    // Com uma coluna (celular), cada cartão tem a altura do próprio texto: altura igual deixaria buracos.
+    verificar((colunas === 1 || r.alturas === 1) && r.larguras === 1, `Ajuda a ${onde}: cartões de dicas de tamanhos diferentes (${r.alturas} alturas, ${r.larguras} larguras)`);
+    verificar(r.links === 1, `Ajuda a ${onde}: "Ir para…" fora da base em algum cartão`);
+    // O cartão só fica no centro quando sobra sozinho na última linha (com 8 cartões, em 3 ou 2 colunas, nenhum sobra).
+    if (colunas > 1 && r.cartoes % colunas === 1) verificar(Math.abs(r.ultimoCentro) <= 2, `Ajuda a ${onde}: último cartão fora do centro (${r.ultimoCentro} px)`);
+    verificar(Math.abs(r.quadro.proporcao - 1.78) < 0.03 && Math.abs(r.quadro.centro) <= 2 && r.quadro.w <= 960, `Ajuda a ${onde}: vídeo fora do centro, maior que 960 px ou fora de 16:9 (${JSON.stringify(r.quadro)})`);
+    if (colunas === 1) verificar(Math.abs(r.quadro.cheio) <= 2, `Ajuda a ${onde}: vídeo não ocupa a largura toda no celular (${JSON.stringify(r.quadro)})`);
+    await fechar();
   }
 });
 
