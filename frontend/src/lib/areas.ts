@@ -20,3 +20,7 @@ export function rotuloSetoresMunicipio(t: T, M: string, n: number): string {
   if (n === 1) return t("{M}: 1 setor de risco geológico", { M });
   return t("{M}: {N} setores de risco geológico", { M, N: String(n) });
 }
+
+/** "Mapeamentos de 2011 a 2024", ou só "Mapeamento de 2018" quando os anos são iguais. */
+export const textoMapeamentos = (t: T, anoMin: number, anoMax: number): string =>
+  anoMin === anoMax ? t("Mapeamento de {N}", { N: String(anoMin) }) : t("Mapeamentos de {N} a {N}", { N: [String(anoMin), String(anoMax)] });
