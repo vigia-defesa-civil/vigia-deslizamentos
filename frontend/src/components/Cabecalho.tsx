@@ -120,11 +120,11 @@ export default function Cabecalho({ lang, tela }: Props) {
             <i />
           </div>
           <div>
-            <b>VIGIA</b>
-            {/* A região deixou de ser um selo: é o subtítulo do logo. */}
-            <small>
-              {t("Deslizamentos")} · {t("Alto Vale do Itajaí, SC")}
-            </small>
+            {/* Título "VIGIA Deslizamentos"; a região é o subtítulo. No celular estreito fica só "VIGIA" (estrutura.css). */}
+            <b>
+              VIGIA <span className="nome2">{t("Deslizamentos")}</span>
+            </b>
+            <small>{t("Alto Vale do Itajaí, SC")}</small>
           </div>
         </div>
         <button

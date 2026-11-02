@@ -287,6 +287,7 @@ await caso("topo", async () => {
           a11y: vis(".hdr .a11yb"),
           regiao: !!document.querySelector(".hdr .region"),
           subtitulo: document.querySelector(".brand small")?.textContent ?? "",
+          titulo: document.querySelector(".brand b")?.innerText?.replace(/\s+/g, " ").trim() ?? "",
           subtituloVisivel: vis(".brand small"),
           seletor: document.querySelector(".hdr .lang .langb span[lang]")?.textContent?.trim() ?? "",
           situacao: status?.textContent?.trim() ?? "",
@@ -296,7 +297,9 @@ await caso("topo", async () => {
       });
       const onde = `${w} px (${lang || "pt/"})`;
       verificar(r.a11y === mob, `botão de acessibilidade do topo ${mob ? "ausente no celular" : "ainda no desktop"} a ${onde}`);
-      verificar(!r.regiao && (mob || (r.subtituloVisivel && /Alto Vale do Itajaí, SC/.test(r.subtitulo))), `região fora do subtítulo do logo a ${onde}: ${JSON.stringify(r.subtitulo)}`);
+      verificar(!r.regiao && (mob || (r.subtituloVisivel && r.subtitulo.trim() === "Alto Vale do Itajaí, SC")), `subtítulo do logo não é só a região a ${onde}: ${JSON.stringify(r.subtitulo)}`);
+      const TITULO = { "": "VIGIA Deslizamentos", "es/": "VIGIA Deslizamientos", "en/": "VIGIA Landslides" }[lang];
+      verificar(mob ? r.titulo.startsWith("VIGIA") : r.titulo.toLowerCase() === TITULO.toLowerCase(), `título do logo a ${onde}: ${JSON.stringify(r.titulo)}`);
       verificar(/^(PT|ES|EN)$/.test(r.seletor.replace(/\s+/g, "")), `seletor de idioma não é "PT ▾" a ${onde}: ${JSON.stringify(r.seletor)}`);
       verificar(SITUACAO[lang].test(r.situacao) && r.situacaoVisivel && !r.mono, `data da situação a ${onde}: ${JSON.stringify(r)}`);
       if (!mob && (await p.locator(".hdr .lang .langb").count())) {
@@ -445,6 +448,8 @@ await caso("ajuda", async () => {
       await p.waitForSelector(".hbtn.ajudab");
       const r = await p.evaluate(() => {
         const caixas = [".brand", ".tghdr", ".hdr .lang", ".a11yb", ".ajudab"].map((s) => [s, document.querySelector(s).getBoundingClientRect()]);
+    [600, 900],
+    [768, 1024],
         const topo = caixas[0][1].top;
         const fora = caixas.filter(([, c]) => c.right > innerWidth || c.left < 0 || c.width === 0).map(([s]) => s);
         const outraLinha = caixas.filter(([, c]) => c.top > topo + 30).map(([s]) => s);

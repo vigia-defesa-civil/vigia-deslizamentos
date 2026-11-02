@@ -84,6 +84,12 @@ astro-island {
   font-size: 16px;
   letter-spacing: 0.14em;
   line-height: 16px;
+  white-space: nowrap;
+}
+
+/* Segunda palavra do título, no mesmo peso e sem o espaçamento largo de "VIGIA". */
+.brand b .nome2 {
+  letter-spacing: 0.02em;
 }
 
 /* Subtítulo "Deslizamentos · Alto Vale do Itajaí, SC": texto discreto, em fonte de texto. */
@@ -1011,10 +1017,14 @@ astro-island {
   }
 }
 
-/* Espaços de 6 px: com o "?" da Ajuda, a primeira linha do topo cabe. */
+/* Espaços de 6 px: com o "?" da Ajuda, a primeira linha do topo cabe. Sem espaço, o título fica só "VIGIA". */
 @media (max-width: 460px) {
   .hdr {
     column-gap: 6px;
+  }
+
+  .brand b .nome2 {
+    display: none;
   }
 }
 
