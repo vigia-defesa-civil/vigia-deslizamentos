@@ -576,8 +576,8 @@ await caso("contatos", async () => {
     await p.waitForSelector(".cc h2", { timeout: 30_000 });
     const texto = await p.locator(".cgrid").innerText();
     verificar(!/coordenador\(a\) a confirmar/i.test(texto), "Contatos mostra \"Nome do coordenador(a) a confirmar\"");
-    // RN09: 27 cartões; selo só nos 2 verificados; os demais com a fonte oficial e a data; sem telefone da
-    // Defesa Civil, o 199 e o 193 no cartão; WhatsApp só nos verificados.
+    // RN09: 27 cartões em ordem alfabética, sem selo, todos com a fonte oficial e a data; sem telefone da Defesa
+    // Civil, o 199 e o 193 no cartão; WhatsApp só onde já havia (Ibirama e Presidente Getúlio).
     const r = await p.evaluate(() => {
       const cartoes = [...document.querySelectorAll(".cgrid .cc")];
       const nome = (c) => c.querySelector("h2")?.textContent?.trim() ?? "";
