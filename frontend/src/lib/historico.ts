@@ -8,10 +8,23 @@ const SCHEMA_VERSION = 1;
 
 export interface ArquivoHistorico {
   fonte: string;
-  municipios: Record<string, { inicio: string; indices: (number | null)[] }>;
+  municipios: Record<string, { inicio: string; indices: (number | null)[]; limiar_anterior?: { limiar_mm: number; ate: string } }>;
 }
 
-/** Campos extras (limiar_mm, mv_h do reconstruído) são aceitos e ignorados. */
+/** Troca de limiar de um município: até `ate` os índices foram calculados com `anterior_mm`; `dia` é o primeiro no limiar atual. */
+export interface TrocaLimiar {
+  ate: string;
+  dia: string;
+  anterior_mm: number;
+  atual_mm: number;
+}
+
+const limiarAnteriorValido = (x: unknown): boolean => {
+  const v = x as { limiar_mm?: unknown; ate?: unknown } | null;
+  return typeof v?.limiar_mm === "number" && Number.isFinite(v.limiar_mm) && v.limiar_mm > 0 && dataValida(v.ate);
+};
+
+/** Campos extras (limiar_mm, mv_h do reconstruído) são aceitos e ignorados; `limiar_anterior`, se vier, é validado. */
 export function lerHistorico(json: unknown): Resultado<ArquivoHistorico> {
   const raiz = json as (Partial<ArquivoHistorico> & { schema_version?: unknown }) | null;
   if (raiz?.schema_version !== SCHEMA_VERSION) return erro(`historico: schema_version desconhecido (${String(raiz?.schema_version)})`);
@@ -21,6 +34,7 @@ export function lerHistorico(json: unknown): Resultado<ArquivoHistorico> {
     if (!dataValida(m?.inicio)) return erro(`historico: inicio inválido em ${ibge}`);
     if (!Array.isArray(m.indices) || m.indices.some((x) => x !== null && !(typeof x === "number" && Number.isFinite(x))))
       return erro(`historico: indices inválidos em ${ibge}`);
+    if ("limiar_anterior" in m && !limiarAnteriorValido(m.limiar_anterior)) return erro(`historico: limiar_anterior inválido em ${ibge}`);
   }
   return { ok: true, dados: raiz as ArquivoHistorico };
 }
@@ -41,6 +55,27 @@ export function combinarHistorico(m: Municipio, d0: string, real?: ArquivoHistor
   for (const item of [...itensDe(reconstruido, m.ibge, true), ...itensDe(real, m.ibge, false), ...m.historico]) porDia.set(item.dia_alvo, item);
   const historico = [...porDia.values()].filter((x) => x.dia_alvo < d0).sort((a, b) => a.dia_alvo.localeCompare(b.dia_alvo));
   return { ...m, historico };
+}
+
+/** Troca de limiar registrada no historico.json para o município, ou null. */
+export function trocaDeLimiar(real: ArquivoHistorico | undefined, ibge: string, atual_mm: number): TrocaLimiar | null {
+  const anterior = real?.municipios[ibge]?.limiar_anterior;
+  if (!anterior) return null;
+  return { ate: anterior.ate, dia: somarDias(anterior.ate, 1), anterior_mm: anterior.limiar_mm, atual_mm };
+}
+
+/**
+ * A nota da troca só aparece quando o gráfico mostra algum dia convertido: um dia real (a partir de `inicioReal`,
+ * quando há reconstrução) até `ate`. Os dias reconstruídos já foram calculados com o limiar atual.
+ */
+export const trocaVisivel = (troca: TrocaLimiar | null, eixo: string[], inicioReal: string | null = null): boolean =>
+  !!troca && eixo.some((dia) => dia <= troca.ate && (!inicioReal || dia >= inicioReal));
+
+/** Índice do dia da troca no eixo para a marca do gráfico, ou -1: só com a nota à vista e nunca na borda esquerda. */
+export function marcaDaTroca(troca: TrocaLimiar | null, eixo: string[], inicioReal: string | null): number {
+  if (!troca || !trocaVisivel(troca, eixo, inicioReal)) return -1;
+  const i = eixo.indexOf(troca.dia);
+  return i > 0 ? i : -1;
 }
 
 /** Dia seguinte ao último dia com dado em qualquer município do reconstruído. */

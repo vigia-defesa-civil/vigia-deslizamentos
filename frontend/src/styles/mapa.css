@@ -26,10 +26,11 @@
   opacity: 0.8;
 }
 
+/* A troca de dia recolore o mapa a cada toque, seta ou passo do ▶: curta (RNF03, até 500 ms). */
 .mapa .mun {
   stroke: var(--map-stroke);
   stroke-width: 2px;
-  transition: fill 0.6s ease, opacity 0.2s;
+  transition: fill 0.16s ease-out, opacity 0.16s ease-out;
 }
 
 .mapa .mun:hover {
@@ -39,6 +40,18 @@
 .mapa .mun.sel {
   stroke: var(--nav-900);
   stroke-width: 5px;
+}
+
+/* Foco só com teclado, e no contorno do município (o tracejado abaixo). O <svg> dos polígonos (tabindex -1,
+   MapaLeaflet) recebia o anel padrão do Chrome quando ganhava foco por script: um retângulo escuro em volta
+   da caixa dos polígonos. O realce de toque pintava a mesma caixa no celular. */
+.mapa {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mapa .leaflet-overlay-pane svg:focus,
+.mapa .mun:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Depois de .sel, e tracejado: no selecionado o foco não se confunde com a seleção. */
@@ -107,6 +120,12 @@
   display: none;
 }
 
+/* Rótulo que encostaria num de ordem maior (MapaLeaflet › arrumarRotulos): o nome continua no polígono
+   (aria-label), na busca e aparece ao selecionar. */
+.mapa .leaflet-tooltip.encoberto {
+  visibility: hidden;
+}
+
 /* Rótulos: tooltips permanentes do Leaflet no centro de cada polígono */
 .mapa .leaflet-tooltip.mlabel {
   display: flex;
@@ -132,7 +151,7 @@
 .mlabel small {
   display: block;
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--ink-2);
 }
 
@@ -158,7 +177,7 @@
 }
 
 .mapa .leaflet-control-attribution {
-  font-size: 10px;
+  font-size: 11px;
 }
 
 /* Cartões flutuantes */
@@ -382,7 +401,7 @@
 .leg .rows .r {
   margin-left: auto;
   font-family: var(--font-mono);
-  font-size: 10.5px;
+  font-size: 11px;
   color: var(--muted);
 }
 
@@ -401,7 +420,7 @@
 
 .leg .foot .seg button {
   padding: 5px 9px;
-  font-size: 10px;
+  font-size: 11px;
 }
 
 .leg .hint {
@@ -528,13 +547,55 @@
   color: var(--muted);
 }
 
-/* Previsões */
+/* Previsões: começam recolhidas no botão .prevs-btn (com a data), no desktop e no celular; a lista abre ao clicar. */
 .prevs {
   left: 68px;
   top: 16px;
-  width: 188px;
-  padding: 12px 14px;
+  padding: 0;
   z-index: 4;
+}
+
+.prevs-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 10px 0 12px;
+  border: none;
+  border-radius: inherit;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.prevs-btn small {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.prevs-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.prevs.aberta .prevs-btn svg {
+  transform: rotate(180deg);
+}
+
+/* Cabe "29/10/2026  +3D": o ano tem 4 dígitos em todo o site. */
+.prevs-lista {
+  display: none;
+  width: 204px;
+  padding: 0 14px 12px;
+}
+
+.prevs.aberta .prevs-lista {
+  display: block;
 }
 
 .prevs .lbl {
@@ -562,7 +623,7 @@
 
 .prevs label small {
   margin-left: auto;
-  font-size: 10px;
+  font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -608,8 +669,8 @@
   /* À direita, sob as camadas (botões ou select): no centro do alto ela cobria os botões de camadas. */
   right: 16px;
   top: 72px;
-  /* Não invade as Previsões (16 + 52 + 188 px à esquerda): em mapa estreito quebra a linha. */
-  max-width: calc(100% - 288px);
+  /* Não invade as Previsões (16 + 52 + 204 px à esquerda): em mapa estreito quebra a linha. */
+  max-width: calc(100% - 304px);
   z-index: 4;
   padding: 7px 12px;
   font-family: var(--font-mono);
@@ -670,25 +731,22 @@
     max-height: min(220px, max(48px, 100cqh - 130px));
   }
 
-  /* No alto cobria o zoom e as camadas: desce para cima do resumo, na mesma coluna. */
+  /* No alto cobria o zoom e as camadas: desce para cima do resumo, na mesma coluna (.rodape-mapa). */
   .dayflag {
-    top: auto;
-    bottom: 68px;
-    left: 72px;
-    right: 16px;
-    max-width: none;
-    text-align: center;
+    text-align: left;
     pointer-events: none;
   }
 
   .prevs {
     left: 64px;
-    width: 168px;
-    padding: 10px 12px;
+  }
+
+  .prevs-lista {
+    padding: 0 12px 10px;
   }
 
   .mapa .leaflet-tooltip.mlabel {
-    font-size: 10.5px;
+    font-size: 11px;
     padding: 3px 6px 3px 4px;
   }
 
@@ -699,6 +757,19 @@
   .leg {
     bottom: 76px;
     max-height: calc(100% - 76px - 120px);
+  }
+}
+
+/* Tela de toque estreita: o zoom é a pinça, e o cadeado da legenda só serve a quem abre a legenda com o mouse
+   por cima (no toque, a faixa abre e o X recolhe). As Previsões encostam na borda. */
+@media (max-width: 900px) and (pointer: coarse) {
+  .zoom,
+  .leg .lockb {
+    display: none;
+  }
+
+  .prevs {
+    left: 16px;
   }
 }
 
@@ -721,29 +792,29 @@
     bottom: 68px;
     max-height: calc(100% - 76px);
   }
-
-  .dayflag {
-    right: 216px;
-  }
 }
 
 /* Previsões e camadas lado a lado mesmo em 320 px: os dois mais estreitos. */
 @media (max-width: 380px) {
-  .prevs {
-    width: 146px;
-    padding: 8px 10px;
-  }
-
+  /* Ao lado das Previsões sobram ~100 px e o campo fica em 16 px (base.css, zoom do iOS): seta desenhada
+     em CSS (a nativa ocupa ~20 px) e a fonte de texto do site, mais estreita que a mono, para
+     "Satélite"/"Satellite" caberem sem corte. */
   .layers-sel {
-    max-width: 92px;
-    padding: 0 8px;
+    right: 8px;
+    max-width: 102px;
+    padding: 0 22px 0 8px;
+    font-family: var(--font-sans);
+    appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%);
+    background-position: right 13px center, right 8px center;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
   }
 
-  /* O resumo quebra em duas linhas; a faixa, menor, fica entre ele e os botões das Previsões, sem cobri-los. */
+  /* A faixa, menor, cabe acima do resumo sem chegar aos botões das Previsões. */
   .dayflag {
-    bottom: 84px;
     padding: 5px 8px;
-    font-size: 10px;
+    font-size: 11px;
     letter-spacing: 0.02em;
   }
 }

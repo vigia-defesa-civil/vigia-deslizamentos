@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { TELAS, rota, rotaComEstado } from "./telas";
+import { TELAS, rota, rotaComEstado, mostraIndice } from "./telas";
 
 describe("rota", () => {
   it("monta o caminho com a base do site e o prefixo /es ou /en", () => {
@@ -21,15 +21,20 @@ describe("rotaComEstado", () => {
 });
 
 describe("TELAS", () => {
-  it("7 telas na ordem do menu, Contatos por último", () => {
+  it("6 telas na ordem do menu, Contatos por último", () => {
     expect(TELAS.map((t) => t.rota)).toEqual([
       "",
       "simulacao",
       "dados",
-      "monitoramento-sc",
       "areas-de-risco",
       "cartilha",
       "contatos",
     ]);
+  });
+});
+
+describe("mostraIndice", () => {
+  it("só Monitoramento, Simulação e Dados exibem índice (aviso de dados desatualizados)", () => {
+    expect(TELAS.filter((x) => mostraIndice(x.rota)).map((x) => x.rota)).toEqual(["", "simulacao", "dados"]);
   });
 });

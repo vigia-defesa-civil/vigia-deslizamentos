@@ -95,10 +95,10 @@ describe("municipioDaBusca", () => {
     expect(municipioDaBusca(indices, "?municipio=4209151")).toBe("4209151");
   });
 
-  it("sem parâmetro, desconhecido ou sem dados: o de maior índice no D0", () => {
-    expect(municipioDaBusca(indices, "")).toBe("4214003");
-    expect(municipioDaBusca(indices, "?municipio=123")).toBe("4214003");
-    expect(municipioDaBusca({ ...indices, municipios_sem_dados: ["4209151"] }, "?municipio=4209151")).toBe("4214003");
+  it("sem parâmetro, desconhecido ou sem dados: nenhum município (o usuário escolhe)", () => {
+    expect(municipioDaBusca(indices, "")).toBeUndefined();
+    expect(municipioDaBusca(indices, "?municipio=123")).toBeUndefined();
+    expect(municipioDaBusca({ ...indices, municipios_sem_dados: ["4209151"] }, "?municipio=4209151")).toBeUndefined();
   });
 });
 
@@ -150,16 +150,18 @@ describe("avisoSimulacao (RN04: sempre condicional)", () => {
     expect(avisoSimulacao(t, { ...base, atual: 1.9, simulado: 1.2 }).texto).toBe("Com 60 mm em 48h o índice ficaria em 1,20 (classe moderado).");
   });
 
-  it("ok: abaixo do nível de alerta", () => {
+  it("ok: sem alerta, no mesmo termo do Monitoramento e em tom condicional (RN04)", () => {
     expect(avisoSimulacao(t, { ...base, atual: 1.5, simulado: 0.66 })).toEqual({
       tipo: "ok",
-      titulo: "Abaixo do nível de alerta",
+      titulo: "Ibirama ficaria sem alerta",
       texto: "Com 60 mm em 48h, Ibirama ficaria na classe muito baixo (0,66).",
     });
   });
 
   it("traduz para o espanhol", () => {
     expect(avisoSimulacao(tradutor("es"), { ...base, atual: 0.8, simulado: 1.2 }).titulo).toBe("Ibirama podría entrar en alerta");
+    expect(avisoSimulacao(tradutor("es"), { ...base, atual: 1.5, simulado: 0.66 }).titulo).toBe("Ibirama quedaría sin alerta");
+    expect(avisoSimulacao(tradutor("en"), { ...base, atual: 1.5, simulado: 0.66 }).titulo).toBe("Ibirama would not be on alert");
   });
 });
 

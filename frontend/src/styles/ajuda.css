@@ -1,0 +1,244 @@
+/* Página de Ajuda: mesmos cartões, cores e tipografia das telas Contatos e Cartilha. */
+
+.ajuda {
+  min-height: 100%;
+  padding: 24px 28px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--surface-100);
+}
+
+.aj-top h1 {
+  margin: 4px 0;
+  font-size: 24px;
+  line-height: 30px;
+  color: var(--ink-brand);
+}
+
+.aj-top p {
+  max-width: 640px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+.aj-video h2,
+.aj-fim h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--ink-brand);
+}
+
+/* Vídeo centralizado, até 960 px; no celular, a largura toda. */
+.aj-video {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.aj-quadro {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--nav-900);
+}
+
+/* Capa: o mapa do VIGIA, escurecido para o texto por cima ter contraste. */
+.aj-capa-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.35;
+}
+
+.aj-legendas {
+  margin: 8px 0 0;
+  font-size: 14px;
+}
+
+.aj-legendas a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  font-weight: 600;
+  color: var(--ink-brand);
+}
+
+.aj-quadro iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.aj-capa {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  border: 0;
+  background: none;
+  color: var(--on-nav);
+  text-align: center;
+}
+
+/* O texto da capa fica num painel escuro: sobre os rótulos do mapa ele perdia contraste. */
+.aj-painel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  max-width: 92%;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--nav-900) 90%, transparent);
+}
+
+.aj-capa svg {
+  width: 56px;
+  height: 56px;
+  color: var(--accent);
+}
+
+.aj-capa b {
+  font-size: 17px;
+}
+
+.aj-capa small {
+  max-width: 420px;
+  font-size: 13px;
+  line-height: 18px;
+  color: var(--nav-muted);
+}
+
+.aj-transcricao {
+  margin-top: 10px;
+  font-size: 14px;
+  line-height: 21px;
+  color: var(--ink);
+}
+
+.aj-transcricao summary {
+  min-height: 24px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.aj-transcricao p {
+  margin: 8px 0 0;
+}
+
+/* Dicas: 3 colunas no desktop, 2 no tablet, 1 no celular; com mais de uma coluna, todos os cartões com a altura
+   do maior (linhas de 1fr) e o último, sozinho na linha, no centro. */
+.aj-dicas {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 12px;
+}
+
+.aj-sec:last-of-type:nth-of-type(3n + 1) {
+  grid-column: 2;
+}
+
+@media (max-width: 1023px) {
+  .aj-dicas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .aj-sec:last-of-type:nth-of-type(3n + 1) {
+    grid-column: auto;
+  }
+
+  .aj-sec:last-of-type:nth-of-type(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: calc((100% - 12px) / 2);
+  }
+}
+
+.aj-sec {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px;
+  background: var(--surface-000);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.aj-sec h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--ink-brand);
+}
+
+.aj-sec ul {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink);
+}
+
+.aj-ir,
+.aj-links a {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 24px;
+  margin-top: auto;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink-brand);
+}
+
+.aj-fim p {
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+.aj-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 6px;
+}
+
+@media (pointer: coarse) {
+  .aj-ir,
+  .aj-links a {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 600px) {
+  .ajuda {
+    padding: 20px 16px 28px;
+  }
+
+  .aj-dicas {
+    grid-template-columns: minmax(0, 1fr);
+    grid-auto-rows: auto;
+  }
+
+  .aj-sec:last-of-type:nth-of-type(odd) {
+    grid-column: auto;
+    width: auto;
+  }
+}

@@ -84,53 +84,35 @@ astro-island {
   font-size: 16px;
   letter-spacing: 0.14em;
   line-height: 16px;
+  white-space: nowrap;
 }
 
+/* Segunda palavra do título, no mesmo peso e sem o espaçamento largo de "VIGIA". */
+.brand b .nome2 {
+  letter-spacing: 0.02em;
+}
+
+/* Subtítulo "Deslizamentos · Alto Vale do Itajaí, SC": texto discreto, em fonte de texto. */
 .brand small {
   display: block;
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.16em;
+  font-size: 12px;
   color: var(--nav-muted);
-  text-transform: uppercase;
-  margin-top: 3px;
-}
-
-.region {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 7px 12px;
-  border: 1px solid var(--nav-700);
-  border-radius: var(--radius-md);
-  background: var(--nav-800);
+  margin-top: 4px;
   white-space: nowrap;
-  min-width: 0;
 }
 
-.region .lbl {
-  color: var(--nav-muted);
-}
-
-.region strong {
-  font-weight: 600;
-  font-size: 13px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Quem cede espaço é a região (reticências), não o botão. */
+/* O Telegram, único botão em destaque, vai para a direita e não encolhe. */
 .hdr .tghdr {
   margin-left: auto;
   flex-shrink: 0;
 }
 
+/* RN11: "Situação de dd/mm/aaaa", em fonte de texto e sempre à vista. */
 .hdr .status {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--nav-muted);
   white-space: nowrap;
 }
@@ -172,9 +154,23 @@ astro-island {
   padding: 0;
 }
 
-.hbtn.a11yb svg {
+.hbtn.a11yb svg,
+.hbtn.ajudab svg {
   width: 20px;
   height: 20px;
+}
+
+/* Acessibilidade e Ajuda: no desktop ficam no rail (Menu); no topo, só no celular. */
+@media (min-width: 901px) {
+  .hbtn.a11yb {
+    display: none;
+  }
+}
+
+/* Ajuda: no desktop fica no rail (Menu); o "?" do topo é só do celular. */
+.hbtn.ajudab {
+  display: none;
+  padding: 0;
 }
 
 .tgdisc {
@@ -194,47 +190,100 @@ astro-island {
   margin-left: -1px;
 }
 
+/* Idioma: botão discreto "PT ▾" (Cabecalho › SeletorIdioma); em destaque no topo fica só o Telegram. */
 .lang {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--nav-700);
-  border-radius: var(--radius-md);
-  background: var(--nav-800);
-  overflow: hidden;
+  position: relative;
   flex: none;
 }
 
-.lang .lg {
-  width: 16px;
-  height: 16px;
-  margin: 0 4px 0 8px;
-  color: var(--nav-muted);
-}
-
-.lang a {
-  display: grid;
-  place-items: center;
-  min-width: 44px;
-  height: 44px;
-  padding: 0 8px;
+.langb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: none;
   color: var(--on-nav);
   font-family: var(--font-mono);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.06em;
+}
+
+.langb:hover,
+.lang.aberto .langb {
+  background: var(--nav-800);
+  border-color: var(--nav-700);
+}
+
+.langb svg {
+  width: 16px;
+  height: 16px;
+  color: var(--nav-muted);
+}
+
+.langb .seta {
+  width: 14px;
+  height: 14px;
+}
+
+.lang.aberto .langb .seta {
+  transform: rotate(180deg);
+}
+
+.lang-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  z-index: 30;
+  min-width: 168px;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--surface-000);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-float);
+}
+
+.lang-menu[hidden] {
+  display: none;
+}
+
+.lang-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  color: var(--ink);
+  font-size: 14px;
   text-decoration: none;
 }
 
-.lang a abbr {
-  text-decoration: none;
+.lang-menu a b {
+  width: 22px;
+  font-family: var(--font-mono);
+  font-size: 12px;
 }
 
-.lang a[aria-current] {
+.lang-menu a:hover {
+  background: var(--surface-050);
+}
+
+.lang-menu a[aria-current] {
   background: var(--accent);
   color: var(--on-accent);
 }
 
-/* RN12 */
+.lang-menu :focus-visible {
+  outline-color: var(--focus);
+}
+
+/* RNF04: aviso de dados desatualizados */
 .faixa-aviso {
   grid-column: 2;
   grid-row: 2;
@@ -463,6 +512,16 @@ astro-island {
 
 .btn.pri:hover {
   background: var(--accent-hover);
+}
+
+/* Desativado (ex.: Simular sem município escolhido). */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn.pri:disabled:hover {
+  background: var(--accent);
 }
 
 .btn svg {
@@ -713,7 +772,7 @@ astro-island {
   position: absolute;
   right: 8px;
   bottom: 3px;
-  font-size: 10px;
+  font-size: 11px;
   color: var(--muted);
   font-family: var(--font-mono);
 }
@@ -807,14 +866,7 @@ astro-island {
 }
 
 /* ---------- celular ---------- */
-/* Entre 901 e 1300 px os itens não cabem numa linha: sai a região (como no celular) e, mais estreito, o
-   texto do Telegram. Antes o carimbo passava da tela e o botão encolhia sob o próprio texto. */
-@media (max-width: 1300px) {
-  .hdr .region {
-    display: none;
-  }
-}
-
+/* Até 1040 px o texto do Telegram sai: antes o carimbo passava da tela e o botão encolhia sob o próprio texto. */
 @media (max-width: 1040px) {
   .hdr .tghdr > span:not(.tgdisc) {
     display: none;
@@ -847,6 +899,10 @@ astro-island {
     display: none;
   }
 
+  .hbtn.ajudab {
+    display: flex;
+  }
+
   /* Os mapas medem a área visível do conteúdo (100cqh), já sem cabeçalho, aviso de dados e barra inferior. */
   #conteudo {
     container-type: size;
@@ -872,10 +928,11 @@ astro-island {
     display: none;
   }
 
+  /* Respiro nas pontas: o rótulo do último item ("Contactos" no espanhol) ficava a 5 px da borda a 393 px. */
   .rail .navlist {
     flex-direction: row;
     flex: 1;
-    padding: 0;
+    padding: 0 clamp(4px, 2.6vw, 12px);
     gap: 0;
     min-width: 0;
   }
@@ -900,7 +957,7 @@ astro-island {
 
   .rail .item .short {
     display: block;
-    font-size: clamp(8.5px, 2.8vw, 11px);
+    font-size: clamp(11px, 3.2vw, 12px);
     letter-spacing: -0.03em;
   }
 
@@ -960,9 +1017,13 @@ astro-island {
   }
 }
 
-/* Com PT, ES e EN o globo não cabe na primeira linha. */
-@media (max-width: 420px) {
-  .lang .lg {
+/* Espaços de 6 px: com o "?" da Ajuda, a primeira linha do topo cabe. Sem espaço, o título fica só "VIGIA". */
+@media (max-width: 460px) {
+  .hdr {
+    column-gap: 6px;
+  }
+
+  .brand b .nome2 {
     display: none;
   }
 }
@@ -970,7 +1031,7 @@ astro-island {
 @media (max-width: 380px) {
   .hdr {
     gap: 6px 4px;
-    padding: 8px 10px;
+    padding: 8px;
   }
 
   /* Com PT, ES e EN a primeira linha não cabia (o botão de acessibilidade descia): sai o círculo da marca e os
@@ -979,10 +1040,6 @@ astro-island {
     display: none;
   }
 
-  .lang a {
-    min-width: 40px;
-    padding: 0 4px;
-  }
 }
 
 /* Carregando / falha ao carregar um arquivo de dados */

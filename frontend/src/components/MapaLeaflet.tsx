@@ -5,8 +5,9 @@ import { MapContainer, Marker, Polygon, TileLayer, Tooltip, useMap } from "react
 import { tradutor, type T } from "../i18n";
 import { CLASSES, infoClasse, SEM_DADOS } from "../lib/classes";
 import { formatarIndice } from "../lib/formato";
-import { CAMADA_NEUTRA, classesDoRotulo, limites, posicoes, pontoInterno, rotulosDeLonge, rotuloAria, type Camada, type FeicaoMunicipio, type LatLon, type Valor } from "../lib/mapa";
+import { CAMADA_NEUTRA, classesDoRotulo, limites, ordemRotulo, posicoes, pontoInterno, rotulosDeLonge, rotulosVisiveis, rotuloAria, type Camada, type FeicaoMunicipio, type LatLon, type Valor } from "../lib/mapa";
 import { FEICOES } from "../lib/municipios";
+import { semMovimento } from "../lib/movimento";
 import type { GrauSetor, Setor } from "../lib/setores";
 import Camadas from "./Camadas";
 import type { Pino, PropsMapa } from "./Mapa";
@@ -41,6 +42,18 @@ function iconeConta(n: number): DivIcon {
 }
 
 const id = (n: number) => `hachura-${n}`;
+
+/** Esconde os rótulos que encostam num de ordem maior (lib/mapa › rotulosVisiveis). Vizinhos têm a menor ordem. */
+function arrumarRotulos(mapa: MapaL) {
+  const els = [...mapa.getContainer().querySelectorAll<HTMLElement>(".leaflet-tooltip.mlabel, .leaflet-tooltip.ctxl")];
+  for (const el of els) el.classList.remove("encoberto");
+  const caixas = els.map((el, i) => {
+    const r = el.getBoundingClientRect();
+    return { id: String(i), ordem: Number(el.dataset.ordem ?? -10), x: r.left, y: r.top, w: r.width, h: r.height };
+  });
+  const visiveis = rotulosVisiveis(caixas);
+  els.forEach((el, i) => el.classList.toggle("encoberto", !visiveis.has(String(i))));
+}
 
 // Gota azul-marinho com miolo branco (protótipo: est.js); a ponta fica na coordenada da estação.
 const ICONE_PINO = divIcon({
@@ -136,12 +149,15 @@ function Municipio({ t, feicao, pos, valor, selecionado, onSelecionar, rotuloMun
     const classes = classesDoRotulo(selecionado, valor);
     rotulo?.classList.toggle("sel", classes.sel);
     rotulo?.classList.toggle("alerta", classes.alerta);
+    if (rotulo) rotulo.dataset.ordem = String(ordemRotulo(selecionado, valor));
     if (selecionado) {
-      // bringToFront move o <path> no DOM e o foco do teclado (Enter no município) se perderia.
+      // bringToFront move o <path> no DOM e o foco do teclado (Enter no município) se perderia. O foco volta
+      // visível só se já era (teclado); depois de um clique, volta sem o tracejado.
       const comFoco = document.activeElement === el;
+      const visivel = comFoco && el.matches(":focus-visible");
       fundo.current?.bringToFront();
       hachura.current?.bringToFront();
-      if (comFoco) el.focus();
+      if (comFoco) el.focus({ preventScroll: true, focusVisible: visivel } as FocusOptions);
     }
   }, [t, ibge, nome, valor, n, selecionado, interativo, rotuloMunicipio]);
 
@@ -237,6 +253,8 @@ export default function MapaLeaflet({
   ref,
 }: PropsMapa) {
   const t = useMemo(() => tradutor(lang), [lang]);
+  // prefers-reduced-motion: zoom (teclado, duplo clique, pinça) e arrasto sem animação. Só vale na criação do mapa.
+  const [reduzido] = useState(() => semMovimento());
   const [mapa, setMapa] = useState<MapaL | null>(null);
   const [fundo, setFundo] = useState<Camada>(CAMADA_NEUTRA);
   const [longeAtual, setLongeAtual] = useState(false);
@@ -283,6 +301,31 @@ export default function MapaLeaflet({
       mapa.off("zoomend", marcar);
     };
   }, [mapa]);
+
+  // Rótulos que se tocam: fica o de maior ordem. Refaz ao mudar o zoom, o tamanho do mapa, os valores (dia) e a
+  // seleção. Também no "resize" e no "moveend" do Leaflet: é quando ele termina de reposicionar os rótulos depois de
+  // remedir o mapa (abrir ou fechar o painel do município muda a largura). O quadro seguinte espera o Leaflet.
+  useEffect(() => {
+    if (!mapa) return;
+    let quadro = 0;
+    const arrumar = () => {
+      cancelAnimationFrame(quadro);
+      quadro = requestAnimationFrame(() => arrumarRotulos(mapa));
+    };
+    arrumar();
+    mapa.on("zoomend resize moveend", arrumar);
+    const observador = new ResizeObserver(arrumar);
+    observador.observe(mapa.getContainer());
+    // A fonte do site chega depois do primeiro desenho e muda a largura dos rótulos.
+    document.fonts?.ready.then(arrumar);
+    document.fonts?.addEventListener("loadingdone", arrumar);
+    return () => {
+      cancelAnimationFrame(quadro);
+      document.fonts?.removeEventListener("loadingdone", arrumar);
+      mapa.off("zoomend resize moveend", arrumar);
+      observador.disconnect();
+    };
+  }, [mapa, valores, selecionado, longeAtual]);
 
   // O Leaflet só remede o container no resize da janela; quando a página muda a altura do mapa
   // (faixa de aviso que aparece depois), o tamanho antigo faria o fitBounds passar da borda.
@@ -333,27 +376,27 @@ export default function MapaLeaflet({
   useEffect(() => {
     if (!mapa || !temSetores || !selecionado || setorSelecionado) return;
     const f = MONITORADOS.find((x) => x.feicao.properties.ibge === selecionado)?.feicao;
-    if (f) mapa.fitBounds(limites([f]), { padding: [24, 24] });
+    if (f) mapa.fitBounds(limites([f]), { padding: [24, 24], animate: !semMovimento() });
   }, [mapa, temSetores, selecionado, setorSelecionado]);
 
   // Volta à região (tinha município ou setor e não tem mais): reenquadra a região. Nunca na abertura.
   const tinhaSelecao = useRef(false);
   useEffect(() => {
     const tem = !!(selecionado || setorSelecionado);
-    if (mapa && temSetores && tinhaSelecao.current && !tem) mapa.fitBounds(LIMITES, { padding: [24, 24] });
+    if (mapa && temSetores && tinhaSelecao.current && !tem) mapa.fitBounds(LIMITES, { padding: [24, 24], animate: !semMovimento() });
     tinhaSelecao.current = tem;
   }, [mapa, temSetores, selecionado, setorSelecionado]);
 
   // Setor selecionado: enquadra o setor, com zoom máximo limitado.
   useEffect(() => {
     const s = setoresRef.current.find((x) => x.id === setorSelecionado);
-    if (mapa && s) mapa.fitBounds(polygon(s.aneis).getBounds(), { maxZoom: 16, padding: [32, 32] });
+    if (mapa && s) mapa.fitBounds(polygon(s.aneis).getBounds(), { maxZoom: 16, padding: [32, 32], animate: !semMovimento() });
   // temSetores: com a seleção vinda da URL, os setores chegam depois; reenquadra quando carregam.
   }, [mapa, setorSelecionado, temSetores]);
 
   return (
     <>
-      <MapContainer ref={setMapa} fadeAnimation={false} bounds={enquadramento} boundsOptions={{ padding: comPinos ? [48, 48] : [24, 24] }} zoomSnap={0.25} zoomControl={false} className="mapa">
+      <MapContainer ref={setMapa} fadeAnimation={false} zoomAnimation={!reduzido} markerZoomAnimation={!reduzido} inertia={!reduzido} bounds={enquadramento} boundsOptions={{ padding: comPinos ? [48, 48] : [24, 24] }} zoomSnap={0.25} zoomControl={false} className="mapa">
         <TileLayer
           key={fundo.id}
           url={fundo.url}
@@ -413,10 +456,10 @@ export default function MapaLeaflet({
         <Hachuras />
       </MapContainer>
       <div className="float zoom">
-        <button type="button" aria-label={t("Aproximar")} onClick={() => mapa?.zoomIn()}>
+        <button type="button" aria-label={t("Aproximar")} onClick={() => mapa?.zoomIn(1, { animate: !semMovimento() })}>
           +
         </button>
-        <button type="button" aria-label={t("Afastar")} onClick={() => mapa?.zoomOut()}>
+        <button type="button" aria-label={t("Afastar")} onClick={() => mapa?.zoomOut(1, { animate: !semMovimento() })}>
           −
         </button>
       </div>

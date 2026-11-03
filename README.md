@@ -81,9 +81,9 @@ O VIGIA **não reproduz integralmente** o GeoRisk: aplica as mesmas equações c
 
 O limiar crítico é o valor mínimo de chuva acumulada que, quando superado, indica possibilidade de deflagração de deslizamentos. No GeoRisk, cada município possui um único limiar de referência, calculado para acumulados de 24 horas e extrapolado para todo o território municipal.
 
-Para municípios não monitorados pelo Cemaden ou sem áreas suscetíveis mapeadas, o GeoRisk adota um limiar hipotético padrão de **250 mm**, e recomenda usar apenas os resultados de análise regional.
+Nos municípios monitorados, o GeoRisk usa limiares calibrados pelo Cemaden. Para municípios não monitorados ou sem áreas suscetíveis mapeadas, adota um limiar hipotético padrão de **250 mm**, e recomenda usar apenas os resultados de análise regional.
 
-No VIGIA, o limiar é um **parâmetro de configuração por município**, versionado no repositório e documentado com a respectiva fonte. Enquanto não houver valor de fonte oficial, os 27 municípios usam um limiar provisório de **100 mm**, definido pela equipe com base nos critérios de deslizamento da [Defesa Civil de Blumenau](https://defesacivil.blumenau.sc.gov.br/c/geologia/escorregamentos), vizinha da região, que entra em alerta a partir de 100 mm em 24 h (adaptado de Pinheiro et al., 2005, e AlertaRio, 2013). O hipotético de 250 mm do GeoRisk deixava o alerta só para chuvas acima de cerca de 230 mm, bem além do que a Defesa Civil da região considera crítico.
+No VIGIA, o limiar é um **parâmetro de configuração por município**, versionado no repositório e documentado com a respectiva fonte. Os 27 municípios usam hoje **100 mm**, um **parâmetro de demonstração escolhido pela equipe**. Não é um valor do GeoRisk nem um limiar calibrado pelo Cemaden, e deve ser trocado em `backend/config/municipios.json` quando houver limiar oficial para cada município. A equipe escolheu o valor com base nos critérios de deslizamento da [Defesa Civil de Blumenau](https://defesacivil.blumenau.sc.gov.br/c/geologia/escorregamentos), vizinha da região, que entra em alerta a partir de 100 mm em 24 h (adaptado de Pinheiro et al., 2005, e AlertaRio, 2013). O hipotético de 250 mm do GeoRisk deixava o alerta só para chuvas acima de cerca de 230 mm, bem além do que a Defesa Civil da região considera crítico.
 
 ### Chuva efetiva antecedente
 
@@ -150,7 +150,7 @@ Conforme o manual, essas probabilidades são **informação secundária** — o 
 | Grade de cálculo | Grade de 5 km × 5 km sobre todo o território nacional | Pontos representativos por município (centróide e pontos adicionais conforme a extensão territorial) |
 | Modelos de previsão | 15 a 25 rodadas de GEFS, GFS, WRF, Eta e ECMWF, obtidas direto da fonte | Modelos e ensembles disponibilizados via API pública (a definir na integração) |
 | Pesos do ensemble | Recalibrados periodicamente por matriz de confusão contra ocorrências reais | Pesos fixos por recência e horário de assimilação, **sem calibração** |
-| Limiar crítico | Calibrado por município pelo Cemaden | Parâmetro de configuração, com fonte documentada; provisório de 100 mm nos 27 municípios |
+| Limiar crítico | Calibrado por município pelo Cemaden | Parâmetro de configuração, com fonte documentada; 100 mm de demonstração nos 27 municípios, até haver limiar oficial |
 | Meia-vida (MV) | Valor por município quando há estudo disponível | 24 horas (padrão) para todos os municípios |
 | Validação | Matriz de confusão contra o REINDESC (2017–presente) | Sem validação estatística — ver limitações |
 
@@ -163,6 +163,7 @@ Conforme o manual, essas probabilidades são **informação secundária** — o 
 - **O sistema tem melhor desempenho para deslizamentos do tipo translacional raso**, conforme o manual.
 - **Horários em UTC.** O conceito de "dia-alvo" da metodologia é ancorado em UTC; a conversão para o horário de Brasília (UTC-3) precisa ser tratada explicitamente no cálculo e na exibição.
 - **Os dias anteriores ao início do sistema são estimativa.** Na tela Dados, os dias de 15/10/2025 a 14/10/2026 são reconstruídos com a chuva de reanálise ERA5 (Open-Meteo) e os parâmetros atuais, sem ensemble. O índice publicado na época não existe para esses dias, e a reconstrução não é dado oficial. A reanálise suaviza chuvas fortes e localizadas, então tende a subestimar picos, justamente os dias de alerta. Dias de alerta podem não aparecer.
+- **Os índices calculados antes da troca de limiar usaram 150 mm.** Do início do sistema (15/10/2026) até a troca para 100 mm, o pipeline calculou com 150 mm. Na tela Dados esses dias aparecem convertidos para 100 mm (índice × 1,5), e o gráfico de evolução marca o dia da troca com uma nota explicando a conversão.
 
 ## Funcionamento
 
@@ -241,13 +242,13 @@ A RADIAN divide um sistema de apoio à decisão para desastres naturais em duas 
 
 | Bloco RADIAN | No VIGIA |
 |---|---|
-| Sistema de Interface do Usuário | 7 telas, idiomas PT/ES/EN, acessibilidade e contatos de emergência |
+| Sistema de Interface do Usuário | 6 telas e a página de Ajuda, idiomas PT/ES/EN, acessibilidade e contatos de emergência |
 | Sistemas Cognitivos — Análise e Tomada de Decisão | Mapa de risco, painel do município, previsões D0–D3, simulação, dados da análise e cartilha (FAQ) |
 | Sistemas Cognitivos — Supervisão da Execução de Decisões | Geração e envio de alertas pelo Telegram |
 | Sistemas de Gerenciamento de Dados e Conhecimento | Banco SQLite (índices calculados e inscritos do bot), malhas IBGE e estações |
 | Sistemas de Suporte | Privacidade (LGPD): o site não coleta dados pessoais; o bot guarda só o chat e os municípios escolhidos |
-| Sistemas de Infraestrutura Computacional | Coleta (Open-Meteo, INMET), cálculo e integração com IBGE, Defesa Civil SC (iframe) e Telegram |
-| Ecossistema | Open-Meteo, INMET, Epagri/Ciram, IBGE, Cemaden (referência metodológica), Defesa Civil SC, Telegram, OpenStreetMap, Google Maps (links "como chegar") |
+| Sistemas de Infraestrutura Computacional | Coleta (Open-Meteo, INMET), cálculo e integração com IBGE e Telegram |
+| Ecossistema | Open-Meteo, INMET, IBGE, Cemaden (referência metodológica), Defesa Civil SC (link para o painel oficial), Telegram, OpenStreetMap, Google Maps (links "como chegar") |
 
 Não se aplicam ao projeto o módulo Planejamento da Execução (abrigos, doações, resgates) e as macrofuncionalidades de decisão multicritério, plataforma colaborativa, governança/auditoria e atuação sobre sistemas físicos.
 
@@ -308,13 +309,13 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 
 | Tela | Rota | Conteúdo principal |
 |---|---|---|
-| Monitoramento | `/` | Mapa colorido pela classe de risco, resumo "N de 6 em alerta", previsões D0–D3, busca, legenda e painel do município |
+| Monitoramento | `/` | Mapa colorido pela classe de risco, resumo "N de 27 em alerta" com a data e a hora da última atualização, previsões D0–D3, busca, legenda e painel do município |
 | Simulação | `/simulacao` | Município, período e chuva informada; o mapa recolore e compara a situação atual com a simulada |
 | Dados da análise | `/dados` | Indicadores, evolução do índice em 7 dias (padrão), 30 dias ou um período personalizado de até 1 ano, chuva acumulada e tabela por município (minigráfico dos últimos 7 dias) |
-| Monitoramento SC | `/monitoramento-sc` | Mapa oficial da Defesa Civil de SC incorporado, com link para o site |
 | Áreas de risco | `/areas-de-risco` | Setores de risco geológico do SGB e ocorrências por município; estações do INMET como camada opcional |
 | Cartilha | `/cartilha` | Sinais de perigo, o que fazer antes/durante/depois, mochila de emergência, "não faça". Cada seção cita suas fontes oficiais: Defesa Civil Nacional (MDR), Serviço Geológico do Brasil (SGB), Defesa Civil de SC, Ministério das Comunicações, Defesa Civil do Paraná e SP Sempre Alerta |
-| Contatos | `/contatos` | Números de emergência e Defesa Civil de cada município |
+| Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e Defesa Civil de cada município |
+| Ajuda | `/ajuda` | Quadro do vídeo tutorial no topo (capa do mapa; carrega só ao clicar, com legendas e transcrição) e dicas de uso de cada tela e do bot. Fica no rail do desktop e no "?" do topo no celular, fora da barra inferior |
 
 Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram".
 
@@ -332,7 +333,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RF07** — Exibir probabilidades complementares, fontes e dados brutos com data da coleta, e, se viável, a camada de suscetibilidade do CPRM (ainda sem tela no protótipo). O histórico de ocorrências fica em Áreas de risco.
 
 **Informação à população**
-- **RF08** — Incorporar o mapa oficial da Defesa Civil de SC; se o site bloquear, mostrar só o link.
+- **RF08** — Indicar, na tela Contatos, o painel oficial da Defesa Civil de SC como link externo, com uma frase explicando o que ele mostra.
 - **RF09** — Mostrar a localização das estações de monitoramento do INMET, com tipo, município e fonte, como camada opcional em Áreas de risco.
 - **RF10** — Apresentar a cartilha de autoproteção e os contatos de emergência e das Defesas Civis municipais.
 
@@ -340,6 +341,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RF11** — Levar o usuário ao bot do Telegram, onde ele escolhe os municípios (`/start`), consulta a situação (`/status`) e cancela (`/parar`).
 - **RF12** — Enviar aviso aos inscritos quando um município atingir índice ≥ 1,00.
 - **RF13** — Oferecer português, espanhol e inglês, tema claro ou escuro (sem escolha, segue o sistema) e paleta de cores para daltonismo, lembrando a escolha do usuário.
+- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo só é carregado (via youtube-nocookie.com) quando o usuário pede; sem o ID do vídeo (`VIDEO_AJUDA_ID` em `frontend/src/lib/config.ts`) ou sem a transcrição, o quadro mostra a capa com "Vídeo tutorial em produção".
 
 ### Requisitos não funcionais
 
@@ -347,7 +349,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RNF02 — Responsividade:** funcionar de 320 px até desktop sem rolagem lateral.
 - **RNF03 — Desempenho:** página principal carregada em até 2,5 s em conexão 4G; simulação e troca de dia em até 500 ms.
 - **RNF04 — Disponibilidade:** se a atualização falhar, exibir o último índice válido com data e hora.
-- **RNF05 — Privacidade (LGPD):** o site não coleta dados pessoais; o bot guarda só o identificador do chat e os municípios escolhidos, apagados com `/parar` ou quando o usuário bloqueia o bot.
+- **RNF05 — Privacidade (LGPD):** o site não coleta dados pessoais; o bot guarda só o identificador do chat e os municípios escolhidos, apagados com `/parar` ou quando o usuário bloqueia o bot. Vídeos incorporados só carregam depois de um clique, pelo domínio sem cookies do YouTube.
 - **RNF06 — Segurança:** acesso somente por HTTPS e nenhum token ou chave exposto no frontend.
 - **RNF07 — Manutenibilidade:** parâmetros de cada município em configuração, para incluir municípios sem alterar o código.
 
@@ -359,10 +361,10 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RN04** — Todo texto de risco é condicional ("poderá entrar em alerta"), e toda tela com índice informa que o VIGIA não emite alerta oficial.
 - **RN05** — Números usam vírgula decimal.
 - **RN06** — Previsões (D1–D3) aparecem sempre marcadas como valores estimados.
-- **RN07** — A simulação usa a mesma equação do subíndice, trocando a chuva prevista pela chuva informada: (EfR + chuva) ÷ limiar. Ela não altera dados reais e não dispara alertas (o protótipo ainda usa uma fórmula ilustrativa).
+- **RN07** — A simulação usa a mesma equação do subíndice, trocando a chuva prevista pela chuva informada: (EfR × 0,5^((h − 24) ÷ MV) + chuva) ÷ limiar, em que h é o período escolhido (24, 48 ou 72 h) e o EfR do D0 decai pela meia-vida até o fim do período (com 24 h, fica (EfR + chuva) ÷ limiar). Ela não altera dados reais e não dispara alertas.
 - **RN08** — O aviso do bot não se repete enquanto o município permanecer na mesma classe.
-- **RN09** — Só vão ao ar contatos verificados com a prefeitura.
-- **RN10** — O mapa oficial de SC só é incorporado com autorização, mantendo o crédito da fonte.
+- **RN09** — Os números de emergência (199, 193, 192) aparecem sempre. Os 27 municípios têm um card, em ordem alfabética, com os contatos publicados no site oficial da prefeitura ou da Defesa Civil municipal, o link dessa fonte e a data da consulta. Sem contato oficial da Defesa Civil, o card mostra o telefone geral da prefeitura e os números de emergência.
+- **RN10** — O VIGIA não incorpora sites oficiais: o painel da Defesa Civil de SC aparece só como link, na tela Contatos, com o crédito da fonte.
 - **RN11** — Dia-alvo e horário da última atualização ficam sempre visíveis.
 
 ## Tecnologias
@@ -379,7 +381,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **Hospedagem do backend:** GitHub Actions (pipeline) e Cloudflare Workers (bot)
 - **Arquitetura de referência:** RADIAN
 - **Idiomas:** Português, Espanhol e Inglês
-- **Acessibilidade:** verificação com axe-core antes de cada publicação
+- **Acessibilidade:** verificação com axe-core (WCAG 2.1 A e AA, temas claro e escuro, a 1366 e a 320 px, sem depender dos tiles externos) e testes de interação no navegador (`scripts/interacao.mjs`: foco, sobreposições no mapa, celular) em todo PR, no job `a11y` do CI
 
 > **Sobre a escolha do backend:** o GitHub Pages serve apenas conteúdo estático, e o bot com inscrição por usuário exige um banco de inscritos e algo que responda ao Telegram a qualquer hora. A solução sem servidor próprio é o Worker, que responde por webhook e guarda os inscritos no D1, e o Actions, que roda o pipeline por agendamento. Python foi escolhido por concentrar as bibliotecas adequadas ao tipo de processamento da metodologia (séries horárias, decaimento exponencial, agregação de ensemble) e por ter a biblioteca de bot mais madura para o caso de uso.
 
@@ -387,29 +389,53 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 
 ```
 vigia-deslizamentos/
+├── .github/workflows/
+│   ├── ci.yml               # Testes do frontend, backend e Worker, build e axe-core em todo PR
+│   ├── pages.yml            # Build e publicação do site no GitHub Pages
+│   └── pipeline.yml         # Pipeline agendado (3, 9, 15 e 21 UTC) e branch estado
 ├── backend/
 │   ├── app/
-│   │   ├── coleta/          # Clientes das APIs de precipitação
-│   │   ├── calculo/         # Chuva efetiva, subíndices, índice de risco
-│   │   ├── classificacao/   # Classes de risco e probabilidades
-│   │   ├── bot/             # Mensagens e avisos do Telegram
-│   │   ├── exportacao/      # Geração do indices.json consumido pelo frontend
-│   │   └── modelos/         # Modelos de dados e persistência
+│   │   ├── coleta/          # Open-Meteo (chuva antecedente e ensemble) e INMET (estações)
+│   │   ├── calculo/         # Chuva efetiva, subíndice, índice e agregação por dia-alvo
+│   │   ├── classificacao/   # Classes de risco e probabilidades complementares
+│   │   ├── modelos/         # Tipos compartilhados e persistência em SQLite
+│   │   ├── exportacao/      # indices.json, historico.json e bot.json; publicação por commit
+│   │   ├── bot/             # Mensagens, inscrição, regra de aviso (RN08) e envio
+│   │   ├── config.py        # Variáveis de ambiente e municipios.json
+│   │   ├── pipeline.py      # Uma execução inteira: coleta → cálculo → publicação → avisos
+│   │   └── main.py          # --uma-vez (Actions) ou serviço (bot + agendador)
 │   ├── config/
-│   │   └── municipios.json  # Limiar, meia-vida e pontos de cálculo por município
-│   └── tests/
-├── bot-worker/              # Worker do Telegram (webhook, inscritos no D1)
+│   │   └── municipios.json  # Limiar, meia-vida, pontos de cálculo e microrregião por município
+│   ├── scripts/             # Geradores dos dados estáticos e preparação da branch estado
+│   ├── deploy/              # Unidade systemd (alternativa ao Actions)
+│   └── tests/               # Suíte pytest, sem rede
+├── bot-worker/              # Cloudflare Worker do Telegram
+│   ├── src/                 # Webhook, comandos /start, /status e /parar, inscritos no D1
+│   ├── test/                # Testes (vitest) e fixture do bot.json gerada pelo backend
+│   └── migrations/          # Schema do D1
 ├── frontend/
 │   ├── src/
-│   │   ├── components/      # Componentes de interface (React)
-│   │   ├── layouts/         # Layouts Astro
-│   │   ├── pages/           # Páginas do site
-│   │   └── data/            # GeoJSON dos municípios e camadas estáticas
-│   └── public/
-└── docs/                    # Metodologia, fontes de dados e decisões de projeto
+│   │   ├── pages/[...lang]/ # As 6 telas e a Ajuda, geradas em PT (/), ES (/es/) e EN (/en/)
+│   │   ├── layouts/         # Layout Astro comum (menu, cabeçalho, tema)
+│   │   ├── components/      # Componentes React das telas
+│   │   ├── lib/             # Regras e formatação das telas, com testes
+│   │   ├── i18n/            # Traduções ES e EN (o português é a chave)
+│   │   ├── styles/          # CSS por tela e tokens de cor
+│   │   ├── conteudo/        # Textos da Cartilha
+│   │   ├── data/            # GeoJSON dos municípios
+│   │   └── fixtures/        # Dados de exemplo do npm run dev e dos testes
+│   ├── public/data/         # JSON publicados: índices, históricos, contatos, estações,
+│   │                        # ocorrências e setores de risco
+│   └── scripts/             # Geração do GeoJSON, axe-core e testes de interação no navegador
+└── docs/
+    ├── contratos-de-dados.md  # Formato dos arquivos trocados entre backend, bot e site
+    ├── indices.schema.json    # JSON Schema do indices.json
+    ├── pendencias.md          # Pendências de desenvolvimento
+    ├── decisoes/              # Decisões de fontes, convenções e pesos do ensemble
+    ├── diagramas/             # Diagrama de casos de uso
+    ├── auditoria/             # Auditoria README × código
+    └── superpowers/           # Especificações e planos de implementação
 ```
-
-> Estrutura sujeita a ajustes conforme o projeto evolui.
 
 ## Roteiro de desenvolvimento
 

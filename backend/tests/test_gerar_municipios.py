@@ -10,8 +10,8 @@ import pytest
 
 from scripts.gerar_municipios import (
     COMMIT_MALHA,
-    FONTE_LIMIAR_PROVISORIA,
-    LIMIAR_PROVISORIO_MM,
+    FONTE_LIMIAR_DEMONSTRACAO,
+    LIMIAR_DEMONSTRACAO_MM,
     centroide,
     chave_de_ordem,
     dentro,
@@ -71,7 +71,7 @@ ATUAL = {
     "ibge": "4206900",
     "nome": "Ibirama",
     "limiar_mm": 150,
-    "fonte_limiar": FONTE_LIMIAR_PROVISORIA,
+    "fonte_limiar": FONTE_LIMIAR_DEMONSTRACAO,
     "mv_h": 24,
     "pontos": [{"lat": -27.0181, "lon": -49.5286}],
 }
@@ -91,8 +91,8 @@ def test_mescla_preserva_o_atual_e_acrescenta_o_novo():
     assert lontras == {
         "ibge": "4209003",
         "nome": "Lontras",
-        "limiar_mm": LIMIAR_PROVISORIO_MM,
-        "fonte_limiar": FONTE_LIMIAR_PROVISORIA,
+        "limiar_mm": LIMIAR_DEMONSTRACAO_MM,
+        "fonte_limiar": FONTE_LIMIAR_DEMONSTRACAO,
         "mv_h": 24,
         "pontos": [{"lat": -27.0, "lon": -49.5}],
         "microrregiao": {"codigo": "42011", "nome": "Rio do Sul"},
@@ -151,8 +151,16 @@ def test_arquivo_versionado_tem_os_27_e_os_6_atuais_intactos():
         assert {k: v for k, v in por_ibge[ibge].items() if k != "microrregiao"} == {
             "ibge": ibge,
             "nome": nome,
-            "limiar_mm": LIMIAR_PROVISORIO_MM,
-            "fonte_limiar": FONTE_LIMIAR_PROVISORIA,
+            "limiar_mm": LIMIAR_DEMONSTRACAO_MM,
+            "fonte_limiar": FONTE_LIMIAR_DEMONSTRACAO,
             "mv_h": 24,
             "pontos": [{"lat": lat, "lon": lon}],
         }
+
+
+def test_limiar_e_parametro_de_demonstracao_nos_27():
+    """O README chama os 100 mm de parâmetro de demonstração da equipe: a fonte gravada diz o mesmo."""
+    assert "de demonstração" in FONTE_LIMIAR_DEMONSTRACAO
+    assert "provisório" not in FONTE_LIMIAR_DEMONSTRACAO
+    dados = json.loads((RAIZ / "backend" / "config" / "municipios.json").read_text(encoding="utf-8"))
+    assert {m["fonte_limiar"] for m in dados} == {FONTE_LIMIAR_DEMONSTRACAO}

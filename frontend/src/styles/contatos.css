@@ -170,24 +170,6 @@
   color: var(--ink-brand);
 }
 
-.cc .tag {
-  margin-left: auto;
-  padding: 4px 7px;
-  border-radius: var(--radius-sm);
-  font-family: var(--font-mono);
-  font-size: 10px;
-  line-height: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-.cc .tag.ok {
-  background: var(--surface-050);
-  color: var(--status-ok);
-  border: 1px solid var(--line);
-}
-
 .cc dl {
   display: grid;
   grid-template-columns: 22px 1fr;
@@ -232,11 +214,6 @@
   }
 }
 
-.cc .pend-t {
-  color: var(--muted);
-  font-style: italic;
-}
-
 .cc .acts {
   display: flex;
   flex-wrap: wrap;
@@ -246,6 +223,37 @@
 
 .cc .acts .btn {
   flex: 1 1 130px;
+}
+
+/* Painel oficial da Defesa Civil de SC: um cartão .cc com texto e link externo. */
+.painel-sc {
+  scroll-margin-top: 16px;
+}
+
+.painel-sc p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--ink-2);
+}
+
+.painel-sc .btn {
+  align-self: flex-start;
+}
+
+/* RN09: de onde veio o contato e quando foi consultado. */
+.cfonte {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.cfonte a {
+  color: var(--ink-brand);
+}
+
+.cc dd.emerg-cc {
+  font-size: 14px;
 }
 
 .cnote {

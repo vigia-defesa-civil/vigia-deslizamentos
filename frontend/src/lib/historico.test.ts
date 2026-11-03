@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { classe } from "./classes";
-import { avisoHistorico, combinarHistorico, lerHistorico, primeiroDiaReal, type ArquivoHistorico } from "./historico";
+import { avisoHistorico, combinarHistorico, lerHistorico, marcaDaTroca, primeiroDiaReal, trocaDeLimiar, trocaVisivel, type ArquivoHistorico } from "./historico";
 import type { Municipio } from "./tipos";
 
 const arq = (inicio: string, indices: (number | null)[]) => ({ schema_version: 1, fonte: "f", municipios: { "4214805": { inicio, indices } } });
@@ -66,4 +66,61 @@ describe("avisoHistorico", () => {
   it("lacuna sem falha: texto de histórico curto", () => expect(avisoHistorico({ ...base, com: 10, falhou: false })).toEqual({ tipo: "curto", n: 10 }));
   it("7 dias nunca diz falha", () => expect(avisoHistorico({ ...base, tipo: 7, inicioEixo: "2026-10-10", com: 3 })).toEqual({ tipo: "curto", n: 3 }));
   it("carregando e além do indices: nada", () => expect(avisoHistorico({ ...base, com: 10, carregando: true })).toBeNull());
+});
+
+describe("limiar_anterior", () => {
+  const comTroca = (limiar_anterior: unknown) => ({
+    schema_version: 1,
+    fonte: "f",
+    municipios: { "4206900": { inicio: "2026-10-20", indices: [0.6, 0.75, 0.5], limiar_anterior } },
+  });
+
+  it("lerHistorico aceita limiar_anterior válido e arquivo sem ele", () => {
+    expect(lerHistorico(comTroca({ limiar_mm: 150, ate: "2026-10-21" })).ok).toBe(true);
+    expect(lerHistorico(arq("2026-10-20", [0.5])).ok).toBe(true);
+  });
+
+  it("lerHistorico recusa limiar_anterior com data, limiar ou tipo inválido", () => {
+    for (const invalido of [{ limiar_mm: 150, ate: "21/10/2026" }, { limiar_mm: 0, ate: "2026-10-21" }, { limiar_mm: "150", ate: "2026-10-21" }, null]) {
+      expect(lerHistorico(comTroca(invalido))).toEqual({ ok: false, erro: expect.stringContaining("limiar_anterior") });
+    }
+  });
+
+  it("trocaDeLimiar devolve o dia da troca e os dois limiares", () => {
+    const real = lerOk(comTroca({ limiar_mm: 150, ate: "2026-10-21" }));
+    expect(trocaDeLimiar(real, "4206900", 100)).toEqual({ ate: "2026-10-21", dia: "2026-10-22", anterior_mm: 150, atual_mm: 100 });
+  });
+
+  it("trocaDeLimiar sem o campo, sem o município ou sem o arquivo é null", () => {
+    expect(trocaDeLimiar(lerOk(arq("2026-10-20", [0.5])), "4214805", 100)).toBeNull();
+    expect(trocaDeLimiar(lerOk(comTroca({ limiar_mm: 150, ate: "2026-10-21" })), "4205100", 100)).toBeNull();
+    expect(trocaDeLimiar(undefined, "4206900", 100)).toBeNull();
+  });
+
+  it("trocaVisivel só quando o eixo tem dias convertidos", () => {
+    const troca = { ate: "2026-10-21", dia: "2026-10-22", anterior_mm: 150, atual_mm: 100 };
+    expect(trocaVisivel(troca, ["2026-10-20", "2026-10-21", "2026-10-22"])).toBe(true);
+    expect(trocaVisivel(troca, ["2026-10-22", "2026-10-23"])).toBe(false);
+    expect(trocaVisivel(null, ["2026-10-20"])).toBe(false);
+    expect(trocaVisivel(troca, [])).toBe(false);
+  });
+
+  it("trocaVisivel ignora os dias reconstruídos, já calculados com o limiar atual", () => {
+    const troca = { ate: "2026-10-21", dia: "2026-10-22", anterior_mm: 150, atual_mm: 100 };
+    // Período inteiro antes do início do sistema (15/10): nenhum dia convertido.
+    expect(trocaVisivel(troca, ["2026-10-01", "2026-10-14"], "2026-10-15")).toBe(false);
+    // Período que alcança um dia real até a troca: há dia convertido.
+    expect(trocaVisivel(troca, ["2026-10-13", "2026-10-14", "2026-10-15"], "2026-10-15")).toBe(true);
+    // Sem reconstrução, todo dia até `ate` é convertido.
+    expect(trocaVisivel(troca, ["2026-10-01"], null)).toBe(true);
+  });
+
+  it("marcaDaTroca só quando a nota aparece e o dia da troca não é a borda esquerda do gráfico", () => {
+    const troca = { ate: "2026-10-21", dia: "2026-10-22", anterior_mm: 150, atual_mm: 100 };
+    expect(marcaDaTroca(troca, ["2026-10-21", "2026-10-22", "2026-10-23"], null)).toBe(1);
+    // O período começa no dia da troca: nenhum dia convertido à vista, sem marca.
+    expect(marcaDaTroca(troca, ["2026-10-22", "2026-10-23"], null)).toBe(-1);
+    expect(marcaDaTroca(troca, ["2026-10-01", "2026-10-14"], "2026-10-15")).toBe(-1);
+    expect(marcaDaTroca(null, ["2026-10-21", "2026-10-22"], null)).toBe(-1);
+  });
 });

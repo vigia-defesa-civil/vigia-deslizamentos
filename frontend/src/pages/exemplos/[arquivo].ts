@@ -1,6 +1,9 @@
 import type { APIRoute, GetStaticPaths } from "astro";
+import indices from "../../fixtures/indices.exemplo.json";
+import { exemploParaHoje } from "../../lib/exemplos";
 
-// Só em desenvolvimento: serve src/fixtures/*.exemplo.json em /exemplos/<nome>.json (ver .env.development).
+// Só em desenvolvimento: serve src/fixtures/*.exemplo.json em /exemplos/<nome>.json (ver .env.development),
+// com as datas deslocadas para o D0 cair em hoje.
 const exemplos = import.meta.glob<{ default: unknown }>("../../fixtures/*.exemplo.json", { eager: true });
 
 export const getStaticPaths: GetStaticPaths = () =>
@@ -11,4 +14,4 @@ export const getStaticPaths: GetStaticPaths = () =>
       }))
     : [];
 
-export const GET: APIRoute = ({ props }) => Response.json(props.dados);
+export const GET: APIRoute = ({ props }) => Response.json(exemploParaHoje(props.dados, indices.dia_alvo_d0));

@@ -81,4 +81,10 @@ export interface Contato {
   email: string | null;
   endereco: string | null;
   site: string | null;
+  /** RN09: página oficial (prefeitura ou Defesa Civil municipal) de onde vieram os dados, se não verificado. */
+  fonte?: string | null;
+  /** Data da consulta à fonte (AAAA-MM-DD). */
+  consultado_em?: string | null;
+  /** De quem é o telefone: da Defesa Civil municipal ou o geral da prefeitura. */
+  telefone_de?: "defesa_civil" | "prefeitura" | null;
 }

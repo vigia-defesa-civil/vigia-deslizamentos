@@ -1,5 +1,7 @@
 // Regras da tela Monitoramento: resumo do dia, município inicial e variáveis do painel.
+import type { T } from "../i18n";
 import { emAlerta } from "./classes";
+import { formatarData, formatarDataHora, formatarHora, hojeEmBrasilia } from "./formato";
 import type { Dia, IndiceClasse, Indices, Municipio } from "./tipos";
 
 export interface Resumo {
@@ -45,8 +47,19 @@ export function variaveis(m: Pick<Municipio, "limiar_mm">, dia: Pick<Dia, "efr_m
   return { efr_mm: dia.efr_mm, limiar_mm: m.limiar_mm, razao, barra: Math.min(100, razao * 100), n_membros: dia.n_membros };
 }
 
-/** `?municipio=<ibge>` se é um município conhecido (com ou sem índice); senão, o inicial. */
-export function selecaoDaBusca(indices: Indices, busca: string, conhecidos: ReadonlyMap<string, string>): string | undefined {
+/**
+ * `?municipio=<ibge>` se é um município conhecido (com ou sem índice). Sem o parâmetro (ou desconhecido), nenhum:
+ * o site abre com o mapa inteiro e sem painel, e não lembra o último município entre visitas.
+ */
+export function selecaoDaBusca(busca: string, conhecidos: ReadonlyMap<string, string>): string | undefined {
   const ibge = new URLSearchParams(busca).get("municipio");
-  return ibge && conhecidos.has(ibge) ? ibge : municipioInicial(indices);
+  return ibge && conhecidos.has(ibge) ? ibge : undefined;
 }
+
+/** RN11: data e hora da última atualização (`gerado_em`), no horário de Brasília. */
+export const textoAtualizacao = (t: T, gerado_em: string): string =>
+  t("Atualizado em {N} (horário de Brasília)", { N: formatarDataHora(gerado_em) });
+
+/** RN11 no celular: "Atualizado 29/10 06:50", dia/mês e hora de Brasília, para o resumo caber numa linha. */
+export const textoAtualizacaoCurto = (t: T, gerado_em: string): string =>
+  t("Atualizado {N}", { N: `${formatarData(hojeEmBrasilia(new Date(gerado_em)), "dia")} ${formatarHora(gerado_em)}` });

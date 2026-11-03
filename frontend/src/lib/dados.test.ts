@@ -80,7 +80,7 @@ describe("lerIndices", () => {
   });
 });
 
-describe("desatualizado (RN12)", () => {
+describe("desatualizado (RNF04)", () => {
   const gerado = "2026-09-29T06:00:00-03:00";
   it("12 h exatas → falso", () => {
     expect(desatualizado(gerado, new Date("2026-09-29T18:00:00-03:00"))).toBe(false);
@@ -125,13 +125,29 @@ describe("estadoMunicipio", () => {
 });
 
 describe("listas", () => {
-  it("contatos.json: só itens com verificado: true (RN09)", () => {
-    const r = lerContatos(contatos);
+  it("contatos.json (RN09): ficam os verificados e os que trazem fonte e data da consulta; os outros saem", () => {
+    const comFonte = {
+      ibge: "4219408",
+      nome: "Witmarsum",
+      verificado: false,
+      responsavel: null,
+      telefone: "(47) 3358-1300",
+      email: null,
+      endereco: null,
+      site: "witmarsum.sc.gov.br",
+      fonte: "https://witmarsum.sc.gov.br/",
+      consultado_em: "2026-10-31",
+      telefone_de: "prefeitura",
+    };
+    const semData = { ...comFonte, ibge: "4205100", nome: "Dona Emma", consultado_em: null };
+    const r = lerContatos([...contatos.filter((c) => c.ibge !== "4219408"), comFonte, semData]);
     expect(r.ok).toBe(true);
     if (r.ok) {
-      expect(r.dados.length).toBeGreaterThan(0);
-      expect(r.dados.length).toBeLessThan(contatos.length);
-      expect(r.dados.every((c) => c.verificado)).toBe(true);
+      const ibges = r.dados.map((c) => c.ibge);
+      expect(ibges).toContain("4206900"); // verificado
+      expect(ibges).toContain("4219408"); // fonte e data
+      expect(ibges).not.toContain("4205100"); // fonte sem data
+      expect(ibges).not.toContain("4209151"); // nem verificado nem fonte
     }
   });
 

@@ -51,16 +51,15 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
   const [chuva, setChuva] = useState(CHUVA_INICIAL);
   const [regional, setRegional] = useState(false);
   const [cenario, setCenario] = useState<Cenario | null>(null);
-  const [ver, setVer] = useState<Ver>("simulado");
+  const [ver, setVer] = useState<Ver>("agora");
   const mapa = useRef<MapaApi>(null);
 
   useEffect(() => {
     carregar("indices.json", lerIndices).then((r) => {
       setCarga(r);
       if (!r.ok) return;
-      const inicial = municipioDaBusca(r.dados, location.search) ?? "";
-      setIbge(inicial);
-      setCenario({ ibge: inicial, chuva_mm: CHUVA_INICIAL, horas: 48, regional: false });
+      // UC03: a tela abre na condição atual; o resultado só aparece depois de "Simular".
+      setIbge(municipioDaBusca(r.dados, location.search) ?? "");
     });
   }, []);
 
@@ -119,7 +118,17 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
   }
 
   function escolher(x: string) {
-    if (municipios.some((m) => m.ibge === x)) setIbge(x);
+    if (municipios.some((m) => m.ibge === x)) mudar(() => setIbge(x));
+  }
+
+  // Um controle mudou depois de simular: o resultado não vale mais. Some, o mapa volta para "Agora" e o leitor de
+  // tela avisa que é preciso simular de novo.
+  function mudar(aplicar: () => void) {
+    aplicar();
+    if (!cenario) return;
+    setCenario(null);
+    setVer("agora");
+    anunciar(t("Os valores mudaram. Simule de novo para ver o resultado."));
   }
 
   return (
@@ -136,7 +145,12 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
           <label className="lbl" htmlFor="sim-mun">
             {t("Município")}
           </label>
-          <select id="sim-mun" value={ibge} onChange={(e) => setIbge(e.target.value)}>
+          <select id="sim-mun" value={ibge} onChange={(e) => mudar(() => setIbge(e.target.value))}>
+            {!ibge && (
+              <option value="" disabled>
+                {t("Escolha um município")}
+              </option>
+            )}
             {municipios.map((m) => (
               <option key={m.ibge} value={m.ibge}>
                 {m.nome}
@@ -150,7 +164,7 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
           </span>
           <div className="seg" role="group" aria-labelledby="sim-per">
             {PERIODOS.map((h) => (
-              <button key={h} type="button" aria-pressed={h === horas} onClick={() => setHoras(h)}>
+              <button key={h} type="button" aria-pressed={h === horas} onClick={() => mudar(() => setHoras(h))}>
                 {t("próximas {N}", { N: `${h}h` })}
               </button>
             ))}
@@ -168,7 +182,7 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
               step={1}
               value={chuva}
               aria-label={t("Chuva em mm")}
-              onChange={(e) => setChuva(Number(e.target.value))}
+              onChange={(e) => mudar(() => setChuva(Number(e.target.value)))}
             />
             <input
               id="sim-mm"
@@ -176,24 +190,24 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
               min={0}
               max={CHUVA_MAX_MM}
               value={chuva}
-              onChange={(e) => setChuva(limitarChuva(Number(e.target.value) || 0))}
+              onChange={(e) => mudar(() => setChuva(limitarChuva(Number(e.target.value) || 0)))}
             />
             <span className="unit">mm</span>
           </div>
           <div className="presets">
             {ATALHOS.map(([nome, mm]) => (
-              <button key={mm} type="button" onClick={() => setChuva(mm)}>
+              <button key={mm} type="button" onClick={() => mudar(() => setChuva(mm))}>
                 {t(nome)} <b>{mm}</b>
               </button>
             ))}
           </div>
         </div>
         <label className="chk">
-          <input type="checkbox" checked={regional} onChange={(e) => setRegional(e.target.checked)} />
+          <input type="checkbox" checked={regional} onChange={(e) => mudar(() => setRegional(e.target.checked))} />
           {t("Aplicar a mesma chuva aos {N} municípios (chuva regional)", { N: String(municipios.length) })}
         </label>
         <div className="go">
-          <button type="button" className="btn pri" onClick={rodar}>
+          <button type="button" className="btn pri" disabled={!ibge} onClick={rodar}>
             <CloudRain aria-hidden="true" />
             {t("Simular")}
           </button>

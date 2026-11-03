@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { marcaClasse } from "../lib/graficos";
-import { TELAS } from "../lib/telas";
+import { AJUDA, TELAS } from "../lib/telas";
 import EN from "./en.json";
 import ES from "./es.json";
 import { RE_CLASSE, tradutor } from "./index";
@@ -74,6 +74,48 @@ describe("dicionário", () => {
     const marcas = (s: string) => (s.match(/\{[MCN]\}/g) ?? []).sort();
     const divergentes = Object.entries(EN as Record<string, string>).filter(([pt, en]) => marcas(pt).join() !== marcas(en).join());
     expect(divergentes).toEqual([]);
+  });
+
+  it("nenhuma frase de es.json sobrou sem uso (sobras do protótipo)", () => {
+    const fontes = import.meta.glob<string>(["../**/*.{ts,tsx,astro,json}", "../../public/data/*.json", "!../**/*.test.ts", "!./*.json"], {
+      query: "?raw",
+      import: "default",
+      eager: true,
+    });
+    const codigo = Object.values(fontes).join("\n");
+    // Frases montadas no código: o título "VIGIA · {tela}" (Base.astro), o aviso "{opção} ativado" (PainelAcessibilidade)
+    // e as setas de classe "↑ {C}"/"↓ {C}" (lib/graficos › marcaClasse, traduzidas pelo modelo com {C}).
+    const dinamica = (f: string) =>
+      [...TELAS, AJUDA].some((t) => f === `VIGIA · ${t.nome}`) ||
+      (f.endsWith(" ativado") && codigo.includes(`"${f.slice(0, -" ativado".length)}"`)) ||
+      f === "↑ {C}" ||
+      f === "↓ {C}";
+    const literal = (f: string) => codigo.includes(JSON.stringify(f).slice(1, -1)) || codigo.includes(f);
+    expect(Object.keys(ES).filter((f) => !literal(f) && !dinamica(f))).toEqual([]);
+  });
+
+  it('toda frase t("…") também de src/lib, inclusive com quebra de linha depois de t(, existe em es.json', () => {
+    const fontes = import.meta.glob<string>(["../components/**/*.tsx", "../layouts/**/*.astro", "../pages/**/*.astro", "../lib/**/*.ts", "!../lib/**/*.test.ts"], {
+      query: "?raw",
+      import: "default",
+      eager: true,
+    });
+    const faltando = Object.values(fontes)
+      .flatMap((codigo) => [...codigo.matchAll(/\bt\(\s*"([^"]+)"/g)].map((m) => m[1]))
+      .filter((frase) => !(frase in ES));
+    expect(faltando).toEqual([]);
+  });
+
+  it("WCAG 2.5.3: o nome acessível dos botões dos Contatos contém o texto visível, em ES e EN", () => {
+    const PARES: [string, string][] = [
+      ["Copiar telefone", "Copiar telefone de {M}"],
+      ["Copiar telefone", "Copiar telefone da Defesa Civil de {M}"],
+      ["Como chegar", "Como chegar ao endereço de {M} no Google Maps (abre em nova aba)"],
+      ["Como chegar", "Como chegar à Defesa Civil de {M} no Google Maps (abre em nova aba)"],
+      ["Abrir WhatsApp", "Abrir WhatsApp da Defesa Civil de {M} (abre em nova aba)"],
+    ];
+    for (const d of [ES, EN] as Record<string, string>[])
+      for (const [visivel, nome] of PARES) expect(d[nome].toLowerCase(), nome).toContain(d[visivel].toLowerCase());
   });
 
   it("nomes e rótulos curtos das telas existem em es.json", () => {

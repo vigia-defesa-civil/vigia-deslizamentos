@@ -540,3 +540,50 @@ def test_indice_atual_traz_o_dia_alvo_do_d0():
     atual = banco.indice_atual(conexao, "4206900")
 
     assert atual.dia_alvo == date(2026, 10, 1)
+
+
+# --- limiar_anterior -----------------------------------------------------------
+
+
+def test_limiar_anterior_devolve_o_ultimo_dia_calculado_com_outro_limiar():
+    conexao = _conexao()
+    _inserir_calculo(conexao, "4206900", "2026-10-20", "2026-10-20T06:00:00Z", 0.4, 2, limiar_mm=150)
+    _inserir_calculo(conexao, "4206900", "2026-10-21", "2026-10-21T06:00:00Z", 0.5, 2, limiar_mm=150)
+    _inserir_calculo(conexao, "4206900", "2026-10-22", "2026-10-22T06:00:00Z", 0.9, 3, limiar_mm=100)
+
+    resultado = banco.limiar_anterior(conexao, "4206900", date(2026, 10, 23), 100)
+
+    assert resultado == banco.LimiarAnterior(limiar_mm=150.0, ate=date(2026, 10, 21))
+
+
+def test_limiar_anterior_usa_o_ultimo_calculo_de_cada_dia():
+    conexao = _conexao()
+    _inserir_calculo(conexao, "4206900", "2026-10-20", "2026-10-20T06:00:00Z", 0.4, 2, limiar_mm=150)
+    _inserir_calculo(conexao, "4206900", "2026-10-21", "2026-10-21T06:00:00Z", 0.5, 2, limiar_mm=150)
+    _inserir_calculo(conexao, "4206900", "2026-10-21", "2026-10-21T12:00:00Z", 0.8, 3, limiar_mm=100)
+
+    resultado = banco.limiar_anterior(conexao, "4206900", date(2026, 10, 23), 100)
+
+    assert resultado == banco.LimiarAnterior(limiar_mm=150.0, ate=date(2026, 10, 20))
+
+
+def test_limiar_anterior_sem_troca_e_none():
+    conexao = _conexao()
+    _inserir_calculo(conexao, "4206900", "2026-10-20", "2026-10-20T06:00:00Z", 0.4, 2, limiar_mm=100)
+
+    assert banco.limiar_anterior(conexao, "4206900", date(2026, 10, 23), 100) is None
+
+
+def test_limiar_anterior_ignora_dias_a_partir_do_d0():
+    conexao = _conexao()
+    _inserir_calculo(conexao, "4206900", "2026-10-23", "2026-10-22T06:00:00Z", 0.4, 2, limiar_mm=150)
+    _inserir_calculo(conexao, "4206900", "2026-10-25", "2026-10-22T06:00:00Z", 0.4, 2, limiar_mm=150)
+
+    assert banco.limiar_anterior(conexao, "4206900", date(2026, 10, 23), 100) is None
+
+
+def test_limiar_anterior_nao_mistura_municipios():
+    conexao = _conexao()
+    _inserir_calculo(conexao, "4205100", "2026-10-20", "2026-10-20T06:00:00Z", 0.4, 2, limiar_mm=150)
+
+    assert banco.limiar_anterior(conexao, "4206900", date(2026, 10, 23), 100) is None

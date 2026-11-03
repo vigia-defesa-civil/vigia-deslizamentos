@@ -81,7 +81,7 @@ a {
 /* Tipografia (design-system/tokens.json › type) */
 .lbl {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 11px;
   line-height: 14px;
   letter-spacing: 0.16em;
   text-transform: uppercase;

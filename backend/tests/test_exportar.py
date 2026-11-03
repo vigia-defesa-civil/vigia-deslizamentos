@@ -17,7 +17,7 @@ from app.calculo.agregacao import Resultado, ResultadoDia, ResultadoMunicipio
 from app.classificacao.probabilidades import Probabilidades
 from app.config import Municipio, Ponto
 from app.exportacao.exportar import montar_historico, montar_indices, serializar, serializar_compacto
-from app.modelos.banco import ItemHistorico
+from app.modelos.banco import ItemHistorico, LimiarAnterior
 from tests.apoio_schema import carregar_schema, validador_estrito
 
 UTC = timezone.utc
@@ -311,3 +311,20 @@ def test_montar_historico_sem_nenhum_municipio_e_valido():
 
 def test_serializar_compacto_sem_espacos_com_acentos_e_quebra_final():
     assert serializar_compacto({"a": [1, None], "n": "Getúlio"}) == '{"a":[1,null],"n":"Getúlio"}\n'.encode("utf-8")
+
+
+def test_montar_historico_inclui_limiar_anterior():
+    dados = montar_historico(
+        {"4206900": [_item_h("2026-10-20", 0.5)], "4205100": [_item_h("2026-10-20", 0.2)]},
+        "f",
+        {"4206900": LimiarAnterior(limiar_mm=150.0, ate=date(2026, 10, 21))},
+    )
+
+    assert dados["municipios"]["4206900"]["limiar_anterior"] == {"limiar_mm": 150.0, "ate": "2026-10-21"}
+    assert "limiar_anterior" not in dados["municipios"]["4205100"]
+
+
+def test_montar_historico_ignora_limiar_anterior_de_municipio_sem_historico():
+    dados = montar_historico({"4206900": []}, "f", {"4206900": LimiarAnterior(limiar_mm=150.0, ate=date(2026, 10, 21))})
+
+    assert dados["municipios"] == {}

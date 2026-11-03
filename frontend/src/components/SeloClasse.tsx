@@ -9,6 +9,13 @@ const DESENHOS: Record<IconeClasse, ReactNode> = {
       <path d="m8 12.5 2.8 2.8L16.5 9.5" />
     </>
   ),
+  // Classe 2: o mesmo círculo da 1, com um traço no lugar do check (forma própria, RN03).
+  "circulo-menos": (
+    <>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M8 12h8" />
+    </>
+  ),
   olho: (
     <>
       <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z" />

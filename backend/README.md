@@ -84,7 +84,7 @@ Opcional:
 | Variável | Para que serve |
 |---|---|
 | `INMET_TOKEN` | Token da API do INMET, solicitado por e-mail a `cadastro.act@inmet.gov.br`. Sem ele o sistema roda igual; só a comparação de conferência entre a chuva medida e a calculada deixa de ser registrada. |
-| `VIGIA_SIMULACAO` | **Só para demonstração.** Com `1`, o bot ganha o comando `/simular`, que envia a mensagem de aviso de cada classe de risco sem chuva real, sem gravar classe notificada e sem publicar nada. Fica vazia em produção; o comando será removido antes do deploy (`docs/pendencias.md`). No Actions vem da variável `VIGIA_SIMULACAO`. |
+| `VIGIA_SIMULACAO` | **Recurso de demonstração.** Com `1`, o bot ganha o comando `/simular`, que envia a mensagem de aviso de cada classe de risco sem chuva real, sem gravar classe notificada e sem publicar nada. Continua ativo até a apresentação final e será removido depois, conforme `docs/pendencias.md`. No Actions vem da variável `VIGIA_SIMULACAO`. |
 | `VIGIA_WORKER_URL` | URL do Worker do bot. Com ela, os avisos usam os inscritos do Worker em vez dos do SQLite local. Vem sempre junto de `VIGIA_WORKER_SEGREDO` |
 | `VIGIA_WORKER_SEGREDO` | Segredo compartilhado com o Worker, para listar e apagar inscritos |
 | `BOT_JSON_PATH` | Onde gravar o `bot.json` com os textos do bot. Sem ele, o arquivo não é gerado |
@@ -120,7 +120,7 @@ Configuração em Settings > Secrets and variables > Actions:
 | Secret (opcional) | `INMET_TOKEN` | Veja a tabela de variáveis |
 | Variable | `VIGIA_WORKER_URL` | `https://vigia-bot.kaiquedeoliveira0412.workers.dev` |
 | Variable | `SITE_URL` | URL pública do site |
-| Variable | `VIGIA_SIMULACAO` | Com `1` só durante a demonstração; sai antes da entrega final |
+| Variable | `VIGIA_SIMULACAO` | Com `1` para a demonstração; continua ativo até a apresentação final e sai depois (`docs/pendencias.md`) |
 
 > **O GitHub pode atrasar execuções agendadas** nos horários de pico, e **desativa
 > o agendamento depois de 60 dias sem atividade** no repositório. Para reativar:

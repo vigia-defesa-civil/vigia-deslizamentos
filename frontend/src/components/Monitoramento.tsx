@@ -1,12 +1,12 @@
 import "../styles/monitoramento.css";
-import { Check, CloudRain, Share2, TriangleAlert } from "lucide-react";
+import { Check, CloudRain, Share2, TriangleAlert, X } from "lucide-react";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { tradutor, type T } from "../i18n";
 import { emAlerta, infoClasse, type NumeroClasse } from "../lib/classes";
 import { carregar, estadoMunicipio, lerIndices, type Resultado } from "../lib/dados";
 import { formatarData, formatarIndice, formatarMm, formatarRazao } from "../lib/formato";
 import { mensagemSelecao, valoresDoDia } from "../lib/mapa";
-import { resumo, selecaoDaBusca, variaveis, type Variaveis } from "../lib/monitoramento";
+import { resumo, selecaoDaBusca, textoAtualizacao, textoAtualizacaoCurto, variaveis, type Variaveis } from "../lib/monitoramento";
 import { MONITORADOS, NOMES } from "../lib/municipios";
 import type { Idioma } from "../lib/preferencias";
 import { rota } from "../lib/telas";
@@ -37,9 +37,20 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
     carregar("indices.json", lerIndices).then((r) => {
       setCarga(r);
       // ?municipio= vem dos links de Áreas de risco ("Ver o índice de {M} em Monitoramento").
-      if (r.ok) setSelecionado(selecaoDaBusca(r.dados, location.search, NOMES));
+      if (r.ok) setSelecionado(selecaoDaBusca(location.search, NOMES));
     });
   }, []);
+
+  // Esc fecha o painel do município, se nenhum menu aberto (Previsões, idioma, busca, diálogo) usar a tecla antes.
+  useEffect(() => {
+    if (!selecionado) return;
+    const esc = (e: KeyboardEvent) => {
+      if (e.key !== "Escape" || document.querySelector(".prevs.aberta, .lang.aberto, .busca.open, dialog[open]")) return;
+      fecharPainel();
+    };
+    document.addEventListener("keydown", esc);
+    return () => document.removeEventListener("keydown", esc);
+  });
 
   useEffect(() => {
     if (!toast) return;
@@ -63,6 +74,16 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
     anunciar(mensagemSelecao(t, nome(ibge), valores[ibge]));
   };
 
+  // Sem município, sem painel: o mapa volta a ocupar a largura toda. O foco que estava no painel vai para o mapa.
+  function fecharPainel() {
+    const noPainel = !!document.activeElement?.closest(".mon .side.r");
+    setSelecionado(undefined);
+    const q = new URLSearchParams(location.search);
+    q.delete("municipio");
+    history.replaceState(null, "", `${location.pathname}${q.size ? `?${q}` : ""}${location.hash}`);
+    if (noPainel) document.querySelector<HTMLElement>(".mon .mapa")?.focus();
+  }
+
   async function compartilhar(texto: string, aviso: string) {
     const url = location.href;
     if (navigator.share) {
@@ -79,7 +100,6 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
     <div className="mon">
       <Mapa ref={mapa} lang={lang} valores={valores} selecionado={selecionado} onSelecionar={selecionar}>
         <Previsoes lang={lang} dias={dias} d={d} aoMudar={setD} />
-        <FaixaPrevisao lang={lang} dia={dias[d]} d={d} />
         <Legenda lang={lang} />
         <Busca
           lang={lang}
@@ -92,10 +112,20 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
         <div className={toast ? "toast on" : "toast"} aria-hidden="true">
           {toast}
         </div>
-        <p className="float resumo">
-          <b className={nAlerta ? "al" : undefined}>{nAlerta}</b>{" "}
-          {t("de {N} municípios em alerta · maior índice {N}", { N: [String(total), maior === null ? "—" : formatarIndice(maior)] })}
-        </p>
+        {/* Até 900 px a faixa de previsão e o resumo empilham no rodapé do mapa, sem um cobrir o outro (RN06). */}
+        <div className="rodape-mapa">
+          <FaixaPrevisao lang={lang} dia={dias[d]} d={d} />
+          <p className="float resumo">
+            <b className={nAlerta ? "al" : undefined}>{nAlerta}</b>{" "}
+            {t("de {N} municípios em alerta · maior índice {N}", { N: [String(total), maior === null ? "—" : formatarIndice(maior)] })}
+            <span className="atualizado">
+              <span className="longo">{textoAtualizacao(t, indices.gerado_em)}</span>
+              <span className="curto" aria-hidden="true">
+                {textoAtualizacaoCurto(t, indices.gerado_em)}
+              </span>
+            </span>
+          </p>
+        </div>
       </Mapa>
       {selecionado && (
         <Painel
@@ -107,6 +137,7 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
           d={d}
           aoCompartilhar={compartilhar}
           aoTelegram={() => setTelegram(true)}
+          aoFechar={fecharPainel}
         />
       )}
       <JanelaTelegram lang={lang} aberto={telegram} aoFechar={() => setTelegram(false)} ibge={selecionado} />
@@ -123,15 +154,19 @@ interface PropsPainel {
   d: number;
   aoCompartilhar: (texto: string, aviso: string) => void;
   aoTelegram: () => void;
+  aoFechar: () => void;
 }
 
-function Painel({ t, lang, indices, ibge, nome, d, aoCompartilhar, aoTelegram }: PropsPainel) {
+function Painel({ t, lang, indices, ibge, nome, d, aoCompartilhar, aoTelegram, aoFechar }: PropsPainel) {
   const estado = estadoMunicipio(indices, ibge);
   const municipio = estado.estado === "ok" ? estado.municipio : undefined;
   const dia = municipio?.dias.find((x) => x.d === d);
 
   return (
     <aside className="side r" aria-label={t("Município selecionado")}>
+      <button type="button" className="fechar" aria-label={t("Fechar o painel de {M}", { M: nome })} title={t("Fechar")} onClick={aoFechar}>
+        <X aria-hidden="true" />
+      </button>
       <div>
         <span className="lbl">{t("Município selecionado")}</span>
         <h2 className="mname">{nome}</h2>
@@ -179,7 +214,7 @@ function Indice({ t, indice, classe, dia }: { t: T; indice: number; classe: Nume
     <>
       <span className={alerta ? "pill al" : "pill"}>
         {alerta ? <TriangleAlert aria-hidden="true" /> : <Check aria-hidden="true" />}
-        {t(alerta ? "Em alerta" : "Sem alerta")} <span className="mono">{t("classe {C}", { C: nomeClasse })}</span>
+        <span className="pill-t">{t(alerta ? "Em alerta" : "Sem alerta")}</span> <span className="mono">{t("classe {C}", { C: nomeClasse })}</span>
       </span>
       <div className="bigidx">
         <SeloClasse classe={classe} grande />
@@ -187,7 +222,7 @@ function Indice({ t, indice, classe, dia }: { t: T; indice: number; classe: Nume
       </div>
       <div className="bigsub">
         {dia
-          ? t("índice de risco · {C} · previsão {N}", { C: nomeClasse, N: formatarData(dia, "curto") })
+          ? t("índice de risco · {C} · previsão {N}", { C: nomeClasse, N: formatarData(dia) })
           : t("índice de risco · {C}", { C: nomeClasse })}
       </div>
     </>
@@ -198,7 +233,7 @@ function ListaVariaveis({ t, efr_mm, limiar_mm, razao, barra, n_membros }: { t: 
   const linhas: [string, string, boolean][] = [
     [t("Chuva efetiva antecedente"), `${formatarMm(efr_mm)} mm`, true],
     [t("Limiar crítico do município"), `${formatarMm(limiar_mm)} mm`, false],
-    [t("Razão chuva / limiar"), formatarRazao(razao), true],
+    [t("Chuva efetiva / limiar"), formatarRazao(razao), true],
     [t("Membros de ensemble"), String(n_membros), false],
   ];
   return (

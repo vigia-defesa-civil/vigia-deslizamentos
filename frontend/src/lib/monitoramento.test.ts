@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import exemplo from "../fixtures/indices.exemplo.json";
-import { municipioInicial, resumo, selecaoDaBusca, variaveis } from "./monitoramento";
+import { tradutor } from "../i18n";
+import { municipioInicial, resumo, selecaoDaBusca, textoAtualizacao, textoAtualizacaoCurto, variaveis } from "./monitoramento";
 import type { Indices } from "./tipos";
 
 const indices = exemplo as Indices;
@@ -40,10 +41,34 @@ describe("variaveis", () => {
 describe("selecaoDaBusca", () => {
   const conhecidos = new Map([["4214805", "Rio do Sul"]]);
   it("mantém município conhecido, mesmo sem dados", () => {
-    expect(selecaoDaBusca(indices, "?municipio=4214805", conhecidos)).toBe("4214805");
+    expect(selecaoDaBusca("?municipio=4214805", conhecidos)).toBe("4214805");
   });
-  it("desconhecido ou ausente: município inicial", () => {
-    expect(selecaoDaBusca(indices, "?municipio=1", conhecidos)).toBe("4214003");
-    expect(selecaoDaBusca(indices, "", conhecidos)).toBe("4214003");
+  it("desconhecido ou ausente: nenhum selecionado (o site abre com o mapa inteiro)", () => {
+    expect(selecaoDaBusca("?municipio=1", conhecidos)).toBeUndefined();
+    expect(selecaoDaBusca("", conhecidos)).toBeUndefined();
+  });
+});
+
+describe("textoAtualizacao (RN11)", () => {
+  it("data e hora da última atualização no horário de Brasília, no idioma", () => {
+    expect(textoAtualizacao(tradutor("pt"), "2026-10-29T09:50:18Z")).toBe("Atualizado em 29/10/2026 06:50 (horário de Brasília)");
+    expect(textoAtualizacao(tradutor("es"), "2026-10-29T09:50:18Z")).toBe("Actualizado el 29/10/2026 06:50 (hora de Brasilia)");
+    expect(textoAtualizacao(tradutor("en"), "2026-10-29T09:50:18Z")).toBe("Updated 29/10/2026 06:50 (Brasília time)");
+  });
+
+  it("perto da meia-noite UTC, a data é a de Brasília", () => {
+    expect(textoAtualizacao(tradutor("pt"), "2026-10-30T01:10:00Z")).toBe("Atualizado em 29/10/2026 22:10 (horário de Brasília)");
+  });
+});
+
+describe("textoAtualizacaoCurto (RN11 no celular)", () => {
+  it("dia/mês e hora de Brasília, para caber numa linha a 320 px", () => {
+    expect(textoAtualizacaoCurto(tradutor("pt"), "2026-10-29T09:50:18Z")).toBe("Atualizado 29/10 06:50");
+    expect(textoAtualizacaoCurto(tradutor("es"), "2026-10-29T09:50:18Z")).toBe("Actualizado 29/10 06:50");
+    expect(textoAtualizacaoCurto(tradutor("en"), "2026-10-29T09:50:18Z")).toBe("Updated 29/10 06:50");
+  });
+
+  it("perto da meia-noite UTC, o dia é o de Brasília", () => {
+    expect(textoAtualizacaoCurto(tradutor("pt"), "2026-10-30T01:10:00Z")).toBe("Atualizado 29/10 22:10");
   });
 });

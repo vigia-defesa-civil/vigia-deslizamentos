@@ -2,7 +2,7 @@ import "../styles/areas.css";
 import { TriangleAlert } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { tradutor, type T } from "../i18n";
-import { estadoDoPainel, rotuloSetoresMunicipio } from "../lib/areas";
+import { estadoDoPainel, rotuloSetoresMunicipio, textoMapeamentos } from "../lib/areas";
 import { carregar, lerEstacoes, type Resultado } from "../lib/dados";
 import { estacoesVisiveis, rotuloEstacao, textoDistancia } from "../lib/estacoes";
 import { formatarCoord, formatarData } from "../lib/formato";
@@ -205,7 +205,7 @@ export default function AreasRisco({ lang }: { lang: Idioma }) {
           <>
             {titulo(t("Risco geológico mapeado pelo SGB"))}
             <p className="resumo-areas">{resumoRegiao(t, setores)}</p>
-            {r.anoMin !== null && <p className="note">{t("Mapeamentos de {N} a {N}", { N: [String(r.anoMin), String(r.anoMax)] })}</p>}
+            {r.anoMin !== null && <p className="note">{textoMapeamentos(t, r.anoMin, r.anoMax ?? r.anoMin)}</p>}
             <ul className="lst lst-areas">
               {porMunicipio(setores).map(({ ibge, setores: lista }) => (
                 <li key={ibge}>
@@ -279,7 +279,7 @@ export default function AreasRisco({ lang }: { lang: Idioma }) {
                 </div>
               </>
             )}
-            {r.anoMin !== null && <p className="note">{t("Mapeamentos de {N} a {N}", { N: [String(r.anoMin), String(r.anoMax)] })}</p>}
+            {r.anoMin !== null && <p className="note">{textoMapeamentos(t, r.anoMin, r.anoMax ?? r.anoMin)}</p>}
             {fonte}
             <Ocorrencias t={t} ibge={ibge} nome={M} />
             <a className="btn" href={`${rota("", lang)}?municipio=${ibge}`}>

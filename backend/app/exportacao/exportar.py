@@ -16,7 +16,7 @@ from datetime import datetime, timedelta, timezone
 
 from app.calculo.agregacao import Resultado, ResultadoDia, ResultadoMunicipio
 from app.config import Municipio
-from app.modelos.banco import ItemHistorico
+from app.modelos.banco import ItemHistorico, LimiarAnterior
 
 #: Versão do contrato (`docs/contratos-de-dados.md`). O site recusa um valor
 #: desconhecido em vez de exibir dados parciais, então subir este número é
@@ -136,13 +136,20 @@ SCHEMA_VERSION_HISTORICO = 1
 CASAS_HISTORICO = 4
 
 
-def montar_historico(historicos: dict[str, list[ItemHistorico]], fonte: str) -> dict:
+def montar_historico(
+    historicos: dict[str, list[ItemHistorico]],
+    fonte: str,
+    anteriores: dict[str, LimiarAnterior] | None = None,
+) -> dict:
     """Formato compacto do `historico.json`/`historico_reconstruido.json`.
 
     Um item por dia a partir do primeiro com dado (`inicio`), `None` nos dias
     sem cálculo; município sem nenhum item fica de fora. Os itens chegam do
     mais antigo para o mais recente (como `banco.historico` devolve).
+    `anteriores` acrescenta `limiar_anterior` aos municípios que trocaram de
+    limiar, para o site avisar que os dias até `ate` foram convertidos.
     """
+    anteriores = anteriores or {}
     municipios = {}
     for ibge, itens in historicos.items():
         if not itens:
@@ -155,6 +162,12 @@ def montar_historico(historicos: dict[str, list[ItemHistorico]], fonte: str) -> 
             valor = por_dia.get(inicio + timedelta(days=i))
             indices.append(None if valor is None else round(valor, CASAS_HISTORICO))
         municipios[ibge] = {"inicio": inicio.isoformat(), "indices": indices}
+        if ibge in anteriores:
+            anterior = anteriores[ibge]
+            municipios[ibge]["limiar_anterior"] = {
+                "limiar_mm": anterior.limiar_mm,
+                "ate": anterior.ate.isoformat(),
+            }
     return {"schema_version": SCHEMA_VERSION_HISTORICO, "fonte": fonte, "municipios": municipios}
 
 
