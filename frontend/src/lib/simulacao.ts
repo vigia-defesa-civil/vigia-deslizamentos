@@ -7,7 +7,15 @@ import type { IndiceClasse, Indices, Municipio } from "./tipos";
 
 export type Horas = 24 | 48 | 72;
 
-export const CHUVA_MAX_MM = 400;
+/**
+ * Maior acumulado de chuva já registrado no mundo em cada período (OMM, "Records of Weather and Climate Extremes",
+ * tabela de 31/07/2025): 24 h Foc-Foc, Reunião, 1966; 48 h Cherrapunji, Índia, 1995; 72 h Crater Commerson, Reunião, 2007.
+ * Só evita valores absurdos no campo: o cálculo do índice não usa teto.
+ */
+export const RECORDE_MM: Record<Horas, number> = { 24: 1825, 48: 2493, 72: 3930 };
+
+/** Maior chuva aceita no campo e no controle deslizante: o recorde do período, em mm inteiros. */
+export const limiteChuva = (horas: Horas): number => Math.floor(RECORDE_MM[horas]);
 
 /** `classe` calculada a partir do índice simulado (não há classe publicada para ele). */
 export interface Simulacao extends IndiceClasse {
@@ -24,12 +32,12 @@ export interface Cenario {
 
 export type NivelAviso = "crit" | "entra" | "continua" | "ok";
 
-export const limitarChuva = (mm: number): number => Math.min(Math.max(mm, 0), CHUVA_MAX_MM);
+export const limitarChuva = (mm: number, horas: Horas): number => Math.min(Math.max(mm, 0), limiteChuva(horas));
 
 export function simularMunicipio(m: Municipio, chuva_mm: number, horas: Horas): Simulacao | null {
   const d0 = m.dias.find((d) => d.d === 0);
   if (!d0) return null;
-  const chuva_efetiva_mm = d0.efr_mm * 0.5 ** ((horas - 24) / m.mv_h) + limitarChuva(chuva_mm);
+  const chuva_efetiva_mm = d0.efr_mm * 0.5 ** ((horas - 24) / m.mv_h) + Math.max(chuva_mm, 0);
   const indice = chuva_efetiva_mm / m.limiar_mm;
   return { chuva_efetiva_mm, indice, classe: classe(indice) };
 }

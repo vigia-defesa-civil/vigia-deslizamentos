@@ -73,7 +73,7 @@ Legenda: ✅ feito e verificado · 🟡 parcial · ❌ não feito · ⚠️ READ
 |---|---|---|---|
 | UC01 | ✅ | RF01/RF02; exceção (dados desatualizados) em `Cabecalho.tsx:108-113` | — |
 | UC02 | ✅ | `Previsoes.tsx` | — |
-| UC03 | ✅ | Faixa de 0 a 400 mm em `lib/simulacao.ts:11,28` | — |
+| UC03 | ✅ | Faixa de 0 até o recorde mundial do período (1.825 / 2.493 / 3.930 mm) em `lib/simulacao.ts` (`RECORDE_MM`, `limiteChuva`) | — |
 | UC04 | ✅ | `lib/config.ts:17`: o link `t.me` abre a página do bot no navegador quando o Telegram não está instalado | — |
 | UC05 | ✅ | `regra_aviso.py`, `avisos.py` | Hoje `notificacoes` está vazia na `estado`: nenhum município entrou em alerta desde 15/10 |
 | UC06 | ✅ | `pipeline.py:238-242`; erros viram avisos no resumo do run (`pipeline.yml:96-113`) | O run continua verde de propósito |

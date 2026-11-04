@@ -489,5 +489,9 @@
 "Legendas e transcrição": "Captions and transcript",
 "Fechar o painel de {M}": "Close the {M} panel",
 "Escolha um município": "Choose a municipality",
-"Mapeamento de {N}": "Mapped in {N}"
+"Mapeamento de {N}": "Mapped in {N}",
+"A chuva foi ajustada para {N} mm, o limite de {N} h.": "Rainfall was adjusted to {N} mm, the limit for {N} h.",
+"Até {N} mm, o recorde mundial em {N} h (OMM).": "Up to {N} mm, the world record for {N} h (WMO).",
+"O limite do campo é o maior acumulado de chuva já registrado no mundo naquele período: 1.825 mm em 24 h, 2.493 mm em 48 h e 3.930 mm em 72 h (Organização Meteorológica Mundial, tabela de recordes de 31/07/2025).": "The field limit is the largest rainfall total ever recorded in the world for that period: 1,825 mm in 24 h, 2,493 mm in 48 h and 3,930 mm in 72 h (World Meteorological Organization, records table of 31 July 2025).",
+"Esse limite só evita valores absurdos. O cálculo usa a mesma equação do índice, sem teto.": "This limit only prevents absurd values. The calculation uses the same equation as the index, with no cap."
 }

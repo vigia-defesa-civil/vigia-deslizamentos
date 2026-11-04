@@ -489,5 +489,9 @@
 "Legendas e transcrição": "Subtítulos y transcripción",
 "Fechar o painel de {M}": "Cerrar el panel de {M}",
 "Escolha um município": "Elige un municipio",
-"Mapeamento de {N}": "Mapeo de {N}"
+"Mapeamento de {N}": "Mapeo de {N}",
+"A chuva foi ajustada para {N} mm, o limite de {N} h.": "La lluvia se ajustó a {N} mm, el límite de {N} h.",
+"Até {N} mm, o recorde mundial em {N} h (OMM).": "Hasta {N} mm, el récord mundial en {N} h (OMM).",
+"O limite do campo é o maior acumulado de chuva já registrado no mundo naquele período: 1.825 mm em 24 h, 2.493 mm em 48 h e 3.930 mm em 72 h (Organização Meteorológica Mundial, tabela de recordes de 31/07/2025).": "El límite del campo es la mayor lluvia acumulada registrada en el mundo en ese período: 1.825 mm en 24 h, 2.493 mm en 48 h y 3.930 mm en 72 h (Organización Meteorológica Mundial, tabla de récords del 31/07/2025).",
+"Esse limite só evita valores absurdos. O cálculo usa a mesma equação do índice, sem teto.": "Ese límite solo evita valores absurdos. El cálculo usa la misma ecuación del índice, sin tope."
 }

@@ -300,7 +300,7 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 |---|---|---|---|
 | **UC01** Consultar o risco do município | População, Defesa Civil | Abre o site, vê o mapa e o total de municípios em alerta, seleciona o município (clique ou busca) e lê índice, classe e situação de alerta no painel | Dados desatualizados: exibe o último índice com data e hora |
 | **UC02** Consultar a previsão | População, Defesa Civil | Estende o UC01: no mapa, escolhe +1, +2 ou +3 dias, e mapa e painel mostram os valores estimados | — |
-| **UC03** Simular uma chuva | População, Defesa Civil | Abre a simulação (menu ou painel), informa município, período e chuva e compara a situação atual com a simulada | Valor fora da faixa: o campo limita a chuva entre 0 e 400 mm |
+| **UC03** Simular uma chuva | População, Defesa Civil | Abre a simulação (menu ou painel), informa município, período e chuva e compara a situação atual com a simulada | Valor acima do limite: o campo limita a chuva entre 0 e o maior acumulado já registrado no mundo no período (OMM): 1.825 mm em 24 h, 2.493 mm em 48 h, 3.930 mm em 72 h. Ao trocar de período, o valor que passar do novo limite é ajustado e anunciado |
 | **UC04** Assinar os alertas | População | Toca em "Alertas no Telegram", abre o bot, envia `/start` e escolhe os municípios; `/parar` cancela | Telegram não instalado: o link abre a página do bot no navegador |
 | **UC05** Receber aviso de alerta | Inscrito, via Telegram | Após uma atualização, o município chega a índice ≥ 1,00 ou sobe de classe, e o bot envia o aviso com índice, classe e link do site | Mesma classe da última notificação: o aviso não é repetido |
 | **UC06** Atualizar os índices | Agendador (sistema) | Coleta chuva e previsão, calcula índice e classe, grava no banco, publica o JSON; se algum município mudar de classe com índice ≥ 1,00, é estendido pelo UC05 | Falha na coleta: mantém o último JSON publicado e registra o erro |
@@ -328,7 +328,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RF04** — A partir do painel, compartilhar a situação do município, abrir a simulação e assinar os alertas do município no Telegram.
 
 **Simulação e análise**
-- **RF05** — Simular o índice a partir de município, período (24/48/72 h) e chuva em mm, para um município ou para toda a região, comparando a situação atual com a simulada.
+- **RF05** — Simular o índice a partir de município, período (24/48/72 h) e chuva em mm (de 0 até o recorde mundial do período, só para evitar valores absurdos; o cálculo não tem teto), para um município ou para toda a região, comparando a situação atual com a simulada.
 - **RF06** — Exibir a evolução do índice, a chuva acumulada (24–96 h) comparada ao limiar e uma tabela com a tendência de cada município.
 - **RF07** — Exibir probabilidades complementares, fontes e dados brutos com data da coleta, e, se viável, a camada de suscetibilidade do CPRM (ainda sem tela no protótipo). O histórico de ocorrências fica em Áreas de risco.
 

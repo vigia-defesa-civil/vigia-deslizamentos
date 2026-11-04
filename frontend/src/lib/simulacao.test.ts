@@ -6,6 +6,8 @@ import {
   avisoRegional,
   avisoSimulacao,
   faixasEscala,
+  limiteChuva,
+  limitarChuva,
   municipioDaBusca,
   nivelAviso,
   posicaoEscala,
@@ -47,13 +49,27 @@ describe("simularMunicipio (RN07)", () => {
     expect(simularMunicipio(a, 10, 72)?.chuva_efetiva_mm).toBeCloseTo(35);
   });
 
-  it("limita a chuva a 0–400 mm", () => {
-    expect(simularMunicipio(a, 500, 24)?.chuva_efetiva_mm).toBeCloseTo(500);
+  it("o cálculo não tem teto (o limite é só do campo); chuva negativa vale 0", () => {
+    expect(simularMunicipio(a, 5000, 24)?.chuva_efetiva_mm).toBeCloseTo(5100);
     expect(simularMunicipio(a, -20, 24)?.chuva_efetiva_mm).toBeCloseTo(100);
   });
 
   it("sem D0 não há simulação", () => {
     expect(simularMunicipio({ ...a, dias: a.dias.slice(1) }, 10, 24)).toBeNull();
+  });
+});
+
+describe("limite da chuva por período (recordes mundiais da OMM)", () => {
+  it("é o recorde do período, em mm inteiros", () => {
+    expect([24, 48, 72].map((h) => limiteChuva(h as 24 | 48 | 72))).toEqual([1825, 2493, 3930]);
+  });
+
+  it("limitarChuva fica entre 0 e o limite do período", () => {
+    expect(limitarChuva(-5, 24)).toBe(0);
+    expect(limitarChuva(1825, 24)).toBe(1825);
+    expect(limitarChuva(1826, 24)).toBe(1825);
+    expect(limitarChuva(2000, 48)).toBe(2000);
+    expect(limitarChuva(9999, 72)).toBe(3930);
   });
 });
 
@@ -73,7 +89,7 @@ describe("simular", () => {
 
   it("nunca altera os dados carregados", () => {
     const copia = structuredClone([a, b]);
-    simular([a, b], { ibge: a.ibge, chuva_mm: 400, horas: 72, regional: true });
+    simular([a, b], { ibge: a.ibge, chuva_mm: 3930, horas: 72, regional: true });
     expect([a, b]).toEqual(copia);
   });
 });
