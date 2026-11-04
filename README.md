@@ -218,6 +218,7 @@ O pipeline é executado de forma agendada, **a cada 6 horas**, após a disponibi
 - Inscrição pelo bot (`/start`), com seleção de um ou mais municípios de interesse;
 - Envio de mensagem quando um município inscrito atinge índice de risco ≥ 1,0 (classe moderado ou superior);
 - Cancelamento da inscrição (`/parar`) e consulta ao status atual (`/status`);
+- Comando de demonstração `/simular [município]`, que mostra o aviso de cada classe só para quem o pediu, sem mexer nos inscritos nem na última classe notificada. Só existe com `VIGIA_SIMULACAO=1` e **continua ativo até a apresentação final**; depois dela será removido (passos em [docs/pendencias.md](docs/pendencias.md));
 - Controle para não repetir notificação enquanto o município permanecer na mesma classe.
 
 ### Camada submunicipal (condicional)
@@ -242,8 +243,8 @@ A RADIAN divide um sistema de apoio à decisão para desastres naturais em duas 
 
 | Bloco RADIAN | No VIGIA |
 |---|---|
-| Sistema de Interface do Usuário | 6 telas e a página de Ajuda, idiomas PT/ES/EN, acessibilidade e contatos de emergência |
-| Sistemas Cognitivos — Análise e Tomada de Decisão | Mapa de risco, painel do município, previsões D0–D3, simulação, dados da análise e cartilha (FAQ) |
+| Sistema de Interface do Usuário | 7 telas (Monitoramento, Simulação, Dados da análise, Áreas de risco, Cartilha, Contatos e Ajuda), idiomas PT/ES/EN, acessibilidade e contatos de emergência |
+| Sistemas Cognitivos — Análise e Tomada de Decisão | Mapa de risco, painel do município, previsões D0–D3, simulação, dados da análise, áreas de risco, cartilha e ajuda |
 | Sistemas Cognitivos — Supervisão da Execução de Decisões | Geração e envio de alertas pelo Telegram |
 | Sistemas de Gerenciamento de Dados e Conhecimento | Banco SQLite (índices calculados e inscritos do bot), malhas IBGE e estações |
 | Sistemas de Suporte | Privacidade (LGPD): o site não coleta dados pessoais; o bot guarda só o chat e os municípios escolhidos |
@@ -261,14 +262,14 @@ Não se aplicam ao projeto o módulo Planejamento da Execução (abrigos, doaç�
 | Classificador | Enquadramento nas classes e cálculo das probabilidades complementares |
 | Persistência | Banco SQLite com os índices calculados e o controle de notificações; os inscritos ficam no D1 do Cloudflare, junto do Worker |
 | Exportador | Gera o `indices.json` com os resultados e o publica junto do frontend |
-| Notificador | Bot do Telegram: o Worker atende `/start`, `/status` e `/parar`; o pipeline dispara os avisos e controla a repetição |
+| Notificador | Bot do Telegram: o Worker atende `/start`, `/status` e `/parar` (e `/simular`, na demonstração); o pipeline dispara os avisos e controla a repetição |
 | Interface | Mapa, painéis e consulta aos dados |
 
 ### Fluxo de dados
 
 O pipeline roda no GitHub Actions 4 vezes por dia, grava os resultados no SQLite e publica um arquivo `indices.json` junto do frontend no GitHub Pages. O site lê esse arquivo em vez de consultar o backend a cada visita; assim, se o backend ficar fora do ar, o site continua exibindo o último índice publicado, com data e hora. A publicação é feita por commit automático do arquivo no repositório, pela API do GitHub, com um token restrito a este repositório.
 
-O bot tem duas metades. Um **Cloudflare Worker** (`bot-worker/`) recebe as mensagens do Telegram por webhook, responde `/start`, `/status` e `/parar` e guarda os inscritos num banco D1. O **pipeline** consulta o Worker para saber quem avisar e envia os avisos. Os textos das respostas são escritos pelo backend em um `bot.json`, que o Worker lê. Com 27 municípios, o teclado do `/start` é agrupado por região: "Região de Rio do Sul" e "Região de Ituporanga" abrem a lista de municípios do grupo, com "Todos da Região de …" e "Voltar"; o "Todos" global segue no menu principal. O `vigia.db` e o `bot.json` ficam na branch `estado`, que só o pipeline escreve (contrato em [docs/contratos-de-dados.md](docs/contratos-de-dados.md)). Operação e deploy em [backend/README.md](backend/README.md).
+O bot tem duas metades. Um **Cloudflare Worker** (`bot-worker/`) recebe as mensagens do Telegram por webhook, responde `/start`, `/status` e `/parar` (e `/simular`, enquanto a demonstração estiver ativa) e guarda os inscritos num banco D1. O **pipeline** consulta o Worker para saber quem avisar e envia os avisos. Os textos das respostas são escritos pelo backend em um `bot.json`, que o Worker lê. Com 27 municípios, o teclado do `/start` é agrupado por região: "Região de Rio do Sul" e "Região de Ituporanga" abrem a lista de municípios do grupo, com "Todos da Região de …" e "Voltar"; o "Todos" global segue no menu principal. O `vigia.db` e o `bot.json` ficam na branch `estado`, que só o pipeline escreve (contrato em [docs/contratos-de-dados.md](docs/contratos-de-dados.md)). Operação e deploy em [backend/README.md](backend/README.md).
 
 Quem se inscreveu em "Todos" quando eram 6 municípios continua com esses 6; para receber os 27, toque em "Todos" de novo no /start.
 
@@ -298,8 +299,8 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 
 | Caso de uso | Ator | Fluxo principal | Exceção |
 |---|---|---|---|
-| **UC01** Consultar o risco do município | População, Defesa Civil | Abre o site, vê o mapa e o total de municípios em alerta, seleciona o município (clique ou busca) e lê índice, classe e situação de alerta no painel | Dados desatualizados: exibe o último índice com data e hora |
-| **UC02** Consultar a previsão | População, Defesa Civil | Estende o UC01: no mapa, escolhe +1, +2 ou +3 dias, e mapa e painel mostram os valores estimados | — |
+| **UC01** Consultar o risco do município | População, Defesa Civil | Abre o site (o mapa começa sem município selecionado), vê o total de municípios em alerta, seleciona o município (clique ou busca) e lê índice, classe e situação de alerta no painel | Dados desatualizados: exibe o último índice com data e hora |
+| **UC02** Consultar a previsão | População, Defesa Civil | Estende o UC01: abre a lista recolhível de Previsões, escolhe +1, +2 ou +3 dias, e mapa e painel mostram os valores estimados | — |
 | **UC03** Simular uma chuva | População, Defesa Civil | Abre a simulação (menu ou painel), informa município, período e chuva e compara a situação atual com a simulada | Valor acima do limite: o campo limita a chuva entre 0 e o maior acumulado já registrado no mundo no período (OMM): 1.825 mm em 24 h, 2.493 mm em 48 h, 3.930 mm em 72 h. Ao trocar de período, o valor que passar do novo limite é ajustado e anunciado |
 | **UC04** Assinar os alertas | População | Toca em "Alertas no Telegram", abre o bot, envia `/start` e escolhe os municípios; `/parar` cancela | Telegram não instalado: o link abre a página do bot no navegador |
 | **UC05** Receber aviso de alerta | Inscrito, via Telegram | Após uma atualização, o município chega a índice ≥ 1,00 ou sobe de classe, e o bot envia o aviso com índice, classe e link do site | Mesma classe da última notificação: o aviso não é repetido |
@@ -309,22 +310,22 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 
 | Tela | Rota | Conteúdo principal |
 |---|---|---|
-| Monitoramento | `/` | Mapa colorido pela classe de risco, resumo "N de 27 em alerta" com a data e a hora da última atualização, previsões D0–D3, busca, legenda e painel do município |
-| Simulação | `/simulacao` | Município, período e chuva informada; o mapa recolore e compara a situação atual com a simulada |
+| Monitoramento | `/` | Mapa colorido pela classe de risco, que abre sem município selecionado (o painel aparece depois do clique ou da busca); resumo "N de 27 em alerta" com a data e a hora da última atualização; Previsões D0–D3 numa lista recolhível (botão com a data); busca, legenda e seletor de fundo do mapa (Satélite, Neutro, Ruas, Relevo) |
+| Simulação | `/simulacao` | Município (a tela abre sem nenhum escolhido), período (24, 48 ou 72 h) e chuva informada, de 0 até o recorde mundial do período, por campo, controle deslizante (passo de 5 mm) ou atalhos em mm (fraca a extrema e "recorde mundial"); o mapa recolore e compara "Agora" com "Simulado", e o seletor de fundo do mapa fica logo abaixo desse botão |
 | Dados da análise | `/dados` | Indicadores, evolução do índice em 7 dias (padrão), 30 dias ou um período personalizado de até 1 ano, chuva acumulada e tabela por município (minigráfico dos últimos 7 dias) |
 | Áreas de risco | `/areas-de-risco` | Setores de risco geológico do SGB e ocorrências por município; estações do INMET como camada opcional |
 | Cartilha | `/cartilha` | Sinais de perigo, o que fazer antes/durante/depois, mochila de emergência, "não faça". Cada seção cita suas fontes oficiais: Defesa Civil Nacional (MDR), Serviço Geológico do Brasil (SGB), Defesa Civil de SC, Ministério das Comunicações, Defesa Civil do Paraná e SP Sempre Alerta |
-| Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e Defesa Civil de cada município |
+| Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e os 27 municípios em ordem alfabética, cada um com a fonte oficial e a data da consulta |
 | Ajuda | `/ajuda` | Quadro do vídeo tutorial no topo (capa do mapa; carrega só ao clicar, com legendas e transcrição) e dicas de uso de cada tela e do bot. Fica no rail do desktop e no "?" do topo no celular, fora da barra inferior |
 
-Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram".
+Em todas as telas: menu, seletor de idioma (botão "PT ▾" com PT, ES e EN), acessibilidade, "Alertas no Telegram" e, no topo, "Situação de dd/mm/aaaa" (o dia-alvo).
 
 ### Requisitos funcionais
 
 **Monitoramento**
 - **RF01** — Exibir o mapa dos 27 municípios coloridos pela classe de risco, com nome e índice, e o total de municípios em alerta.
 - **RF02** — Selecionar um município (clique, toque, teclado ou busca por nome) e mostrar no painel: índice, classe, situação de alerta, chuva efetiva antecedente e limiar.
-- **RF03** — Mostrar a previsão para os próximos 3 dias.
+- **RF03** — Mostrar a previsão para os próximos 3 dias, numa lista recolhível (Previsões).
 - **RF04** — A partir do painel, compartilhar a situação do município, abrir a simulação e assinar os alertas do município no Telegram.
 
 **Simulação e análise**
@@ -341,7 +342,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RF11** — Levar o usuário ao bot do Telegram, onde ele escolhe os municípios (`/start`), consulta a situação (`/status`) e cancela (`/parar`).
 - **RF12** — Enviar aviso aos inscritos quando um município atingir índice ≥ 1,00.
 - **RF13** — Oferecer português, espanhol e inglês, tema claro ou escuro (sem escolha, segue o sistema) e paleta de cores para daltonismo, lembrando a escolha do usuário.
-- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo só é carregado (via youtube-nocookie.com) quando o usuário pede; sem o ID do vídeo (`VIDEO_AJUDA_ID` em `frontend/src/lib/config.ts`) ou sem a transcrição, o quadro mostra a capa com "Vídeo tutorial em produção".
+- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo só é carregado (via youtube-nocookie.com) quando o usuário pede; sem o ID do vídeo (`VIDEO_AJUDA_ID` em `frontend/src/lib/config.ts`, ou a variável de build `PUBLIC_AJUDA_VIDEO_ID`) ou sem a transcrição, o quadro mostra a capa com "Vídeo tutorial em produção".
 
 ### Requisitos não funcionais
 
@@ -365,7 +366,7 @@ Em todas as telas: menu, seletor PT/ES/EN, acessibilidade e "Alertas no Telegram
 - **RN08** — O aviso do bot não se repete enquanto o município permanecer na mesma classe.
 - **RN09** — Os números de emergência (199, 193, 192) aparecem sempre. Os 27 municípios têm um card, em ordem alfabética, com os contatos publicados no site oficial da prefeitura ou da Defesa Civil municipal, o link dessa fonte e a data da consulta. Sem contato oficial da Defesa Civil, o card mostra o telefone geral da prefeitura e os números de emergência.
 - **RN10** — O VIGIA não incorpora sites oficiais: o painel da Defesa Civil de SC aparece só como link, na tela Contatos, com o crédito da fonte.
-- **RN11** — Dia-alvo e horário da última atualização ficam sempre visíveis.
+- **RN11** — O dia-alvo ("Situação de dd/mm/aaaa", no topo) e o horário da última atualização (no resumo do mapa) ficam sempre visíveis.
 
 ## Tecnologias
 
@@ -400,7 +401,7 @@ vigia-deslizamentos/
 │   │   ├── classificacao/   # Classes de risco e probabilidades complementares
 │   │   ├── modelos/         # Tipos compartilhados e persistência em SQLite
 │   │   ├── exportacao/      # indices.json, historico.json e bot.json; publicação por commit
-│   │   ├── bot/             # Mensagens, inscrição, regra de aviso (RN08) e envio
+│   │   ├── bot/             # Mensagens, inscrição, regra de aviso (RN08), envio e /simular (demonstração)
 │   │   ├── config.py        # Variáveis de ambiente e municipios.json
 │   │   ├── pipeline.py      # Uma execução inteira: coleta → cálculo → publicação → avisos
 │   │   └── main.py          # --uma-vez (Actions) ou serviço (bot + agendador)
@@ -408,24 +409,26 @@ vigia-deslizamentos/
 │   │   └── municipios.json  # Limiar, meia-vida, pontos de cálculo e microrregião por município
 │   ├── scripts/             # Geradores dos dados estáticos e preparação da branch estado
 │   ├── deploy/              # Unidade systemd (alternativa ao Actions)
+│   ├── README.md            # Operação e deploy do backend e do bot
 │   └── tests/               # Suíte pytest, sem rede
 ├── bot-worker/              # Cloudflare Worker do Telegram
-│   ├── src/                 # Webhook, comandos /start, /status e /parar, inscritos no D1
+│   ├── src/                 # Webhook, comandos /start, /status, /parar e /simular (demonstração), inscritos no D1
 │   ├── test/                # Testes (vitest) e fixture do bot.json gerada pelo backend
 │   └── migrations/          # Schema do D1
 ├── frontend/
 │   ├── src/
-│   │   ├── pages/[...lang]/ # As 6 telas e a Ajuda, geradas em PT (/), ES (/es/) e EN (/en/)
+│   │   ├── pages/[...lang]/ # As 7 telas (6 do menu + Ajuda), geradas em PT (/), ES (/es/) e EN (/en/)
 │   │   ├── layouts/         # Layout Astro comum (menu, cabeçalho, tema)
 │   │   ├── components/      # Componentes React das telas
 │   │   ├── lib/             # Regras e formatação das telas, com testes
 │   │   ├── i18n/            # Traduções ES e EN (o português é a chave)
 │   │   ├── styles/          # CSS por tela e tokens de cor
-│   │   ├── conteudo/        # Textos da Cartilha
+│   │   ├── conteudo/        # Textos da Cartilha e transcrições do vídeo da Ajuda (ajuda/transcricao.{pt,es,en}.md)
 │   │   ├── data/            # GeoJSON dos municípios
 │   │   └── fixtures/        # Dados de exemplo do npm run dev e dos testes
 │   ├── public/data/         # JSON publicados: índices, históricos, contatos, estações,
 │   │                        # ocorrências e setores de risco
+│   ├── public/ajuda/        # Capa do vídeo tutorial da Ajuda
 │   └── scripts/             # Geração do GeoJSON, axe-core e testes de interação no navegador
 └── docs/
     ├── contratos-de-dados.md  # Formato dos arquivos trocados entre backend, bot e site
