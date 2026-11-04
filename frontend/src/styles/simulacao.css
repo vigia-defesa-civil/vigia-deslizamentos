@@ -191,8 +191,11 @@
   color: var(--muted);
 }
 
+/* A margem lateral abriga a metade do rótulo "simulado" quando o índice passa do fim da escala (posição 100%): sem ela
+   o rótulo passava da borda do painel e criava rolagem horizontal. */
 .scalew {
   position: relative;
+  margin: 0 14px;
   padding: 20px 0 22px;
 }
 
