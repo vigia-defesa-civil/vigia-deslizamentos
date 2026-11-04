@@ -11,11 +11,13 @@ import type { Idioma } from "../lib/preferencias";
 import {
   avisoRegional,
   avisoSimulacao,
-  CHUVA_MAX_MM,
+  ATALHOS,
   ESCALA_MAX,
   faixasEscala,
+  limiteChuva,
   limitarChuva,
   municipioDaBusca,
+  PASSO_CHUVA_MM,
   posicaoEscala,
   simular,
   simularMunicipio,
@@ -31,13 +33,6 @@ import Mapa, { type MapaApi } from "./Mapa";
 import SeloClasse from "./SeloClasse";
 
 const PERIODOS: Horas[] = [24, 48, 72];
-const ATALHOS: [string, number][] = [
-  ["fraca", 10],
-  ["moderada", 30],
-  ["forte", 60],
-  ["muito forte", 100],
-  ["extrema", 180],
-];
 const MARCAS = [0, LIMIAR_ALERTA, infoClasse(CLASSE_CRITICA).min, ESCALA_MAX];
 const CHUVA_INICIAL = 40;
 
@@ -72,6 +67,7 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
       </div>
     );
 
+  const limite = limiteChuva(horas);
   const indices = carga.dados;
   const municipios = indices.municipios
     .filter((m) => !indices.municipios_sem_dados.includes(m.ibge))
@@ -96,7 +92,7 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
   const r = cenario && resultado(cenario);
 
   function rodar() {
-    const c = { ibge, chuva_mm: limitarChuva(chuva), horas, regional };
+    const c = { ibge, chuva_mm: limitarChuva(chuva, horas), horas, regional };
     const novo = resultado(c);
     if (!novo) return;
     setCenario(c);
@@ -123,12 +119,26 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
 
   // Um controle mudou depois de simular: o resultado não vale mais. Some, o mapa volta para "Agora" e o leitor de
   // tela avisa que é preciso simular de novo.
-  function mudar(aplicar: () => void) {
+  function mudar(aplicar: () => void, aviso?: string) {
     aplicar();
-    if (!cenario) return;
-    setCenario(null);
-    setVer("agora");
-    anunciar(t("Os valores mudaram. Simule de novo para ver o resultado."));
+    if (cenario) {
+      setCenario(null);
+      setVer("agora");
+    }
+    const falas = [aviso, cenario && t("Os valores mudaram. Simule de novo para ver o resultado.")].filter(Boolean);
+    if (falas.length) anunciar(falas.join(" "));
+  }
+
+  // O limite da chuva é o recorde do período: ao trocar para um período menor, o valor que passar dele vai para o limite.
+  function trocarPeriodo(h: Horas) {
+    const ajusta = chuva > limiteChuva(h);
+    mudar(
+      () => {
+        setHoras(h);
+        if (ajusta) setChuva(limiteChuva(h));
+      },
+      ajusta ? t("A chuva foi ajustada para {N} mm, o limite de {N} h.", { N: [String(limiteChuva(h)), String(h)] }) : undefined,
+    );
   }
 
   return (
@@ -164,7 +174,7 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
           </span>
           <div className="seg" role="group" aria-labelledby="sim-per">
             {PERIODOS.map((h) => (
-              <button key={h} type="button" aria-pressed={h === horas} onClick={() => mudar(() => setHoras(h))}>
+              <button key={h} type="button" aria-pressed={h === horas} onClick={() => trocarPeriodo(h)}>
                 {t("próximas {N}", { N: `${h}h` })}
               </button>
             ))}
@@ -178,8 +188,8 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
             <input
               type="range"
               min={0}
-              max={CHUVA_MAX_MM}
-              step={1}
+              max={limite}
+              step={PASSO_CHUVA_MM}
               value={chuva}
               aria-label={t("Chuva em mm")}
               onChange={(e) => mudar(() => setChuva(Number(e.target.value)))}
@@ -188,16 +198,21 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
               id="sim-mm"
               type="number"
               min={0}
-              max={CHUVA_MAX_MM}
+              max={limite}
+              step={1}
               value={chuva}
-              onChange={(e) => mudar(() => setChuva(limitarChuva(Number(e.target.value) || 0)))}
+              aria-describedby="sim-lim"
+              onChange={(e) => mudar(() => setChuva(limitarChuva(Number(e.target.value) || 0, horas)))}
             />
             <span className="unit">mm</span>
           </div>
+          <p className="lim" id="sim-lim">
+            {t("Até {N} mm, o recorde mundial em {N} h (OMM).", { N: [limite.toLocaleString("pt-BR"), String(horas)] })}
+          </p>
           <div className="presets">
-            {ATALHOS.map(([nome, mm]) => (
-              <button key={mm} type="button" onClick={() => mudar(() => setChuva(mm))}>
-                {t(nome)} <b>{mm}</b>
+            {[...ATALHOS[horas], ["recorde mundial", limite] as const].map(([nome, mm]) => (
+              <button key={nome} type="button" onClick={() => mudar(() => setChuva(mm))}>
+                {t(nome)} <b>{mm.toLocaleString("pt-BR")} mm</b>
               </button>
             ))}
           </div>

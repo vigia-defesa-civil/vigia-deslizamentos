@@ -430,6 +430,11 @@ function Detalhes({ t, municipio, gerado_em }: { t: T; municipio: Municipio; ger
           </div>
         ))}
       </dl>
+      <p className="sub">
+        {t("O GeoRisk usa limiares calibrados pelo Cemaden e, na falta deles, 250 mm como valor hipotético padrão. O VIGIA adota {N} mm como parâmetro de demonstração escolhido pela equipe, e não como valor do GeoRisk.", {
+          N: formatarNumero(municipio.limiar_mm, 0),
+        })}
+      </p>
     </section>
   );
 }

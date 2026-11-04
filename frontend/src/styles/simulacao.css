@@ -81,6 +81,12 @@
   flex: 1;
 }
 
+.fld .lim {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
 .presets {
   display: flex;
   flex-wrap: wrap;
@@ -185,8 +191,11 @@
   color: var(--muted);
 }
 
+/* A margem lateral abriga a metade do rótulo "simulado" quando o índice passa do fim da escala (posição 100%): sem ela
+   o rótulo passava da borda do painel e criava rolagem horizontal. */
 .scalew {
   position: relative;
+  margin: 0 14px;
   padding: 20px 0 22px;
 }
 
@@ -373,28 +382,30 @@
 
 .sim .leg {
   bottom: 100px;
-  /* Para abaixo do topo do mapa (16 px + avisos, medidos em Simulacao.tsx, + 12 px). Sem espaço, fica com
+  /* Para abaixo do topo do mapa (59 px + avisos, medidos em Simulacao.tsx, + 12 px). Sem espaço, fica com
      200 px e, aberta, passa por cima dos avisos (mapa.css): senão o cartão some e os botões ficam sob o aviso. */
-  max-height: max(200px, calc(100% - 100px - 28px - var(--maphd-h, 72px)));
+  max-height: max(200px, calc(100% - 100px - 71px - var(--maphd-h, 72px)));
 }
 
 
-/* Camadas do mapa embaixo, acima do zoom: no alto, os avisos (altura variável) as cobriam. */
+/* Camadas do mapa: os botões segmentados do Monitoramento, no canto superior direito, ACIMA do "Agora | Simulado".
+   O .maphd desce para abrir espaço (16 px + 35 px dos botões + 8 px; 44 px com toque, mapa.css). Abaixo de 900 px
+   volta o select, na linha do "Agora | Simulado" (bloco de 900 px). */
 .sim .layers {
-  top: auto;
-  bottom: 120px;
+  display: flex;
 }
 
-/* Até 1040 px a legenda aberta cobriria os botões: aqui já entra o select, no mesmo canto. */
-@media (max-width: 1040px) {
-  .sim .layers {
-    display: none;
-  }
+.sim .layers-sel {
+  display: none;
+}
 
-  .sim .layers-sel {
-    display: block;
-    top: auto;
-    bottom: 120px;
+.sim .maphd {
+  top: 59px;
+}
+
+@media (pointer: coarse) {
+  .sim .maphd {
+    top: 68px;
   }
 }
 
@@ -447,7 +458,7 @@
     height: max(150px, min(70dvh, 100cqh));
   }
 
-  .maphd {
+  .sim .maphd {
     left: 12px;
     right: 12px;
     top: 12px;
@@ -455,7 +466,12 @@
 
   /* Na linha do "Agora | Simulado", à esquerda. Fica sob o .maphd (que tem pointer-events: none, então o
      toque passa) e sob a legenda aberta, que o cobre em vez de ser coberta. */
+  .sim .layers {
+    display: none;
+  }
+
   .sim .layers-sel {
+    display: block;
     right: auto;
     bottom: auto;
     left: 12px;
@@ -476,6 +492,7 @@
   .avisos.no-painel {
     display: flex;
     max-width: none;
+    padding-top: 0;
   }
 
   .sim .leg {
