@@ -379,23 +379,16 @@
 }
 
 
-/* Camadas do mapa embaixo, acima do zoom: no alto, os avisos (altura variável) as cobriam. */
+/* Camadas do mapa no canto superior direito, logo abaixo do "Agora | Simulado" (46 px de altura + 8 px). Aqui sempre o
+   select (140 px): os quatro botões (294 px) passariam sob os avisos, que ocupam a faixa à esquerda do "Agora | Simulado". */
 .sim .layers {
-  top: auto;
-  bottom: 120px;
+  display: none;
 }
 
-/* Até 1040 px a legenda aberta cobriria os botões: aqui já entra o select, no mesmo canto. */
-@media (max-width: 1040px) {
-  .sim .layers {
-    display: none;
-  }
-
-  .sim .layers-sel {
-    display: block;
-    top: auto;
-    bottom: 120px;
-  }
+.sim .layers-sel {
+  display: block;
+  top: 70px;
+  right: 16px;
 }
 
 /* Até 1100 px, com o "Agora | Simulado" ao lado, os avisos ficavam estreitos e altos (cobriam metade do mapa):
@@ -410,8 +403,10 @@
     align-self: flex-end;
   }
 
+  /* O "Agora | Simulado" fica no alto e as camadas logo abaixo (70 px + 44 px): os avisos descem para não ficarem sob elas. */
   .avisos {
     max-width: none;
+    padding-top: 52px;
   }
 }
 
@@ -476,6 +471,7 @@
   .avisos.no-painel {
     display: flex;
     max-width: none;
+    padding-top: 0;
   }
 
   .sim .leg {
