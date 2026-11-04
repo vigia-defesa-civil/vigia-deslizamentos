@@ -5,6 +5,7 @@ import type { Indices, Municipio } from "./tipos";
 import {
   avisoRegional,
   avisoSimulacao,
+  ATALHOS,
   faixasEscala,
   limiteChuva,
   limitarChuva,
@@ -70,6 +71,23 @@ describe("limite da chuva por período (recordes mundiais da OMM)", () => {
     expect(limitarChuva(1826, 24)).toBe(1825);
     expect(limitarChuva(2000, 48)).toBe(2000);
     expect(limitarChuva(9999, 72)).toBe(3930);
+  });
+});
+
+describe("atalhos de chuva", () => {
+  it("cinco por período, em ordem crescente e dentro do limite", () => {
+    for (const h of [24, 48, 72] as const) {
+      const mm = ATALHOS[h].map(([, v]) => v);
+      expect(mm).toHaveLength(5);
+      expect([...mm].sort((x, y) => x - y)).toEqual(mm);
+      expect(mm.every((v) => v > 0 && v <= limiteChuva(h))).toBe(true);
+    }
+  });
+
+  it("valores por período", () => {
+    expect(ATALHOS[24].map(([, v]) => v)).toEqual([10, 30, 60, 100, 180]);
+    expect(ATALHOS[48].map(([, v]) => v)).toEqual([20, 60, 120, 200, 360]);
+    expect(ATALHOS[72].map(([, v]) => v)).toEqual([30, 90, 180, 300, 540]);
   });
 });
 

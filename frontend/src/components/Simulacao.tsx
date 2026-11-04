@@ -11,11 +11,13 @@ import type { Idioma } from "../lib/preferencias";
 import {
   avisoRegional,
   avisoSimulacao,
+  ATALHOS,
   ESCALA_MAX,
   faixasEscala,
   limiteChuva,
   limitarChuva,
   municipioDaBusca,
+  PASSO_CHUVA_MM,
   posicaoEscala,
   simular,
   simularMunicipio,
@@ -31,13 +33,6 @@ import Mapa, { type MapaApi } from "./Mapa";
 import SeloClasse from "./SeloClasse";
 
 const PERIODOS: Horas[] = [24, 48, 72];
-const ATALHOS: [string, number][] = [
-  ["fraca", 10],
-  ["moderada", 30],
-  ["forte", 60],
-  ["muito forte", 100],
-  ["extrema", 180],
-];
 const MARCAS = [0, LIMIAR_ALERTA, infoClasse(CLASSE_CRITICA).min, ESCALA_MAX];
 const CHUVA_INICIAL = 40;
 
@@ -194,7 +189,7 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
               type="range"
               min={0}
               max={limite}
-              step={1}
+              step={PASSO_CHUVA_MM}
               value={chuva}
               aria-label={t("Chuva em mm")}
               onChange={(e) => mudar(() => setChuva(Number(e.target.value)))}
@@ -215,9 +210,9 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
             {t("Até {N} mm, o recorde mundial em {N} h (OMM).", { N: [limite.toLocaleString("pt-BR"), String(horas)] })}
           </p>
           <div className="presets">
-            {ATALHOS.map(([nome, mm]) => (
-              <button key={mm} type="button" onClick={() => mudar(() => setChuva(mm))}>
-                {t(nome)} <b>{mm}</b>
+            {[...ATALHOS[horas], ["recorde mundial", limite] as const].map(([nome, mm]) => (
+              <button key={nome} type="button" onClick={() => mudar(() => setChuva(mm))}>
+                {t(nome)} <b>{mm.toLocaleString("pt-BR")} mm</b>
               </button>
             ))}
           </div>

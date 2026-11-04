@@ -14,6 +14,16 @@ export type Horas = 24 | 48 | 72;
  */
 export const RECORDE_MM: Record<Horas, number> = { 24: 1825, 48: 2493, 72: 3930 };
 
+/** Chuva dos botões de atalho por período (mm), da fraca à extrema; nenhum passa do limite. */
+export const ATALHOS: Record<Horas, readonly (readonly [string, number])[]> = {
+  24: [["fraca", 10], ["moderada", 30], ["forte", 60], ["muito forte", 100], ["extrema", 180]],
+  48: [["fraca", 20], ["moderada", 60], ["forte", 120], ["muito forte", 200], ["extrema", 360]],
+  72: [["fraca", 30], ["moderada", 90], ["forte", 180], ["muito forte", 300], ["extrema", 540]],
+};
+
+/** Passo do controle deslizante (mm): com limites de milhares de mm, o passo de 1 dificultaria o ajuste. O campo numérico aceita qualquer inteiro. */
+export const PASSO_CHUVA_MM = 5;
+
 /** Maior chuva aceita no campo e no controle deslizante: o recorde do período, em mm inteiros. */
 export const limiteChuva = (horas: Horas): number => Math.floor(RECORDE_MM[horas]);
 
