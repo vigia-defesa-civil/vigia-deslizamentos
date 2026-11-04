@@ -379,22 +379,31 @@
 
 .sim .leg {
   bottom: 100px;
-  /* Para abaixo do topo do mapa (16 px + avisos, medidos em Simulacao.tsx, + 12 px). Sem espaço, fica com
+  /* Para abaixo do topo do mapa (59 px + avisos, medidos em Simulacao.tsx, + 12 px). Sem espaço, fica com
      200 px e, aberta, passa por cima dos avisos (mapa.css): senão o cartão some e os botões ficam sob o aviso. */
-  max-height: max(200px, calc(100% - 100px - 28px - var(--maphd-h, 72px)));
+  max-height: max(200px, calc(100% - 100px - 71px - var(--maphd-h, 72px)));
 }
 
 
-/* Camadas do mapa no canto superior direito, logo abaixo do "Agora | Simulado" (46 px de altura + 8 px). Aqui sempre o
-   select (140 px): os quatro botões (294 px) passariam sob os avisos, que ocupam a faixa à esquerda do "Agora | Simulado". */
+/* Camadas do mapa: os botões segmentados do Monitoramento, no canto superior direito, ACIMA do "Agora | Simulado".
+   O .maphd desce para abrir espaço (16 px + 35 px dos botões + 8 px; 44 px com toque, mapa.css). Abaixo de 900 px
+   volta o select, na linha do "Agora | Simulado" (bloco de 900 px). */
 .sim .layers {
-  display: none;
+  display: flex;
 }
 
 .sim .layers-sel {
-  display: block;
-  top: 70px;
-  right: 16px;
+  display: none;
+}
+
+.sim .maphd {
+  top: 59px;
+}
+
+@media (pointer: coarse) {
+  .sim .maphd {
+    top: 68px;
+  }
 }
 
 /* Até 1100 px, com o "Agora | Simulado" ao lado, os avisos ficavam estreitos e altos (cobriam metade do mapa):
@@ -409,10 +418,8 @@
     align-self: flex-end;
   }
 
-  /* O "Agora | Simulado" fica no alto e as camadas logo abaixo (70 px + 44 px): os avisos descem para não ficarem sob elas. */
   .avisos {
     max-width: none;
-    padding-top: 52px;
   }
 }
 
@@ -448,7 +455,7 @@
     height: max(150px, min(70dvh, 100cqh));
   }
 
-  .maphd {
+  .sim .maphd {
     left: 12px;
     right: 12px;
     top: 12px;
@@ -456,7 +463,12 @@
 
   /* Na linha do "Agora | Simulado", à esquerda. Fica sob o .maphd (que tem pointer-events: none, então o
      toque passa) e sob a legenda aberta, que o cobre em vez de ser coberta. */
+  .sim .layers {
+    display: none;
+  }
+
   .sim .layers-sel {
+    display: block;
     right: auto;
     bottom: auto;
     left: 12px;
