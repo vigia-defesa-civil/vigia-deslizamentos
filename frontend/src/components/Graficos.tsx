@@ -63,7 +63,7 @@ export function Evolucao({ t, municipios, destaque, eixo, inicioReal, troca, lan
   const { ibge } = destaque;
   const { esq, dir, largura, altura, topo, base } = AREA;
   const util = altura - topo - base;
-  // Séries, escala e faixa só mudam com municípios, destaque ou eixo (366 dias × 27 municípios): não refazer a cada foco.
+  // Séries, escala e faixa só mudam com municípios, destaque ou eixo (366 dias × 28 municípios): não refazer a cada foco.
   const { max, coords, deltas, xs, faixas, faixa, trechos, recs } = useMemo(() => {
     const max = maxEvolucao(municipios.flatMap((m) => serieMunicipio(m, eixo).map((p) => p.indice)));
     const coords = coordenadas(serieMunicipio(destaque, eixo), eixo, max, AREA);

@@ -61,7 +61,7 @@ export default function Monitoramento({ lang }: { lang: Idioma }) {
   if (!carga?.ok) return <EstadoCarregamento t={t} falhou={!!carga} />;
 
   const indices = carga.dados;
-  const valores = valoresDoDia(indices, d);
+  const valores = valoresDoDia(indices, d, MONITORADOS);
   const dias = indices.municipios[0]?.dias.map((x) => x.dia_alvo) ?? [indices.dia_alvo_d0];
   const { emAlerta: nAlerta, total, maior } = resumo(valores);
   const nome = (ibge: string) => NOMES.get(ibge) ?? ibge;

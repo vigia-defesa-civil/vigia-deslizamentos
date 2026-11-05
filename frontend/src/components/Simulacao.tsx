@@ -7,6 +7,7 @@ import { carregar, lerIndices, type Resultado } from "../lib/dados";
 import { formatarData, formatarHora, formatarIndice, formatarMm } from "../lib/formato";
 import { valoresDoDia } from "../lib/mapa";
 import { resumo } from "../lib/monitoramento";
+import { MONITORADOS } from "../lib/municipios";
 import type { Idioma } from "../lib/preferencias";
 import {
   avisoRegional,
@@ -73,7 +74,7 @@ export default function Simulacao({ lang }: { lang: Idioma }) {
     .filter((m) => !indices.municipios_sem_dados.includes(m.ibge))
     .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
   const nomes = Object.fromEntries(indices.municipios.map((m) => [m.ibge, m.nome]));
-  const atuais = valoresDoDia(indices, 0);
+  const atuais = valoresDoDia(indices, 0, MONITORADOS);
   const simulados = cenario && simular(indices.municipios, cenario);
   const valores = simulados && ver === "simulado" ? { ...atuais, ...simulados } : atuais;
   const { emAlerta, total } = resumo(valores);

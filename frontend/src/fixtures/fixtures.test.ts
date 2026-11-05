@@ -41,7 +41,7 @@ describe("public/data/*.json", () => {
   });
 });
 
-// RN09: os 27 municípios têm cartão, todos com a fonte oficial (site da prefeitura ou da Defesa Civil municipal)
+// RN09: os 28 municípios têm cartão, todos com a fonte oficial (site da prefeitura ou da Defesa Civil municipal)
 // e a data da consulta. "verificado" (confirmado pela equipe) fica só em Ibirama e Presidente Getúlio: é o que
 // libera o botão de WhatsApp.
 const CONTATOS = import.meta.glob<unknown>("../../public/data/contatos.json", { eager: true, import: "default" });
@@ -51,7 +51,7 @@ describe("public/data/contatos.json", () => {
   const contatos = Object.values(CONTATOS)[0] as { ibge: string; verificado: boolean; fonte?: string | null; consultado_em?: string | null }[];
   const config = Object.values(CONFIG)[0];
 
-  it("tem um cartão para cada um dos 27 municípios", () => {
+  it("tem um cartão para cada um dos 28 municípios", () => {
     expect(contatos.map((c) => c.ibge).sort()).toEqual(config.map((m) => m.ibge).sort());
   });
 
@@ -67,7 +67,7 @@ describe("public/data/contatos.json", () => {
 
   it("todos passam pelo leitor do site", () => {
     const r = lerContatos(contatos);
-    expect(r.ok && r.dados.length).toBe(27);
+    expect(r.ok && r.dados.length).toBe(28);
   });
 });
 

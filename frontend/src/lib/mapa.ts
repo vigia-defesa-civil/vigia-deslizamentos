@@ -33,9 +33,18 @@ export function mensagemSelecao(t: T, nome: string, valor: Valor): string {
   return t(modelo, { M: nome, N: formatarIndice(valor.indice), C: infoClasse(valor.classe).nome });
 }
 
-/** `valores` do mapa no dia `d` (0 = dia-alvo), com a classe publicada: sem dados ou sem esse dia → `null`. */
-export function valoresDoDia(indices: Indices, d: number): Record<string, IndiceClasse | null> {
+/**
+ * `valores` do mapa no dia `d` (0 = dia-alvo), com a classe publicada: sem dados ou sem esse dia → `null`.
+ * Município monitorado (`monitorados`) que não está no `indices.json` (recém-incluído, antes da primeira execução
+ * do pipeline) também é `null`: aparece como "sem dados" e conta no total.
+ */
+export function valoresDoDia(
+  indices: Indices,
+  d: number,
+  monitorados: readonly { ibge: string }[] = [],
+): Record<string, IndiceClasse | null> {
   const valores: Record<string, IndiceClasse | null> = {};
+  for (const { ibge } of monitorados) valores[ibge] = null;
   for (const m of indices.municipios) {
     const dia = m.dias.find((x) => x.d === d);
     valores[m.ibge] = dia ? { indice: dia.indice, classe: dia.classe } : null;
