@@ -57,11 +57,11 @@ Legenda: 🔴 bloqueia o deploy · 🟡 bloqueia só uma funcionalidade · ⚪ n
 - ~~⚪ **Execução com o Worker indisponível termina verde**~~ **Resolvida:** a etapa "Avisar erros registrados no log" do `pipeline.yml` transforma as linhas ERROR do log em avisos no resumo do run. O job continua verde de propósito, para o estado ser gravado.
 - ~~⚪ **Fixture de contrato do `bot.json`**~~ **Resolvida:** `bot-worker/test/fixtures/bot.exemplo.json` sai de `montar_bot_json` (teste `test_fixture_do_worker_igual_ao_montar_bot_json`); o Worker confere o formato no `tsc` e nos testes. Para regenerar: `VIGIA_REGERAR_FIXTURES=1 pytest tests/test_bot_json.py`.
 
-## Ampliação para os 27 municípios
+## Ampliação para os 28 municípios
 
-- ⚪ **Limiar dos 27 municípios:** todos com 100 mm de demonstração; trocar quando houver limiar oficial, validar com o time, por município ou por região.
-- ⚪ **Contatos dos 27 municípios:** os dados do site oficial já estão no ar com a fonte e a data; falta confirmar com cada prefeitura (RN09) e refazer a consulta quando os sites mudarem.
-- ⚪ **Prazo total de coleta:** com o Open-Meteo degradado, 111 chamadas × até 92 s podem passar do `timeout-minutes: 60`; limitar o tempo total da coleta e marcar os restantes como sem dados.
+- ⚪ **Limiar dos 28 municípios:** todos com 100 mm de demonstração; trocar quando houver limiar oficial, validar com o time, por município ou por região.
+- ⚪ **Contatos dos 28 municípios:** os dados do site oficial já estão no ar com a fonte e a data; falta confirmar com cada prefeitura (RN09) e refazer a consulta quando os sites mudarem.
+- ⚪ **Prazo total de coleta:** com o Open-Meteo degradado, 115 chamadas × até 92 s podem passar do `timeout-minutes: 60`; limitar o tempo total da coleta e marcar os restantes como sem dados.
 - ⚪ **Avisos agrupados por chat:** se quem segue os 27 receber mensagens demais num evento regional, juntar os avisos de uma execução numa só mensagem.
 
 ## Qualidade e testes

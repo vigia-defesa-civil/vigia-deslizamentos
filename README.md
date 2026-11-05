@@ -6,7 +6,7 @@
 
 ## Sobre o projeto
 
-O **VIGIA Deslizamentos** é um sistema de monitoramento e apoio à decisão voltado à identificação de condições meteorológicas associadas ao risco de deslizamentos de terra nos 27 municípios do Alto Vale do Itajaí (SC).
+O **VIGIA Deslizamentos** é um sistema de monitoramento e apoio à decisão voltado à identificação de condições meteorológicas associadas ao risco de deslizamentos de terra nos 28 municípios do Alto Vale do Itajaí (SC).
 
 A proposta é integrar dados meteorológicos, geográficos e históricos para apresentar informações de forma simples e visual, auxiliando no acompanhamento das condições de risco por meio de um mapa interativo, indicadores de fácil leitura e notificações via Telegram — tanto para gestores públicos quanto para a população em geral.
 
@@ -20,11 +20,11 @@ O VIGIA Deslizamentos nasce dessa necessidade: transformar dados dispersos (chuv
 
 ## Objetivo
 
-Desenvolver um sistema capaz de integrar e analisar dados de precipitação observada e prevista, aplicando a metodologia de cálculo de risco do sistema GeoRisk (Cemaden/MCTI), para fornecer informações que auxiliem no monitoramento e na tomada de decisão diante de possíveis situações de risco de deslizamento nos 27 municípios do Alto Vale do Itajaí.
+Desenvolver um sistema capaz de integrar e analisar dados de precipitação observada e prevista, aplicando a metodologia de cálculo de risco do sistema GeoRisk (Cemaden/MCTI), para fornecer informações que auxiliem no monitoramento e na tomada de decisão diante de possíveis situações de risco de deslizamento nos 28 municípios do Alto Vale do Itajaí.
 
 **Objetivos específicos:**
 
-- Consolidar, em uma única plataforma, dados de precipitação observada, previsão meteorológica e histórico de ocorrências dos 27 municípios da área de abrangência;
+- Consolidar, em uma única plataforma, dados de precipitação observada, previsão meteorológica e histórico de ocorrências dos 28 municípios da área de abrangência;
 - Implementar o cálculo do índice de risco conforme a metodologia documentada no Manual Técnico do GeoRisk, com as simplificações declaradas neste documento;
 - Classificar automaticamente o nível de risco por município;
 - Apresentar os resultados por meio de mapa interativo e painéis de indicadores;
@@ -33,7 +33,7 @@ Desenvolver um sistema capaz de integrar e analisar dados de precipitação obse
 
 ## Área de abrangência
 
-O escopo está **fechado** no **Alto Vale do Itajaí** (SC), nas microrregiões IBGE de **Rio do Sul** (42011, 20 municípios) e de **Ituporanga** (42014, 7 municípios), num total de 27 municípios:
+O escopo está **fechado** no **Alto Vale do Itajaí** (SC): os **28 municípios da AMAVI** (Associação dos Municípios do Alto Vale do Itajaí), que coincidem com a **Região Geográfica Imediata de Rio do Sul** do IBGE.
 
 | Município | Código IBGE | Observações |
 |-----------|-------------|-------------|
@@ -59,6 +59,7 @@ O escopo está **fechado** no **Alto Vale do Itajaí** (SC), nas microrregiões 
 | Rio do Oeste | 4214607 | Região de Rio do Sul |
 | Rio do Sul | 4214805 | Região de Rio do Sul |
 | Salete | 4215307 | Região de Rio do Sul |
+| Santa Terezinha | 4215679 | Região de Rio do Sul |
 | Taió | 4217808 | Região de Rio do Sul |
 | Trombudo Central | 4218608 | Região de Rio do Sul |
 | Vidal Ramos | 4219200 | Região de Ituporanga |
@@ -66,6 +67,8 @@ O escopo está **fechado** no **Alto Vale do Itajaí** (SC), nas microrregiões 
 | Witmarsum | 4219408 | Região de Rio do Sul |
 
 > Os códigos IBGE vieram da [API de Localidades do IBGE](https://servicodados.ibge.gov.br/api/docs/localidades), estão em `backend/config/municipios.json` e são a chave de identificação de município em todo o sistema (malha geográfica, parâmetros de cálculo e persistência).
+
+> A coluna *Observações* é o grupo do teclado do bot (`/start`). Santa Terezinha fica no grupo de Rio do Sul, como os demais da Região Geográfica Imediata, embora na divisão antiga do IBGE ela fosse da microrregião de Canoinhas.
 
 A arquitetura isola os parâmetros específicos de cada município (limites geográficos, limiar crítico, meia-vida da água no solo) da lógica central de coleta, processamento e visualização. Isso permite incorporar novos municípios por configuração, mas **a expansão para outras regiões não faz parte do escopo desta versão**.
 
@@ -83,7 +86,7 @@ O limiar crítico é o valor mínimo de chuva acumulada que, quando superado, in
 
 Nos municípios monitorados, o GeoRisk usa limiares calibrados pelo Cemaden. Para municípios não monitorados ou sem áreas suscetíveis mapeadas, adota um limiar hipotético padrão de **250 mm**, e recomenda usar apenas os resultados de análise regional.
 
-No VIGIA, o limiar é um **parâmetro de configuração por município**, versionado no repositório e documentado com a respectiva fonte. Os 27 municípios usam hoje **100 mm**, um **parâmetro de demonstração escolhido pela equipe**. Não é um valor do GeoRisk nem um limiar calibrado pelo Cemaden, e deve ser trocado em `backend/config/municipios.json` quando houver limiar oficial para cada município. A equipe escolheu o valor com base nos critérios de deslizamento da [Defesa Civil de Blumenau](https://defesacivil.blumenau.sc.gov.br/c/geologia/escorregamentos), vizinha da região, que entra em alerta a partir de 100 mm em 24 h (adaptado de Pinheiro et al., 2005, e AlertaRio, 2013). O hipotético de 250 mm do GeoRisk deixava o alerta só para chuvas acima de cerca de 230 mm, bem além do que a Defesa Civil da região considera crítico.
+No VIGIA, o limiar é um **parâmetro de configuração por município**, versionado no repositório e documentado com a respectiva fonte. Os 28 municípios usam hoje **100 mm**, um **parâmetro de demonstração escolhido pela equipe**. Não é um valor do GeoRisk nem um limiar calibrado pelo Cemaden, e deve ser trocado em `backend/config/municipios.json` quando houver limiar oficial para cada município. A equipe escolheu o valor com base nos critérios de deslizamento da [Defesa Civil de Blumenau](https://defesacivil.blumenau.sc.gov.br/c/geologia/escorregamentos), vizinha da região, que entra em alerta a partir de 100 mm em 24 h (adaptado de Pinheiro et al., 2005, e AlertaRio, 2013). O hipotético de 250 mm do GeoRisk deixava o alerta só para chuvas acima de cerca de 230 mm, bem além do que a Defesa Civil da região considera crítico.
 
 ### Chuva efetiva antecedente
 
@@ -91,7 +94,7 @@ A chuva efetiva antecedente (`EfR`) é a parcela da chuva pretérita que ainda i
 
 $$EfR = \sum_{t=0}^{168} Rh_t \cdot 0{,}5^{\frac{t}{MV}}$$
 
-Onde `Rh` é a chuva horária entre a meia-noite do dia-alvo e as 168 horas anteriores, e `MV` é o parâmetro de decaimento por meia-vida. Na ausência de estudos específicos para o município, o GeoRisk adota **MV = 24 horas** — valor que o VIGIA usa como padrão para os 27 municípios.
+Onde `Rh` é a chuva horária entre a meia-noite do dia-alvo e as 168 horas anteriores, e `MV` é o parâmetro de decaimento por meia-vida. Na ausência de estudos específicos para o município, o GeoRisk adota **MV = 24 horas** — valor que o VIGIA usa como padrão para os 28 municípios.
 
 O período antecedente é preenchido prioritariamente com **dados observados**; onde não houver observação disponível, completa-se com dados de previsão numérica.
 
@@ -150,7 +153,7 @@ Conforme o manual, essas probabilidades são **informação secundária** — o 
 | Grade de cálculo | Grade de 5 km × 5 km sobre todo o território nacional | Pontos representativos por município (centróide e pontos adicionais conforme a extensão territorial) |
 | Modelos de previsão | 15 a 25 rodadas de GEFS, GFS, WRF, Eta e ECMWF, obtidas direto da fonte | Modelos e ensembles disponibilizados via API pública (a definir na integração) |
 | Pesos do ensemble | Recalibrados periodicamente por matriz de confusão contra ocorrências reais | Pesos fixos por recência e horário de assimilação, **sem calibração** |
-| Limiar crítico | Calibrado por município pelo Cemaden | Parâmetro de configuração, com fonte documentada; 100 mm de demonstração nos 27 municípios, até haver limiar oficial |
+| Limiar crítico | Calibrado por município pelo Cemaden | Parâmetro de configuração, com fonte documentada; 100 mm de demonstração nos 28 municípios, até haver limiar oficial |
 | Meia-vida (MV) | Valor por município quando há estudo disponível | 24 horas (padrão) para todos os municípios |
 | Validação | Matriz de confusão contra o REINDESC (2017–presente) | Sem validação estatística — ver limitações |
 
@@ -206,7 +209,7 @@ O pipeline é executado de forma agendada, **a cada 6 horas**, após a disponibi
 
 ### Interface web
 
-- Mapa interativo com os 27 municípios, coloridos pela classe de risco vigente;
+- Mapa interativo com os 28 municípios, coloridos pela classe de risco vigente;
 - Painel de indicadores gerais (municípios por classe, chuva acumulada, última atualização);
 - Detalhamento por município: índice de risco, classe, chuva efetiva antecedente, previsão por dia-alvo, probabilidades complementares e limiar utilizado;
 - Camada de suscetibilidade do terreno (CPRM);
@@ -239,7 +242,7 @@ A arquitetura orienta a separação dos componentes responsáveis pela aquisiç�
 
 ### RADIAN aplicada ao VIGIA
 
-A RADIAN divide um sistema de apoio à decisão para desastres naturais em duas partes: o **DSS** (5 blocos, 13 módulos e 42 macrofuncionalidades) e o **Ecossistema** (sistemas e entidades externas). O VIGIA é derivado dela em três passos: da arquitetura **genérica** (RADIAN completa), para a **parcial** (desastre geológico deflagrado por chuva, nas fases de prevenção, preparação e alerta à população) e, por fim, para a **específica** (VIGIA, 27 municípios do Alto Vale do Itajaí).
+A RADIAN divide um sistema de apoio à decisão para desastres naturais em duas partes: o **DSS** (5 blocos, 13 módulos e 42 macrofuncionalidades) e o **Ecossistema** (sistemas e entidades externas). O VIGIA é derivado dela em três passos: da arquitetura **genérica** (RADIAN completa), para a **parcial** (desastre geológico deflagrado por chuva, nas fases de prevenção, preparação e alerta à população) e, por fim, para a **específica** (VIGIA, 28 municípios do Alto Vale do Itajaí).
 
 | Bloco RADIAN | No VIGIA |
 |---|---|
@@ -269,13 +272,13 @@ Não se aplicam ao projeto o módulo Planejamento da Execução (abrigos, doaç�
 
 O pipeline roda no GitHub Actions 4 vezes por dia, grava os resultados no SQLite e publica um arquivo `indices.json` junto do frontend no GitHub Pages. O site lê esse arquivo em vez de consultar o backend a cada visita; assim, se o backend ficar fora do ar, o site continua exibindo o último índice publicado, com data e hora. A publicação é feita por commit automático do arquivo no repositório, pela API do GitHub, com um token restrito a este repositório.
 
-O bot tem duas metades. Um **Cloudflare Worker** (`bot-worker/`) recebe as mensagens do Telegram por webhook, responde `/start`, `/status` e `/parar` (e `/simular`, enquanto a demonstração estiver ativa) e guarda os inscritos num banco D1. O **pipeline** consulta o Worker para saber quem avisar e envia os avisos. Os textos das respostas são escritos pelo backend em um `bot.json`, que o Worker lê. Com 27 municípios, o teclado do `/start` é agrupado por região: "Região de Rio do Sul" e "Região de Ituporanga" abrem a lista de municípios do grupo, com "Todos da Região de …" e "Voltar"; o "Todos" global segue no menu principal. O `vigia.db` e o `bot.json` ficam na branch `estado`, que só o pipeline escreve (contrato em [docs/contratos-de-dados.md](docs/contratos-de-dados.md)). Operação e deploy em [backend/README.md](backend/README.md).
+O bot tem duas metades. Um **Cloudflare Worker** (`bot-worker/`) recebe as mensagens do Telegram por webhook, responde `/start`, `/status` e `/parar` (e `/simular`, enquanto a demonstração estiver ativa) e guarda os inscritos num banco D1. O **pipeline** consulta o Worker para saber quem avisar e envia os avisos. Os textos das respostas são escritos pelo backend em um `bot.json`, que o Worker lê. Com 28 municípios, o teclado do `/start` é agrupado por região: "Região de Rio do Sul" e "Região de Ituporanga" abrem a lista de municípios do grupo, com "Todos da Região de …" e "Voltar"; o "Todos" global segue no menu principal. O `vigia.db` e o `bot.json` ficam na branch `estado`, que só o pipeline escreve (contrato em [docs/contratos-de-dados.md](docs/contratos-de-dados.md)). Operação e deploy em [backend/README.md](backend/README.md).
 
-Quem se inscreveu em "Todos" quando eram 6 municípios continua com esses 6; para receber os 27, toque em "Todos" de novo no /start.
+Quem escolheu "Todos" quando eram 27 municípios continua com esses 27: o Worker grava uma inscrição por município (a lista vigente no momento do toque), e não "todos os municípios". Para receber também Santa Terezinha e ficar com os 28, toque em "Todos" de novo no /start.
 
 ### Banco de dados
 
-O VIGIA usa **SQLite** como banco padrão: um único arquivo, sem servidor, suficiente para o volume do projeto (27 municípios e algumas rodadas de cálculo por dia). O arquivo vive na branch `estado`, restaurado e gravado a cada execução do pipeline. A troca para PostgreSQL só seria necessária com mais de uma instância escrevendo ao mesmo tempo.
+O VIGIA usa **SQLite** como banco padrão: um único arquivo, sem servidor, suficiente para o volume do projeto (28 municípios e algumas rodadas de cálculo por dia). O arquivo vive na branch `estado`, restaurado e gravado a cada execução do pipeline. A troca para PostgreSQL só seria necessária com mais de uma instância escrevendo ao mesmo tempo.
 
 O banco guarda apenas o que não pode ser obtido de novo nas APIs:
 
@@ -293,7 +296,7 @@ As séries horárias de chuva não são armazenadas: a cada execução, as 168 h
 
 ### Público e casos de uso
 
-O VIGIA atende a **população** dos 27 municípios e as **coordenadorias municipais de Defesa Civil**, sem login.
+O VIGIA atende a **população** dos 28 municípios e as **coordenadorias municipais de Defesa Civil**, sem login.
 
 ![Diagrama de casos de uso](docs/diagramas/casos-de-uso.svg)
 
@@ -310,12 +313,12 @@ O VIGIA atende a **população** dos 27 municípios e as **coordenadorias munici
 
 | Tela | Rota | Conteúdo principal |
 |---|---|---|
-| Monitoramento | `/` | Mapa colorido pela classe de risco, que abre sem município selecionado (o painel aparece depois do clique ou da busca); resumo "N de 27 em alerta" com a data e a hora da última atualização; Previsões D0–D3 numa lista recolhível (botão com a data); busca, legenda e seletor de fundo do mapa (Satélite, Neutro, Ruas, Relevo) |
+| Monitoramento | `/` | Mapa colorido pela classe de risco, que abre sem município selecionado (o painel aparece depois do clique ou da busca); resumo "N de 28 em alerta" com a data e a hora da última atualização; Previsões D0–D3 numa lista recolhível (botão com a data); busca, legenda e seletor de fundo do mapa (Satélite, Neutro, Ruas, Relevo) |
 | Simulação | `/simulacao` | Município (a tela abre sem nenhum escolhido), período (24, 48 ou 72 h) e chuva informada, de 0 até o recorde mundial do período, por campo, controle deslizante (passo de 5 mm) ou atalhos em mm (fraca a extrema e "recorde mundial"); o mapa recolore e compara "Agora" com "Simulado", e o seletor de fundo do mapa fica logo abaixo desse botão |
 | Dados da análise | `/dados` | Indicadores, evolução do índice em 7 dias (padrão), 30 dias ou um período personalizado de até 1 ano, chuva acumulada e tabela por município (minigráfico dos últimos 7 dias) |
 | Áreas de risco | `/areas-de-risco` | Setores de risco geológico do SGB e ocorrências por município; estações do INMET como camada opcional |
 | Cartilha | `/cartilha` | Sinais de perigo, o que fazer antes/durante/depois, mochila de emergência, "não faça". Cada seção cita suas fontes oficiais: Defesa Civil Nacional (MDR), Serviço Geológico do Brasil (SGB), Defesa Civil de SC, Ministério das Comunicações, Defesa Civil do Paraná e SP Sempre Alerta |
-| Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e os 27 municípios em ordem alfabética, cada um com a fonte oficial e a data da consulta |
+| Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e os 28 municípios em ordem alfabética, cada um com a fonte oficial e a data da consulta |
 | Ajuda | `/ajuda` | Quadro do vídeo tutorial no topo (capa do mapa; carrega só ao clicar, com legendas e transcrição) e dicas de uso de cada tela e do bot. Fica no rail do desktop e no "?" do topo no celular, fora da barra inferior |
 
 Em todas as telas: menu, seletor de idioma (botão "PT ▾" com PT, ES e EN), acessibilidade, "Alertas no Telegram" e, no topo, "Situação de dd/mm/aaaa" (o dia-alvo).
@@ -323,7 +326,7 @@ Em todas as telas: menu, seletor de idioma (botão "PT ▾" com PT, ES e EN), ac
 ### Requisitos funcionais
 
 **Monitoramento**
-- **RF01** — Exibir o mapa dos 27 municípios coloridos pela classe de risco, com nome e índice, e o total de municípios em alerta.
+- **RF01** — Exibir o mapa dos 28 municípios coloridos pela classe de risco, com nome e índice, e o total de municípios em alerta.
 - **RF02** — Selecionar um município (clique, toque, teclado ou busca por nome) e mostrar no painel: índice, classe, situação de alerta, chuva efetiva antecedente e limiar.
 - **RF03** — Mostrar a previsão para os próximos 3 dias, numa lista recolhível (Previsões).
 - **RF04** — A partir do painel, compartilhar a situação do município, abrir a simulação e assinar os alertas do município no Telegram.
@@ -364,7 +367,7 @@ Em todas as telas: menu, seletor de idioma (botão "PT ▾" com PT, ES e EN), ac
 - **RN06** — Previsões (D1–D3) aparecem sempre marcadas como valores estimados.
 - **RN07** — A simulação usa a mesma equação do subíndice, trocando a chuva prevista pela chuva informada: (EfR × 0,5^((h − 24) ÷ MV) + chuva) ÷ limiar, em que h é o período escolhido (24, 48 ou 72 h) e o EfR do D0 decai pela meia-vida até o fim do período (com 24 h, fica (EfR + chuva) ÷ limiar). Ela não altera dados reais e não dispara alertas.
 - **RN08** — O aviso do bot não se repete enquanto o município permanecer na mesma classe.
-- **RN09** — Os números de emergência (199, 193, 192) aparecem sempre. Os 27 municípios têm um card, em ordem alfabética, com os contatos publicados no site oficial da prefeitura ou da Defesa Civil municipal, o link dessa fonte e a data da consulta. Sem contato oficial da Defesa Civil, o card mostra o telefone geral da prefeitura e os números de emergência.
+- **RN09** — Os números de emergência (199, 193, 192) aparecem sempre. Os 28 municípios têm um card, em ordem alfabética, com os contatos publicados no site oficial da prefeitura ou da Defesa Civil municipal, o link dessa fonte e a data da consulta. Sem contato oficial da Defesa Civil, o card mostra o telefone geral da prefeitura e os números de emergência.
 - **RN10** — O VIGIA não incorpora sites oficiais: o painel da Defesa Civil de SC aparece só como link, na tela Contatos, com o crédito da fonte.
 - **RN11** — O dia-alvo ("Situação de dd/mm/aaaa", no topo) e o horário da última atualização (no resumo do mapa) ficam sempre visíveis.
 

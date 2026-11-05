@@ -14,7 +14,7 @@ Parâmetros de cada município, versionados no repositório. Incluir um municíp
 | `fonte_limiar` | string | Origem do limiar (ex.: "GeoRisk, limiar hipotético padrão") |
 | `mv_h` | número | Meia-vida da água no solo, em horas. Padrão: 24 |
 | `pontos` | lista de `{lat, lon}` | Pontos de cálculo; no mínimo o centroide do município |
-| `microrregiao` | objeto, opcional | `{"codigo": 5 dígitos, "nome"}`: microrregião IBGE; agrupa o teclado do bot |
+| `microrregiao` | objeto, opcional | `{"codigo": 5 dígitos, "nome"}`: agrupamento do VIGIA, usado no teclado do bot. Nos 27 municípios das microrregiões 42011 e 42014 é a microrregião IBGE (divisão de 1989). Para Santa Terezinha (4215679), da AMAVI e da Região Geográfica Imediata de Rio do Sul, **não corresponde à microrregião do IBGE** (que é Canoinhas): o gerador a coloca no grupo "Região de Rio do Sul" (`MUNICIPIOS_EXTRAS` em `scripts/gerar_municipios.py`) |
 
 ## `frontend/public/data/indices.json`
 
@@ -164,7 +164,7 @@ Estações automáticas do INMET na região, geradas uma vez por script (`backen
 | `distancia_km` | número | Distância entre a estação e o centroide desse município |
 | `lat`, `lon` | número | Coordenadas em graus decimais |
 
-**Por que `ibge_referencia` e não `ibge`.** Só duas estações do INMET ficam dentro dos 27 municípios (A863 Ituporanga e A861 Rio do Campo); as outras ficam a dezenas de km do município mais próximo, e a resposta do INMET não traz código IBGE nenhum, só nome livre e coordenadas. A associação é por proximidade do centroide. O campo tem nome próprio para não significar, aqui, algo diferente do que `ibge` significa em `indices.json` e em `municipios.json` — e `distancia_km` existe para que a distância real não possa ficar escondida.
+**Por que `ibge_referencia` e não `ibge`.** Só duas estações do INMET ficam dentro dos 28 municípios (A863 Ituporanga e A861 Rio do Campo); as outras ficam a dezenas de km do município mais próximo, e a resposta do INMET não traz código IBGE nenhum, só nome livre e coordenadas. A associação é por proximidade do centroide. O campo tem nome próprio para não significar, aqui, algo diferente do que `ibge` significa em `indices.json` e em `municipios.json` — e `distancia_km` existe para que a distância real não possa ficar escondida.
 
 **Regra de leitura no site:** a estação é regional, então o texto não pode afirmar que ela fica no município. Exibir a distância junto do nome (ex.: "ITAJAI, a 76 km de Ibirama") e usar `distancia_km` para filtrar o que vale mostrar. Essa é também a razão pela qual o raio de corte do script é generoso (100 km por padrão): o arquivo entrega o dado e a tela decide.
 

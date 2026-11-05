@@ -457,6 +457,8 @@ coordenadas).
 
 **Atualização (27 municípios, 1 ponto):** 27 × 4 = 108 chamadas, mais 3 `meta.json`, dá 111 por execução, 444 por dia e cerca de 13.300 por mês. Tudo dentro dos limites (600 por minuto, 10.000 por dia e 300.000 por mês).
 
+**Atualização (28 municípios, 1 ponto):** com Santa Terezinha (4215679), são 28 × 4 = 112 chamadas, mais 3 `meta.json`, 115 por execução, 460 por dia e cerca de 13.800 por mês. Continua dentro dos limites.
+
 A conta original, com 6 municípios e até 3 pontos cada (centróide + 2 adicionais — o contrato
 de `municipios.json` exige só "no mínimo o centróide"; 3 é um teto
 conservador para a extensão territorial destes municípios pequenos):
