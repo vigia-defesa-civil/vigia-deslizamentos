@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "gerado_em": "2026-11-05T21:27:12Z",
+  "gerado_em": "2026-11-05T22:57:09Z",
   "municipios": [
     {
       "ibge": "4200200",
@@ -91,6 +91,10 @@
       "nome": "Salete"
     },
     {
+      "ibge": "4215679",
+      "nome": "Santa Terezinha"
+    },
+    {
       "ibge": "4217808",
       "nome": "Taió"
     },
@@ -137,6 +141,7 @@
       "4214607": "Olá! O link veio de Rio do Oeste — toque em \"Rio do Oeste\" para se inscrever só nele, ou em \"Todos\" para acompanhar todos.\n\nUse /status para ver a situação e /parar para cancelar.",
       "4214805": "Olá! O link veio de Rio do Sul — toque em \"Rio do Sul\" para se inscrever só nele, ou em \"Todos\" para acompanhar todos.\n\nUse /status para ver a situação e /parar para cancelar.",
       "4215307": "Olá! O link veio de Salete — toque em \"Salete\" para se inscrever só nele, ou em \"Todos\" para acompanhar todos.\n\nUse /status para ver a situação e /parar para cancelar.",
+      "4215679": "Olá! O link veio de Santa Terezinha — toque em \"Santa Terezinha\" para se inscrever só nele, ou em \"Todos\" para acompanhar todos.\n\nUse /status para ver a situação e /parar para cancelar.",
       "4217808": "Olá! O link veio de Taió — toque em \"Taió\" para se inscrever só nele, ou em \"Todos\" para acompanhar todos.\n\nUse /status para ver a situação e /parar para cancelar.",
       "4218608": "Olá! O link veio de Trombudo Central — toque em \"Trombudo Central\" para se inscrever só nele, ou em \"Todos\" para acompanhar todos.\n\nUse /status para ver a situação e /parar para cancelar.",
       "4219200": "Olá! O link veio de Vidal Ramos — toque em \"Vidal Ramos\" para se inscrever só nele, ou em \"Todos\" para acompanhar todos.\n\nUse /status para ver a situação e /parar para cancelar.",
@@ -166,13 +171,14 @@
       "4214607": "Pronto! Você vai receber avisos de: Rio do Oeste.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
       "4214805": "Pronto! Você vai receber avisos de: Rio do Sul.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
       "4215307": "Pronto! Você vai receber avisos de: Salete.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
+      "4215679": "Pronto! Você vai receber avisos de: Santa Terezinha.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
       "4217808": "Pronto! Você vai receber avisos de: Taió.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
       "4218608": "Pronto! Você vai receber avisos de: Trombudo Central.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
       "4219200": "Pronto! Você vai receber avisos de: Vidal Ramos.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
       "4219358": "Pronto! Você vai receber avisos de: Vitor Meireles.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
       "4219408": "Pronto! Você vai receber avisos de: Witmarsum.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil."
     },
-    "inscricao_confirmada_todos": "Pronto! Você vai receber avisos de: Agrolândia, Agronômica, Atalanta, Aurora, Braço do Trombudo, Chapadão do Lageado, Dona Emma, Ibirama, Imbuia, Ituporanga, José Boiteux, Laurentino, Lontras, Mirim Doce, Petrolândia, Pouso Redondo, Presidente Getúlio, Presidente Nereu, Rio do Campo, Rio do Oeste, Rio do Sul, Salete, Taió, Trombudo Central, Vidal Ramos, Vitor Meireles, Witmarsum.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
+    "inscricao_confirmada_todos": "Pronto! Você vai receber avisos de: Agrolândia, Agronômica, Atalanta, Aurora, Braço do Trombudo, Chapadão do Lageado, Dona Emma, Ibirama, Imbuia, Ituporanga, José Boiteux, Laurentino, Lontras, Mirim Doce, Petrolândia, Pouso Redondo, Presidente Getúlio, Presidente Nereu, Rio do Campo, Rio do Oeste, Rio do Sul, Salete, Santa Terezinha, Taió, Trombudo Central, Vidal Ramos, Vitor Meireles, Witmarsum.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil.",
     "opcao_desconhecida": "Não reconheci essa opção. Use /start para ver a lista de municípios.",
     "inscricoes_apagadas": "Suas inscrições foram apagadas. Use /start quando quiser voltar.",
     "opcao_voltar": "Voltar",
@@ -181,33 +187,34 @@
   "status": {
     "cabecalho": "<b>Situação dos seus municípios</b>\n\n",
     "blocos": {
-      "4200200": "ℹ️ <b>Agrolândia</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,36</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4200309": "ℹ️ <b>Agronômica</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,33</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4201802": "ℹ️ <b>Atalanta</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,32</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4201901": "ℹ️ <b>Aurora</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,33</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4202859": "ℹ️ <b>Braço do Trombudo</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,36</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4204194": "ℹ️ <b>Chapadão do Lageado</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,30</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4205100": "ℹ️ <b>Dona Emma</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,29</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4206900": "ℹ️ <b>Ibirama</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,23</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4207403": "ℹ️ <b>Imbuia</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,34</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4208500": "ℹ️ <b>Ituporanga</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,30</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4209151": "ℹ️ <b>José Boiteux</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,31</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4209508": "ℹ️ <b>Laurentino</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,31</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4209904": "ℹ️ <b>Lontras</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,25</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4210852": "ℹ️ <b>Mirim Doce</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,27</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4212700": "ℹ️ <b>Petrolândia</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,32</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4213708": "ℹ️ <b>Pouso Redondo</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,36</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4214003": "ℹ️ <b>Presidente Getúlio</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,28</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4214102": "ℹ️ <b>Presidente Nereu</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,31</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4214508": "ℹ️ <b>Rio do Campo</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,24</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4214607": "ℹ️ <b>Rio do Oeste</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,27</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4214805": "ℹ️ <b>Rio do Sul</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,29</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4215307": "ℹ️ <b>Salete</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,28</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4217808": "ℹ️ <b>Taió</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,27</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4218608": "ℹ️ <b>Trombudo Central</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,33</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4219200": "ℹ️ <b>Vidal Ramos</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,30</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4219358": "ℹ️ <b>Vitor Meireles</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,26</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27",
-      "4219408": "ℹ️ <b>Witmarsum</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,30</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 18:27"
+      "4200200": "ℹ️ <b>Agrolândia</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,35</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4200309": "ℹ️ <b>Agronômica</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,32</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4201802": "ℹ️ <b>Atalanta</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,32</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4201901": "ℹ️ <b>Aurora</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,33</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4202859": "ℹ️ <b>Braço do Trombudo</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,35</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4204194": "ℹ️ <b>Chapadão do Lageado</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,30</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4205100": "ℹ️ <b>Dona Emma</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,29</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4206900": "ℹ️ <b>Ibirama</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,23</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4207403": "ℹ️ <b>Imbuia</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,33</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4208500": "ℹ️ <b>Ituporanga</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,30</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4209151": "ℹ️ <b>José Boiteux</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,31</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4209508": "ℹ️ <b>Laurentino</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,31</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4209904": "ℹ️ <b>Lontras</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,25</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4210852": "ℹ️ <b>Mirim Doce</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,27</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4212700": "ℹ️ <b>Petrolândia</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,32</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4213708": "ℹ️ <b>Pouso Redondo</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,35</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4214003": "ℹ️ <b>Presidente Getúlio</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,29</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4214102": "ℹ️ <b>Presidente Nereu</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,31</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4214508": "ℹ️ <b>Rio do Campo</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,24</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4214607": "ℹ️ <b>Rio do Oeste</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,27</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4214805": "ℹ️ <b>Rio do Sul</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,29</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4215307": "ℹ️ <b>Salete</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,28</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4215679": "ℹ️ <b>Santa Terezinha</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,23</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4217808": "ℹ️ <b>Taió</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,27</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4218608": "ℹ️ <b>Trombudo Central</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,33</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4219200": "ℹ️ <b>Vidal Ramos</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,29</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4219358": "ℹ️ <b>Vitor Meireles</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,27</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57",
+      "4219408": "ℹ️ <b>Witmarsum</b> · Risco extremamente baixo\n🟩⬜⬜⬜⬜⬜⬜ classe 1 de 7 · Índice <b>0,30</b>\n📅 Válido para 05/11/2026 · cálculo de 05/11/2026 19:57"
     },
     "separador": "\n\n",
     "rodape": "\n\n🗺 Ver no mapa: https://vigia-defesa-civil.github.io/vigia-deslizamentos/\n<i>Sistema acadêmico, não emite alerta oficial.</i>",
@@ -413,6 +420,15 @@
         "🧪 <b>SIMULAÇÃO</b>\n🚨 <b>ALERTA — Salete</b>\n<b>Risco muito alto</b> · classe 6 de 7\n🟩🟩🟩🟨🟧🟥⬜\n\n📊 Índice: <b>3,00</b>\n\n<b>O que fazer</b>\n• Se mora em encosta ou perto de barranco e notar rachaduras, árvores ou postes inclinados ou água barrenta saindo do terreno, saia do local e vá para um lugar seguro.\n• Siga as orientações da Defesa Civil.\n• Emergência: Defesa Civil <b>199</b> · Bombeiros <b>193</b>\n\n🗺 Ver no mapa: https://vigia-defesa-civil.github.io/vigia-deslizamentos/\n<i>Sistema acadêmico, não emite alerta oficial.</i>",
         "🧪 <b>SIMULAÇÃO</b>\n🚨 <b>ALERTA MÁXIMO — Salete</b>\n<b>Risco extremamente alto</b> · classe 7 de 7\n🟩🟩🟩🟨🟧🟥🟪\n\n📊 Índice: <b>3,90</b>\n\n<b>O que fazer</b>\n• Se mora em encosta ou perto de barranco e notar rachaduras, árvores ou postes inclinados ou água barrenta saindo do terreno, saia do local e vá para um lugar seguro.\n• Siga as orientações da Defesa Civil.\n• Emergência: Defesa Civil <b>199</b> · Bombeiros <b>193</b>\n\n🗺 Ver no mapa: https://vigia-defesa-civil.github.io/vigia-deslizamentos/\n<i>Sistema acadêmico, não emite alerta oficial.</i>"
       ],
+      "4215679": [
+        "🧪 <b>SIMULAÇÃO</b>\nℹ️ <b>Santa Terezinha — sem alerta</b>\n<b>Risco extremamente baixo</b> · classe 1 de 7\n🟩⬜⬜⬜⬜⬜⬜\n📊 Índice: <b>0,20</b>\nCondições normais para a chuva acumulada.",
+        "🧪 <b>SIMULAÇÃO</b>\nℹ️ <b>Santa Terezinha — sem alerta</b>\n<b>Risco muito baixo</b> · classe 2 de 7\n🟩🟩⬜⬜⬜⬜⬜\n📊 Índice: <b>0,55</b>\nCondições normais para a chuva acumulada.",
+        "🧪 <b>SIMULAÇÃO</b>\nℹ️ <b>Santa Terezinha — sem alerta</b>\n<b>Risco baixo</b> · classe 3 de 7\n🟩🟩🟩⬜⬜⬜⬜\n📊 Índice: <b>0,85</b>\nCondições normais para a chuva acumulada.",
+        "🧪 <b>SIMULAÇÃO</b>\n⚠️ <b>ATENÇÃO — Santa Terezinha</b>\n<b>Risco moderado</b> · classe 4 de 7\n🟩🟩🟩🟨⬜⬜⬜\n\n📊 Índice: <b>1,40</b>\n\n<b>O que fazer</b>\n• Fique atento a sinais de movimento do terreno: rachaduras em paredes ou no chão, árvores e postes inclinados, portas e janelas emperrando.\n• Acompanhe as atualizações da Defesa Civil.\n• Emergência: Defesa Civil <b>199</b> · Bombeiros <b>193</b>\n\n🗺 Ver no mapa: https://vigia-defesa-civil.github.io/vigia-deslizamentos/\n<i>Sistema acadêmico, não emite alerta oficial.</i>",
+        "🧪 <b>SIMULAÇÃO</b>\n⚠️ <b>ALERTA — Santa Terezinha</b>\n<b>Risco alto</b> · classe 5 de 7\n🟩🟩🟩🟨🟧⬜⬜\n\n📊 Índice: <b>2,20</b>\n\n<b>O que fazer</b>\n• Fique atento a sinais de movimento do terreno: rachaduras em paredes ou no chão, árvores e postes inclinados, portas e janelas emperrando.\n• Acompanhe as atualizações da Defesa Civil.\n• Se mora em encosta ou perto de barranco, combine com a família um plano para sair rapidamente.\n• Emergência: Defesa Civil <b>199</b> · Bombeiros <b>193</b>\n\n🗺 Ver no mapa: https://vigia-defesa-civil.github.io/vigia-deslizamentos/\n<i>Sistema acadêmico, não emite alerta oficial.</i>",
+        "🧪 <b>SIMULAÇÃO</b>\n🚨 <b>ALERTA — Santa Terezinha</b>\n<b>Risco muito alto</b> · classe 6 de 7\n🟩🟩🟩🟨🟧🟥⬜\n\n📊 Índice: <b>3,00</b>\n\n<b>O que fazer</b>\n• Se mora em encosta ou perto de barranco e notar rachaduras, árvores ou postes inclinados ou água barrenta saindo do terreno, saia do local e vá para um lugar seguro.\n• Siga as orientações da Defesa Civil.\n• Emergência: Defesa Civil <b>199</b> · Bombeiros <b>193</b>\n\n🗺 Ver no mapa: https://vigia-defesa-civil.github.io/vigia-deslizamentos/\n<i>Sistema acadêmico, não emite alerta oficial.</i>",
+        "🧪 <b>SIMULAÇÃO</b>\n🚨 <b>ALERTA MÁXIMO — Santa Terezinha</b>\n<b>Risco extremamente alto</b> · classe 7 de 7\n🟩🟩🟩🟨🟧🟥🟪\n\n📊 Índice: <b>3,90</b>\n\n<b>O que fazer</b>\n• Se mora em encosta ou perto de barranco e notar rachaduras, árvores ou postes inclinados ou água barrenta saindo do terreno, saia do local e vá para um lugar seguro.\n• Siga as orientações da Defesa Civil.\n• Emergência: Defesa Civil <b>199</b> · Bombeiros <b>193</b>\n\n🗺 Ver no mapa: https://vigia-defesa-civil.github.io/vigia-deslizamentos/\n<i>Sistema acadêmico, não emite alerta oficial.</i>"
+      ],
       "4217808": [
         "🧪 <b>SIMULAÇÃO</b>\nℹ️ <b>Taió — sem alerta</b>\n<b>Risco extremamente baixo</b> · classe 1 de 7\n🟩⬜⬜⬜⬜⬜⬜\n📊 Índice: <b>0,20</b>\nCondições normais para a chuva acumulada.",
         "🧪 <b>SIMULAÇÃO</b>\nℹ️ <b>Taió — sem alerta</b>\n<b>Risco muito baixo</b> · classe 2 de 7\n🟩🟩⬜⬜⬜⬜⬜\n📊 Índice: <b>0,55</b>\nCondições normais para a chuva acumulada.",
@@ -460,7 +476,7 @@
       ]
     },
     "fim": "🧪 Fim da simulação: 7 classes enviadas.",
-    "municipio_invalido": "🧪 <b>SIMULAÇÃO</b>\nMunicípio \"{entrada}\" não encontrado.\n\nMunicípios válidos:\n• Agrolândia\n• Agronômica\n• Atalanta\n• Aurora\n• Braço do Trombudo\n• Chapadão do Lageado\n• Dona Emma\n• Ibirama\n• Imbuia\n• Ituporanga\n• José Boiteux\n• Laurentino\n• Lontras\n• Mirim Doce\n• Petrolândia\n• Pouso Redondo\n• Presidente Getúlio\n• Presidente Nereu\n• Rio do Campo\n• Rio do Oeste\n• Rio do Sul\n• Salete\n• Taió\n• Trombudo Central\n• Vidal Ramos\n• Vitor Meireles\n• Witmarsum",
+    "municipio_invalido": "🧪 <b>SIMULAÇÃO</b>\nMunicípio \"{entrada}\" não encontrado.\n\nMunicípios válidos:\n• Agrolândia\n• Agronômica\n• Atalanta\n• Aurora\n• Braço do Trombudo\n• Chapadão do Lageado\n• Dona Emma\n• Ibirama\n• Imbuia\n• Ituporanga\n• José Boiteux\n• Laurentino\n• Lontras\n• Mirim Doce\n• Petrolândia\n• Pouso Redondo\n• Presidente Getúlio\n• Presidente Nereu\n• Rio do Campo\n• Rio do Oeste\n• Rio do Sul\n• Salete\n• Santa Terezinha\n• Taió\n• Trombudo Central\n• Vidal Ramos\n• Vitor Meireles\n• Witmarsum",
     "pausa_s": 1.0
   },
   "grupos": [
@@ -483,6 +499,7 @@
         "4214607",
         "4214805",
         "4215307",
+        "4215679",
         "4217808",
         "4218608",
         "4219358",
@@ -490,7 +507,7 @@
       ],
       "opcao_todos": "Todos da Região de Rio do Sul",
       "escolha": "Municípios da Região de Rio do Sul. Toque em um deles, em \"Todos da Região de Rio do Sul\" ou em \"Voltar\".",
-      "confirmacao": "Pronto! Você vai receber avisos de: Agronômica, Aurora, Braço do Trombudo, Dona Emma, Ibirama, José Boiteux, Laurentino, Lontras, Mirim Doce, Pouso Redondo, Presidente Getúlio, Presidente Nereu, Rio do Campo, Rio do Oeste, Rio do Sul, Salete, Taió, Trombudo Central, Vitor Meireles, Witmarsum.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil."
+      "confirmacao": "Pronto! Você vai receber avisos de: Agronômica, Aurora, Braço do Trombudo, Dona Emma, Ibirama, José Boiteux, Laurentino, Lontras, Mirim Doce, Pouso Redondo, Presidente Getúlio, Presidente Nereu, Rio do Campo, Rio do Oeste, Rio do Sul, Salete, Santa Terezinha, Taió, Trombudo Central, Vitor Meireles, Witmarsum.\n\nO VIGIA é um sistema acadêmico e não emite alerta oficial: em caso de emergência, procure a Defesa Civil."
     },
     {
       "nome": "Região de Ituporanga",
