@@ -10,6 +10,11 @@ Ituporanga, divisão de 1989 — substituída pelas regiões imediatas em 2017, 
 estável e suficiente para uma lista gerada uma vez) e a malha municipal do
 `tbrugz/geodata-br` no mesmo commit que o mapa do site usa.
 
+A área do VIGIA são os 28 municípios da AMAVI, que coincidem com a Região
+Geográfica Imediata de Rio do Sul. Santa Terezinha (4215679) pertence a essa
+região, mas, na divisão antiga, é da microrregião de Canoinhas: não vem das duas
+microrregiões acima e entra por `MUNICIPIOS_EXTRAS`.
+
 Os municípios que já estão no arquivo **não mudam** (ponto, limiar, fonte,
 `mv_h` e nome): o histórico gravado no banco depende deles. Um município do
 arquivo que suma do IBGE interrompe o script em vez de ser removido.
@@ -41,6 +46,18 @@ FONTE_LIMIAR_DEMONSTRACAO = (
     "de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)"
 )
 LIMIAR_DEMONSTRACAO_MM = 100
+
+#: Municípios da AMAVI fora das microrregiões 42011/42014 do IBGE. O campo `microrregiao`
+#: deles NÃO é a microrregião do IBGE: é o agrupamento do VIGIA (o grupo do teclado do bot),
+#: o da Região Geográfica Imediata de Rio do Sul. Santa Terezinha é da microrregião de Canoinhas
+#: na divisão antiga do IBGE. Ver `docs/contratos-de-dados.md`.
+MUNICIPIOS_EXTRAS = (
+    {
+        "ibge": "4215679",
+        "nome": "Santa Terezinha",
+        "microrregiao": {"codigo": "42011", "nome": "Rio do Sul"},
+    },
+)
 MV_H = 24
 TIMEOUT_S = 30
 
@@ -98,11 +115,19 @@ def mesclar(
     atuais: list[dict],
     ibge_por_micro: list[tuple[dict, list[dict]]],
     geometrias: dict[str, dict],
+    extras: tuple[dict, ...] = (),
 ) -> list[dict]:
-    """Junta o arquivo atual com a resposta do IBGE. Ver a docstring do módulo."""
+    """Junta o arquivo atual com a resposta do IBGE e os extras. Ver a docstring do módulo."""
     por_ibge = {m["ibge"]: dict(m) for m in atuais}
     vistos: set[str] = set()
-    for micro, lista in ibge_por_micro:
+    entradas = list(ibge_por_micro) + [
+        (
+            {"id": extra["microrregiao"]["codigo"], "nome": extra["microrregiao"]["nome"]},
+            [{"id": extra["ibge"], "nome": extra["nome"]}],
+        )
+        for extra in extras
+    ]
+    for micro, lista in entradas:
         codigo = str(micro["id"])
         if not lista:
             raise ValueError(f"microrregião {codigo} veio vazia do IBGE")
@@ -174,7 +199,7 @@ def main(argv: list[str] | None = None) -> int:
             ibge_por_micro.append(({"id": micro["id"], "nome": micro["nome"]}, lista))
 
     geometrias = {f["properties"]["id"]: f["geometry"] for f in malha["features"]}
-    itens = mesclar(atuais, ibge_por_micro, geometrias)
+    itens = mesclar(atuais, ibge_por_micro, geometrias, MUNICIPIOS_EXTRAS)
     Path(argumentos.saida).write_text(formatar(itens), encoding="utf-8", newline="\n")  # LF mesmo no Windows
     print(f"{len(itens)} município(s) gravado(s) em {argumentos.saida}")
     return 0
