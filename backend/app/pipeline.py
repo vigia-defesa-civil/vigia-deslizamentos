@@ -114,7 +114,7 @@ def _decidir_avisos(
     Entram na lista os municípios que geram mensagem (`avisar = True`) e os que
     precisam de uma gravação de estado — sair de alerta zera a classe, e isso
     tem de ser persistido mesmo sem mensagem. Município em que nada muda fica de
-    fora, para não gastar uma escrita por execução em cada um dos 27.
+    fora, para não gastar uma escrita por execução em cada um dos 28.
 
     Só o D0 entra na decisão: D1–D3 são previsão (RN06) e não disparam aviso.
     """

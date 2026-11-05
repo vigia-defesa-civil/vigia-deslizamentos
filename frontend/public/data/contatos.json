@@ -286,6 +286,19 @@
     "telefone_de": "prefeitura"
   },
   {
+    "ibge": "4215679",
+    "nome": "Santa Terezinha",
+    "verificado": false,
+    "responsavel": null,
+    "telefone": "(47) 3556-0044",
+    "email": "prefeitura@santaterezinha.sc.gov.br",
+    "endereco": "Avenida Bruno Pieczarka, 154 – Centro, Santa Terezinha/SC, 89199-000",
+    "site": "santaterezinha.sc.gov.br",
+    "fonte": "https://santaterezinha.sc.gov.br/contato/",
+    "consultado_em": "2026-11-05",
+    "telefone_de": "prefeitura"
+  },
+  {
     "ibge": "4217808",
     "nome": "Taió",
     "verificado": false,

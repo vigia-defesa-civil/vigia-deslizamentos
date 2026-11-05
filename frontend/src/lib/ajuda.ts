@@ -27,7 +27,7 @@ export const SECOES_AJUDA: readonly SecaoAjuda[] = [
     titulo: "Simulação",
     dicas: [
       "Escolha o município, o período (24, 48 ou 72 h) e a chuva esperada em milímetros.",
-      "Marque a chuva regional para aplicar a mesma chuva aos 27 municípios.",
+      "Marque a chuva regional para aplicar a mesma chuva aos 28 municípios.",
       "O limite do campo é o maior acumulado de chuva já registrado no mundo naquele período: 1.825 mm em 24 h, 2.493 mm em 48 h e 3.930 mm em 72 h (Organização Meteorológica Mundial, tabela de recordes de 31/07/2025).",
       "Esse limite só evita valores absurdos. O cálculo usa a mesma equação do índice, sem teto.",
       "A simulação não muda os dados reais e não envia aviso.",

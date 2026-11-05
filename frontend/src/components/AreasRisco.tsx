@@ -51,7 +51,7 @@ function textoPessoas(t: T, setores: Setor[]): string {
   return ` · ${n === 1 ? t("1 pessoa nos setores mapeados") : t("{N} pessoas nos setores mapeados", { N: milhar(n) })}`;
 }
 
-/** "98 setores de risco geológico em 18 dos 27 municípios · 3.201 pessoas nos setores mapeados" (painel e anúncio). */
+/** "98 setores de risco geológico em 18 dos 28 municípios · 3.201 pessoas nos setores mapeados" (painel e anúncio). */
 function resumoRegiao(t: T, setores: Setor[]): string {
   const r = resumo(setores);
   const N = [String(r.setores), String(r.municipios), String(IBGES.size)];

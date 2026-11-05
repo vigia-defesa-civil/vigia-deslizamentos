@@ -90,7 +90,7 @@ def test_campos_da_raiz_e_ordem_dos_municipios():
     assert dados["municipios"] == [
         {"ibge": m.ibge, "nome": m.nome} for m in MUNICIPIOS
     ]
-    assert len(MUNICIPIOS) == 27
+    assert len(MUNICIPIOS) == 28
 
 
 def test_gerado_em_com_outro_fuso_e_convertido_para_utc():
@@ -228,7 +228,7 @@ def test_grupos_na_ordem_do_codigo_da_microrregiao():
     dados = montar()
     grupos = dados["grupos"]
     assert [g["nome"] for g in grupos] == ["Região de Rio do Sul", "Região de Ituporanga"]
-    assert sum(len(g["municipios"]) for g in grupos) == 27
+    assert sum(len(g["municipios"]) for g in grupos) == 28
     ordem = [m["ibge"] for m in dados["municipios"]]
     for g in grupos:
         assert g["municipios"] == [i for i in ordem if i in set(g["municipios"])]

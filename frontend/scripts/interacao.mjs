@@ -131,7 +131,7 @@ await caso("previsoes-desktop", async () => {
   }
 });
 
-// Rótulos: com os 27 municípios em alerta, nenhum par de rótulos à vista se sobrepõe (de longe e aproximado),
+// Rótulos: com os 28 municípios em alerta, nenhum par de rótulos à vista se sobrepõe (de longe e aproximado),
 // e o de maior índice aparece.
 await caso("rotulos", async () => {
   {
@@ -213,7 +213,7 @@ await caso("simulacao", async () => {
 });
 
 // Painel do município a 1366 e 1920 px: "Sem alerta"/"Em alerta" e a classe nunca partem no meio, e os botões
-// "Compartilhar"/"Simular chuva" ficam numa linha. Os 27 municípios passam pelas 7 classes, em PT, ES e EN.
+// "Compartilhar"/"Simular chuva" ficam numa linha. Os 28 municípios passam pelas 7 classes, em PT, ES e EN.
 await caso("painel", async () => {
   const { readFile } = await import("node:fs/promises");
   const { DIST } = await import("./servidor.mjs");
@@ -635,7 +635,7 @@ await caso("contatos", async () => {
     await p.waitForSelector(".cc h2", { timeout: 30_000 });
     const texto = await p.locator(".cgrid").innerText();
     verificar(!/coordenador\(a\) a confirmar/i.test(texto), "Contatos mostra \"Nome do coordenador(a) a confirmar\"");
-    // RN09: 27 cartões em ordem alfabética, sem selo, todos com a fonte oficial e a data; sem telefone da Defesa
+    // RN09: 28 cartões em ordem alfabética, sem selo, todos com a fonte oficial e a data; sem telefone da Defesa
     // Civil, o 199 e o 193 no cartão; WhatsApp só onde já havia (Ibirama e Presidente Getúlio).
     const r = await p.evaluate(() => {
       const cartoes = [...document.querySelectorAll(".cgrid .cc")];
@@ -655,9 +655,9 @@ await caso("contatos", async () => {
         whatsapp: cartoes.filter((c) => c.querySelector("a[href*='wa.me']")).map(nome).sort(),
       };
     });
-    verificar(r.total === 27 && r.selos === 0, `Contatos com ${r.total} cartões e ${r.selos} selos (esperado 27 e 0)`);
+    verificar(r.total === 28 && r.selos === 0, `Contatos com ${r.total} cartões e ${r.selos} selos (esperado 28 e 0)`);
     verificar(r.ordem && r.primeiro === "Agrolândia", `cartões ou seletor fora da ordem alfabética (primeiro: ${r.primeiro})`);
-    verificar(r.semFonte.length === 0 && r.datas === 27, `cartões sem fonte ou sem data: ${r.semFonte.join(", ")} (com data: ${r.datas})`);
+    verificar(r.semFonte.length === 0 && r.datas === 28, `cartões sem fonte ou sem data: ${r.semFonte.join(", ")} (com data: ${r.datas})`);
     verificar(JSON.stringify(r.taio) === JSON.stringify(["tel:199", "tel:193"]), `cartão de Taió sem 199 e 193: ${JSON.stringify(r.taio)}`);
     verificar(JSON.stringify(r.whatsapp) === JSON.stringify(["Ibirama", "Presidente Getúlio"]), `WhatsApp fora de Ibirama e Presidente Getúlio: ${JSON.stringify(r.whatsapp)}`);
     await fechar();

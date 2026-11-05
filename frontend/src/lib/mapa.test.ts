@@ -3,6 +3,7 @@ import { tradutor } from "../i18n";
 import exemplo from "../fixtures/indices.exemplo.json";
 import geojsonBruto from "../data/municipios.geojson?raw";
 import { FEICOES } from "./municipios";
+import { resumo } from "./monitoramento";
 import type { Indices } from "./tipos";
 import { classesDoRotulo, destacar, ordemRotulo, rotulosVisiveis, limites, pontoInterno, municipiosMonitorados, valoresDoDia, mensagemSelecao, passoDia, posicoes, rotuloAria, rotuloDia, rotulosDeLonge, type FeicaoMunicipio } from "./mapa";
 
@@ -60,9 +61,9 @@ describe("posicoes e limites", () => {
     expect(limites(fs, [[-26.4, -50.4], [-27.0, -48.8]])).toEqual([[-27.3, -50.4], [-26.4, -48.8]]);
   });
 
-  it("os 27 municípios monitorados do GeoJSON enquadram o Alto Vale", () => {
+  it("os 28 municípios monitorados do GeoJSON enquadram o Alto Vale", () => {
     const fs = FEICOES;
-    expect(fs.filter((f) => f.properties.monitorado)).toHaveLength(27);
+    expect(fs.filter((f) => f.properties.monitorado)).toHaveLength(28);
     const [[s, o], [n, l]] = limites(fs);
     expect(s).toBeCloseTo(-27.66, 1);
     expect(o).toBeCloseTo(-50.35, 1);
@@ -114,13 +115,24 @@ describe("valoresDoDia", () => {
     const dia = indices.municipios.find((m) => m.ibge === "4206900")?.dias.find((x) => x.d === 0);
     expect(valoresDoDia(indices, 0)["4206900"]).toEqual({ indice: dia?.indice, classe: dia?.classe });
   });
+
+  it("monitorado fora do indices.json (ainda sem execução do pipeline) → null e entra na contagem", () => {
+    const monitorados = municipiosMonitorados(FEICOES);
+    const sem = monitorados.find((m) => !(exemplo as Indices).municipios.some((x) => x.ibge === m.ibge));
+    expect(sem).toBeDefined();
+    const v = valoresDoDia(exemplo as Indices, 0, monitorados);
+    expect(v[sem!.ibge]).toBeNull();
+    expect(Object.keys(v)).toHaveLength(28);
+    expect(resumo(v).total).toBe(28);
+    expect(valoresDoDia(exemplo as Indices, 0)[sem!.ibge]).toBeUndefined();
+  });
 });
 
 describe("municipiosMonitorados", () => {
   it("só os monitorados, em ordem alfabética", () => {
     const fs = FEICOES;
     const lista = municipiosMonitorados(fs);
-    expect(lista).toHaveLength(27);
+    expect(lista).toHaveLength(28);
     expect(lista[0]).toEqual({ ibge: "4200200", nome: "Agrolândia" });
     expect(lista.map((m) => m.nome)).toEqual([...lista.map((m) => m.nome)].sort((a, b) => a.localeCompare(b, "pt-BR")));
   });
@@ -179,10 +191,10 @@ describe("rótulos sem sobreposição", () => {
     expect(rotulosVisiveis([caixa("a", 2, 0, 0, 0, 0), caixa("b", 1, 0, 0)]).has("b")).toBe(true);
   });
 
-  it("rotulosVisiveis com os 27: nenhum par visível se sobrepõe e o de maior ordem sempre fica", () => {
-    const caixas = Array.from({ length: 27 }, (_, i) => caixa(`m${i}`, i, (i % 6) * 50, Math.floor(i / 6) * 15));
+  it("rotulosVisiveis com os 28: nenhum par visível se sobrepõe e o de maior ordem sempre fica", () => {
+    const caixas = Array.from({ length: 28 }, (_, i) => caixa(`m${i}`, i, (i % 6) * 50, Math.floor(i / 6) * 15));
     const v = rotulosVisiveis(caixas);
-    expect(v.has("m26")).toBe(true);
+    expect(v.has("m27")).toBe(true);
     const vis = caixas.filter((c) => v.has(c.id));
     for (const a of vis)
       for (const b of vis) if (a !== b) expect(a.x + a.w <= b.x || b.x + b.w <= a.x || a.y + a.h <= b.y || b.y + b.h <= a.y).toBe(true);

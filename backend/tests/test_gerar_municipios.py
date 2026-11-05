@@ -12,6 +12,7 @@ from scripts.gerar_municipios import (
     COMMIT_MALHA,
     FONTE_LIMIAR_DEMONSTRACAO,
     LIMIAR_DEMONSTRACAO_MM,
+    MUNICIPIOS_EXTRAS,
     centroide,
     chave_de_ordem,
     dentro,
@@ -99,6 +100,22 @@ def test_mescla_preserva_o_atual_e_acrescenta_o_novo():
     }
 
 
+def test_mescla_acrescenta_o_extra_fora_das_microrregioes_do_ibge():
+    resultado = mesclar([], [(RIO_DO_SUL, [{"id": 4209003, "nome": "Lontras"}])],
+                        {"4209003": poligono(QUADRADO), "4215679": poligono(QUADRADO)},
+                        extras=MUNICIPIOS_EXTRAS)
+    assert [m["ibge"] for m in resultado] == ["4209003", "4215679"]
+    assert resultado[1]["nome"] == "Santa Terezinha"
+    assert resultado[1]["pontos"] == [{"lat": -27.0, "lon": -49.5}]
+    assert resultado[1]["microrregiao"] == {"codigo": "42011", "nome": "Rio do Sul"}
+
+
+def test_mescla_falha_se_o_extra_nao_tem_contorno():
+    with pytest.raises(ValueError, match="4215679"):
+        mesclar([], [(RIO_DO_SUL, [{"id": 4209003, "nome": "Lontras"}])], {"4209003": poligono(QUADRADO)},
+                extras=MUNICIPIOS_EXTRAS)
+
+
 def test_mescla_falha_se_um_atual_sumir_do_ibge():
     with pytest.raises(ValueError, match="4206900"):
         mesclar([dict(ATUAL)], [(RIO_DO_SUL, [{"id": 4209003, "nome": "Lontras"}])], {"4209003": poligono(QUADRADO)})
@@ -139,11 +156,11 @@ SEIS_ORIGINAIS = {
 }
 
 
-def test_arquivo_versionado_tem_os_27_e_os_6_atuais_intactos():
+def test_arquivo_versionado_tem_os_28_e_os_6_atuais_intactos():
     texto = (RAIZ / "backend" / "config" / "municipios.json").read_text(encoding="utf-8")
     dados = json.loads(texto)
     assert texto == formatar(dados)
-    assert len(dados) == 27
+    assert len(dados) == 28
     assert dados == sorted(dados, key=chave_de_ordem)
     por_ibge = {m["ibge"]: m for m in dados}
     assert {m["microrregiao"]["codigo"] for m in dados} == {"42011", "42014"}
@@ -158,9 +175,18 @@ def test_arquivo_versionado_tem_os_27_e_os_6_atuais_intactos():
         }
 
 
-def test_limiar_e_parametro_de_demonstracao_nos_27():
+def test_limiar_e_parametro_de_demonstracao_nos_28():
     """O README chama os 100 mm de parâmetro de demonstração da equipe: a fonte gravada diz o mesmo."""
     assert "de demonstração" in FONTE_LIMIAR_DEMONSTRACAO
     assert "provisório" not in FONTE_LIMIAR_DEMONSTRACAO
     dados = json.loads((RAIZ / "backend" / "config" / "municipios.json").read_text(encoding="utf-8"))
     assert {m["fonte_limiar"] for m in dados} == {FONTE_LIMIAR_DEMONSTRACAO}
+
+
+def test_extra_santa_terezinha_esta_no_arquivo_versionado():
+    dados = {m["ibge"]: m for m in json.loads((RAIZ / "backend" / "config" / "municipios.json").read_text(encoding="utf-8"))}
+    (extra,) = MUNICIPIOS_EXTRAS
+    assert extra["ibge"] == "4215679"
+    assert dados["4215679"]["nome"] == "Santa Terezinha"
+    assert dados["4215679"]["microrregiao"] == extra["microrregiao"]
+    assert len(dados["4215679"]["pontos"]) == 1
