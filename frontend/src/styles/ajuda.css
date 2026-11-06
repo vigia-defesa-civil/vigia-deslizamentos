@@ -169,23 +169,6 @@
   color: var(--nav-muted);
 }
 
-.aj-transcricao {
-  margin-top: 10px;
-  font-size: 14px;
-  line-height: 21px;
-  color: var(--ink);
-}
-
-.aj-transcricao summary {
-  min-height: 24px;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.aj-transcricao p {
-  margin: 8px 0 0;
-}
-
 /* Dicas: 3 colunas no desktop, 2 no tablet, 1 no celular; com mais de uma coluna, todos os cartões com a altura
    do maior (linhas de 1fr) e o último, sozinho na linha, no centro. */
 .aj-dicas {

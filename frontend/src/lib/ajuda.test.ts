@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import EN from "../i18n/en.json";
 import ES from "../i18n/es.json";
-import { mostrarVideo, paragrafos, SECOES_AJUDA, urlDoVideo } from "./ajuda";
+import { mostrarVideo, SECOES_AJUDA, urlDoVideo } from "./ajuda";
 import { VIDEOS_AJUDA, videoAjuda } from "./config";
 import { TELAS } from "./telas";
 
@@ -24,10 +24,6 @@ describe("página de Ajuda", () => {
     expect(mostrarVideo("")).toBe(false);
     expect(mostrarVideo("  ")).toBe(false);
     expect(mostrarVideo("mNW0wHPR7Dk")).toBe(true);
-  });
-
-  it("paragrafos ignora comentários e linhas vazias", () => {
-    expect(paragrafos("<!-- nota -->\n\nPrimeiro\nainda o primeiro.\n\n\nSegundo.\n")).toEqual(["Primeiro ainda o primeiro.", "Segundo."]);
   });
 
   it("os IDs do vídeo ficam num lugar só (VIDEOS_AJUDA), um por idioma; os três idiomas têm vídeo", () => {

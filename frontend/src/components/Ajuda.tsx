@@ -2,7 +2,7 @@ import "../styles/ajuda.css";
 import { CirclePlay } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { tradutor, type T } from "../i18n";
-import { mostrarVideo, paragrafos, SECOES_AJUDA, urlDoVideo } from "../lib/ajuda";
+import { mostrarVideo, SECOES_AJUDA, urlDoVideo } from "../lib/ajuda";
 import { videoAjuda } from "../lib/config";
 import type { Idioma } from "../lib/preferencias";
 import { rota } from "../lib/telas";
@@ -11,14 +11,9 @@ const URL_README = "https://github.com/vigia-defesa-civil/vigia-deslizamentos#re
 const BASE = import.meta.env.BASE_URL.replace(/\/?$/, "/");
 const CAPA = `${BASE}ajuda/capa-mapa.jpg`;
 
-// Transcrição do vídeo por idioma (texto simples, um parágrafo por bloco). Aparece abaixo do vídeo (WCAG 1.2.1).
-const TRANSCRICOES = import.meta.glob<string>("../conteudo/ajuda/transcricao.*.md", { query: "?raw", import: "default", eager: true });
-const transcricao = (lang: Idioma) => TRANSCRICOES[`../conteudo/ajuda/transcricao.${lang}.md`] ?? "";
-
 /** Página de Ajuda: o quadro do vídeo tutorial no topo e as dicas de uso de cada tela. */
 export default function Ajuda({ lang, videoId = videoAjuda(lang) }: { lang: Idioma; videoId?: string }) {
   const t = tradutor(lang);
-  const texto = transcricao(lang);
   return (
     <div className="ajuda">
       <header className="aj-top">
@@ -26,7 +21,7 @@ export default function Ajuda({ lang, videoId = videoAjuda(lang) }: { lang: Idio
         <h1>{t("Como usar o VIGIA")}</h1>
         <p>{t("O VIGIA é um sistema acadêmico de apoio à decisão. Não emite alerta oficial e não substitui o Cemaden nem a Defesa Civil.")}</p>
       </header>
-      <Video t={t} lang={lang} id={videoId} transcricao={texto} />
+      <Video t={t} lang={lang} id={videoId} />
       <section className="aj-dicas" aria-labelledby="aj-dicas-t">
         <h2 id="aj-dicas-t" className="sr-only">
           {t("Dicas de uso")}
@@ -70,10 +65,9 @@ export default function Ajuda({ lang, videoId = videoAjuda(lang) }: { lang: Idio
  * (youtube-nocookie.com, loading="lazy") só carrega depois do clique (RNF05). Sem ID: a capa do mapa com
  * "Vídeo tutorial em produção", sem nada para clicar.
  */
-function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; transcricao: string }) {
+function Video({ t, lang, id }: { t: T; lang: Idioma; id: string }) {
   const [tocando, setTocando] = useState(false);
   const quadro = useRef<HTMLIFrameElement>(null);
-  const textos = paragrafos(transcricao);
   const pronto = mostrarVideo(id);
   useEffect(() => {
     if (tocando) quadro.current?.focus();
@@ -114,19 +108,6 @@ function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; t
         )}
       </div>
       {pronto && !tocando && <p className="aj-aviso">{t("Abre um vídeo do YouTube, com legendas. Nada do YouTube carrega antes de você tocar.")}</p>}
-      {pronto && textos.length > 0 && (
-        <>
-          <p className="aj-legendas">
-            <a href="#aj-transcricao">{t("Legendas e transcrição")}</a>
-          </p>
-          <details id="aj-transcricao" className="aj-transcricao" open>
-            <summary>{t("Transcrição do vídeo")}</summary>
-            {textos.map((p) => (
-              <p key={p}>{p}</p>
-            ))}
-          </details>
-        </>
-      )}
     </section>
   );
 }

@@ -81,13 +81,5 @@ export function urlDoVideo(id: string, lang: Idioma): string {
   return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?${q}`;
 }
 
-/** Parágrafos da transcrição (texto simples, um parágrafo por bloco), sem os comentários HTML. */
-export const paragrafos = (texto: string): string[] =>
-  texto
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .split(/\n\s*\n/)
-    .map((p) => p.replace(/\s+/g, " ").trim())
-    .filter(Boolean);
-
 /** O vídeo entra assim que o idioma tem ID; sem ele, o quadro mostra "Vídeo tutorial em produção". */
 export const mostrarVideo = (id: string): boolean => id.trim() !== "";
