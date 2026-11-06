@@ -403,8 +403,8 @@ await caso("termos", async () => {
   }
 });
 
-// Ajuda: sem ID de vídeo, só as dicas (nenhuma área de vídeo, nada do YouTube); "?" no topo do celular,
-// item no rail do desktop e link no topo da Cartilha.
+// Ajuda: com ID (português), o iframe do YouTube sem cookies no quadro 16:9; sem ID (espanhol e inglês), o quadro
+// "em produção" sem nada do YouTube; "?" no topo do celular, item no rail do desktop e link no topo da Cartilha.
 await caso("ajuda", async () => {
   for (const lang of ["", "es/", "en/"]) {
     const contexto = await navegador.newContext({ viewport: { width: 1366, height: 900 } });
@@ -416,7 +416,7 @@ await caso("ajuda", async () => {
     const r = await p.evaluate(() => ({
       h1: document.querySelector(".ajuda h1")?.textContent ?? "",
       secoes: document.querySelectorAll(".aj-sec").length,
-      // Sem ID: quadro 16:9 com a capa e "em produção", sem botão nem iframe.
+      // Com ID: iframe do YouTube no quadro 16:9. Sem ID: a capa e "em produção", sem botão nem iframe.
       quadro: (() => {
         const q = document.querySelector(".aj-quadro");
         if (!q) return null;
@@ -426,7 +426,13 @@ await caso("ajuda", async () => {
           proporcao: Math.round((c.width / c.height) * 100) / 100,
           capa: !!img && img.complete && img.naturalWidth > 0,
           texto: q.textContent.trim(),
-          interativo: q.querySelectorAll("button, iframe, a").length,
+          interativo: q.querySelectorAll("button, a").length,
+          iframe: (() => {
+            const f = q.querySelector("iframe");
+            if (!f) return null;
+            const b = f.getBoundingClientRect();
+            return { src: f.getAttribute("src"), titulo: f.getAttribute("title"), lazy: f.getAttribute("loading"), tela: f.hasAttribute("allowfullscreen"), proporcao: Math.round((b.width / b.height) * 100) / 100 };
+          })(),
           noTopo: !!document.querySelector(".ajuda .aj-top + .aj-video"),
         };
       })(),
@@ -434,12 +440,20 @@ await caso("ajuda", async () => {
       topo: getComputedStyle(document.querySelector(".hbtn.ajudab")).display,
     }));
     verificar(r.h1.length > 0 && r.secoes === 7, `Ajuda (${lang || "pt/"}) sem título ou sem as 7 seções de dicas: ${JSON.stringify(r)}`);
-    const EM_PRODUCAO = { "": "Vídeo tutorial em produção", "es/": "Video tutorial en producción", "en/": "Video tutorial in production" }[lang];
-    verificar(
-      !!r.quadro && Math.abs(r.quadro.proporcao - 1.78) < 0.03 && r.quadro.capa && r.quadro.texto.includes(EM_PRODUCAO) && r.quadro.interativo === 0 && r.quadro.noTopo,
-      `Ajuda (${lang || "pt/"}) sem o quadro 16:9 "em produção" no topo: ${JSON.stringify(r.quadro)}`,
-    );
-    verificar(!externas.some((u) => /youtube|ytimg|googlevideo/.test(u)), `Ajuda (${lang || "pt/"}) pediu algo ao YouTube: ${externas.filter((u) => /youtube/.test(u)).join(", ")}`);
+    if (lang === "") {
+      const f = r.quadro?.iframe;
+      verificar(
+        !!f && f.src.startsWith("https://www.youtube-nocookie.com/embed/mNW0wHPR7Dk") && f.lazy === "lazy" && f.tela && !!f.titulo && Math.abs(f.proporcao - 1.78) < 0.03 && r.quadro.noTopo && r.quadro.interativo === 0,
+        `Ajuda (pt/) sem o iframe do YouTube em 16:9 no topo: ${JSON.stringify(r.quadro)}`,
+      );
+    } else {
+      const EM_PRODUCAO = { "es/": "Video tutorial en producción", "en/": "Video tutorial in production" }[lang];
+      verificar(
+        !!r.quadro && Math.abs(r.quadro.proporcao - 1.78) < 0.03 && r.quadro.capa && r.quadro.texto.includes(EM_PRODUCAO) && r.quadro.interativo === 0 && !r.quadro.iframe && r.quadro.noTopo,
+        `Ajuda (${lang}) sem o quadro 16:9 "em produção" no topo: ${JSON.stringify(r.quadro)}`,
+      );
+      verificar(!externas.some((u) => /youtube|ytimg|googlevideo/.test(u)), `Ajuda (${lang}) pediu algo ao YouTube sem ter vídeo: ${externas.filter((u) => /youtube/.test(u)).join(", ")}`);
+    }
     verificar(r.rail && r.topo === "none", `Ajuda no desktop (${lang || "pt/"}): item no rail ${r.rail}, "?" do topo ${r.topo}`);
     await contexto.close();
   }

@@ -345,7 +345,7 @@ Em todas as telas: menu, seletor de idioma (botão "PT ▾" com PT, ES e EN), ac
 - **RF11** — Levar o usuário ao bot do Telegram, onde ele escolhe os municípios (`/start`), consulta a situação (`/status`) e cancela (`/parar`).
 - **RF12** — Enviar aviso aos inscritos quando um município atingir índice ≥ 1,00.
 - **RF13** — Oferecer português, espanhol e inglês, tema claro ou escuro (sem escolha, segue o sistema) e paleta de cores para daltonismo, lembrando a escolha do usuário.
-- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo só é carregado (via youtube-nocookie.com) quando o usuário pede; sem o ID do vídeo (`VIDEO_AJUDA_ID` em `frontend/src/lib/config.ts`, ou a variável de build `PUBLIC_AJUDA_VIDEO_ID`) ou sem a transcrição, o quadro mostra a capa com "Vídeo tutorial em produção".
+- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo é incorporado do YouTube (youtube-nocookie.com, `loading="lazy"`), um por idioma; os IDs ficam em `VIDEOS_AJUDA` em `frontend/src/lib/config.ts`. O idioma sem ID mostra o quadro com "Vídeo tutorial em produção".
 
 ### Requisitos não funcionais
 

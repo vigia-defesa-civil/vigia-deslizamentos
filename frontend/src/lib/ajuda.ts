@@ -77,7 +77,7 @@ export const SECOES_AJUDA: readonly SecaoAjuda[] = [
 
 /** Player do YouTube no domínio sem cookies, com legendas ligadas no idioma da página (RNF05, WCAG 1.2.2). */
 export function urlDoVideo(id: string, lang: Idioma): string {
-  const q = new URLSearchParams({ autoplay: "1", cc_load_policy: "1", cc_lang_pref: lang, hl: lang, rel: "0" });
+  const q = new URLSearchParams({ cc_load_policy: "1", cc_lang_pref: lang, hl: lang, rel: "0" });
   return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?${q}`;
 }
 
@@ -89,5 +89,5 @@ export const paragrafos = (texto: string): string[] =>
     .map((p) => p.replace(/\s+/g, " ").trim())
     .filter(Boolean);
 
-/** O vídeo só entra com ID e com transcrição (WCAG 1.2.1): sem um dos dois, a página mostra só as dicas. */
-export const mostrarVideo = (id: string, transcricao: string): boolean => id.trim() !== "" && paragrafos(transcricao).length > 0;
+/** O vídeo entra assim que o idioma tem ID; sem ele, o quadro mostra "Vídeo tutorial em produção". */
+export const mostrarVideo = (id: string): boolean => id.trim() !== "";

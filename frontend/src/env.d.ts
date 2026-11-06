@@ -6,5 +6,4 @@ interface ImportMetaEnv {
   /** Nome do bot do Telegram, sem @. Padrão: `VigiaDeslizamentosBot`. */
   readonly PUBLIC_TELEGRAM_BOT?: string;
   /** ID do vídeo tutorial da página de Ajuda (YouTube). Vazio: a Ajuda mostra só as dicas. */
-  readonly PUBLIC_AJUDA_VIDEO_ID?: string;
 }
