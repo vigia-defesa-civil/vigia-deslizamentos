@@ -14,7 +14,7 @@ describe("página de Ajuda", () => {
     expect(url.searchParams.get("cc_lang_pref")).toBe("es");
     expect(url.searchParams.get("hl")).toBe("es");
     expect(url.searchParams.get("rel")).toBe("0");
-    expect(url.searchParams.has("autoplay")).toBe(false);
+    expect(url.searchParams.get("autoplay")).toBe("1"); // só depois do clique na capa
     expect(new URL(urlDoVideo("id", "pt")).searchParams.get("cc_lang_pref")).toBe("pt");
     // O ID vem da configuração: nada de caminho ou parâmetro injetado.
     expect(new URL(urlDoVideo("a/b?c", "en")).pathname).toBe("/embed/a%2Fb%3Fc");
@@ -30,13 +30,14 @@ describe("página de Ajuda", () => {
     expect(paragrafos("<!-- nota -->\n\nPrimeiro\nainda o primeiro.\n\n\nSegundo.\n")).toEqual(["Primeiro ainda o primeiro.", "Segundo."]);
   });
 
-  it("os IDs do vídeo ficam num lugar só (VIDEOS_AJUDA), um por idioma; só o português está pronto", () => {
+  it("os IDs do vídeo ficam num lugar só (VIDEOS_AJUDA), um por idioma; os três idiomas têm vídeo", () => {
     expect(Object.keys(VIDEOS_AJUDA).sort()).toEqual(["en", "es", "pt"]);
     expect(VIDEOS_AJUDA.pt).toBe("mNW0wHPR7Dk");
     expect(videoAjuda("pt")).toBe("mNW0wHPR7Dk");
-    expect(videoAjuda("es")).toBe("");
-    expect(videoAjuda("en")).toBe("");
+    expect(videoAjuda("es")).toBe("ZG9tgfJpNuA");
+    expect(videoAjuda("en")).toBe("0gXHWRcEpro");
     expect(videoAjuda("es", { pt: "", es: " xyz ", en: "" })).toBe("xyz");
+    expect(videoAjuda("en", { pt: "a", es: "b", en: "" })).toBe("");
   });
 
   it("há dicas para cada tela do menu, na ordem do menu, e para o Telegram", () => {

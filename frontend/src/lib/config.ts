@@ -20,13 +20,13 @@ export const linkTelegram = (bot: string, ibge?: string): string =>
 
 /**
  * IDs do vídeo tutorial da página de Ajuda, um por idioma (o trecho depois de "watch?v=" no YouTube). Para publicar
- * o vídeo de um idioma, é só preencher o ID dele aqui. Vazio, a Ajuda daquele idioma continua mostrando a capa
- * com "Vídeo tutorial em produção".
+ * o vídeo de um idioma, preencha o ID dele aqui, a capa public/ajuda/thumb_<idioma>.png e a transcrição em
+ * src/conteudo/ajuda/transcricao.<idioma>.md. Vazio, a Ajuda daquele idioma mostra "Vídeo tutorial em produção".
  */
 export const VIDEOS_AJUDA: Record<Idioma, string> = {
   pt: "mNW0wHPR7Dk",
-  es: "",
-  en: "",
+  es: "ZG9tgfJpNuA",
+  en: "0gXHWRcEpro",
 };
 
 export const videoAjuda = (lang: Idioma, ids: Record<Idioma, string> = VIDEOS_AJUDA): string => (ids[lang] ?? "").trim();

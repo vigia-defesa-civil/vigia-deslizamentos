@@ -403,8 +403,7 @@ await caso("termos", async () => {
   }
 });
 
-// Ajuda: com ID (português), o iframe do YouTube sem cookies no quadro 16:9; sem ID (espanhol e inglês), o quadro
-// "em produção" sem nada do YouTube; "?" no topo do celular, item no rail do desktop e link no topo da Cartilha.
+// Ajuda: capa local do vídeo no quadro 16:9 (nada do YouTube antes do clique); "?" no topo do celular, item no rail do desktop e link no topo da Cartilha.
 await caso("ajuda", async () => {
   for (const lang of ["", "es/", "en/"]) {
     const contexto = await navegador.newContext({ viewport: { width: 1366, height: 900 } });
@@ -416,7 +415,7 @@ await caso("ajuda", async () => {
     const r = await p.evaluate(() => ({
       h1: document.querySelector(".ajuda h1")?.textContent ?? "",
       secoes: document.querySelectorAll(".aj-sec").length,
-      // Com ID: iframe do YouTube no quadro 16:9. Sem ID: a capa e "em produção", sem botão nem iframe.
+      // Capa do vídeo com o botão ▶ (o iframe só entra no clique).
       quadro: (() => {
         const q = document.querySelector(".aj-quadro");
         if (!q) return null;
@@ -426,7 +425,8 @@ await caso("ajuda", async () => {
           proporcao: Math.round((c.width / c.height) * 100) / 100,
           capa: !!img && img.complete && img.naturalWidth > 0,
           texto: q.textContent.trim(),
-          interativo: q.querySelectorAll("button, a").length,
+          botoes: q.querySelectorAll("button").length,
+          thumb: !!q.querySelector("img.aj-thumb") && q.querySelector("img.aj-thumb").complete && q.querySelector("img.aj-thumb").naturalWidth > 0,
           iframe: (() => {
             const f = q.querySelector("iframe");
             if (!f) return null;
@@ -440,20 +440,12 @@ await caso("ajuda", async () => {
       topo: getComputedStyle(document.querySelector(".hbtn.ajudab")).display,
     }));
     verificar(r.h1.length > 0 && r.secoes === 7, `Ajuda (${lang || "pt/"}) sem título ou sem as 7 seções de dicas: ${JSON.stringify(r)}`);
-    if (lang === "") {
-      const f = r.quadro?.iframe;
-      verificar(
-        !!f && f.src.startsWith("https://www.youtube-nocookie.com/embed/mNW0wHPR7Dk") && f.lazy === "lazy" && f.tela && !!f.titulo && Math.abs(f.proporcao - 1.78) < 0.03 && r.quadro.noTopo && r.quadro.interativo === 0,
-        `Ajuda (pt/) sem o iframe do YouTube em 16:9 no topo: ${JSON.stringify(r.quadro)}`,
-      );
-    } else {
-      const EM_PRODUCAO = { "es/": "Video tutorial en producción", "en/": "Video tutorial in production" }[lang];
-      verificar(
-        !!r.quadro && Math.abs(r.quadro.proporcao - 1.78) < 0.03 && r.quadro.capa && r.quadro.texto.includes(EM_PRODUCAO) && r.quadro.interativo === 0 && !r.quadro.iframe && r.quadro.noTopo,
-        `Ajuda (${lang}) sem o quadro 16:9 "em produção" no topo: ${JSON.stringify(r.quadro)}`,
-      );
-      verificar(!externas.some((u) => /youtube|ytimg|googlevideo/.test(u)), `Ajuda (${lang}) pediu algo ao YouTube sem ter vídeo: ${externas.filter((u) => /youtube/.test(u)).join(", ")}`);
-    }
+    // Os três idiomas têm vídeo: capa local com o botão ▶, 16:9, e nada do YouTube antes do clique.
+    verificar(
+      !!r.quadro && Math.abs(r.quadro.proporcao - 1.78) < 0.03 && r.quadro.thumb && r.quadro.botoes === 1 && !r.quadro.iframe && !/produção|producción|in production/.test(r.quadro.texto) && r.quadro.noTopo,
+      `Ajuda (${lang || "pt/"}) sem a capa do vídeo com o botão no topo: ${JSON.stringify(r.quadro)}`,
+    );
+    verificar(!externas.some((u) => /youtube|ytimg|googlevideo/.test(u)), `Ajuda (${lang || "pt/"}) pediu algo ao YouTube antes do clique: ${externas.filter((u) => /youtube/.test(u)).join(", ")}`);
     verificar(r.rail && r.topo === "none", `Ajuda no desktop (${lang || "pt/"}): item no rail ${r.rail}, "?" do topo ${r.topo}`);
     await contexto.close();
   }
