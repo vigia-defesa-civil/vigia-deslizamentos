@@ -1,3 +1,5 @@
+import type { Idioma } from "./preferencias";
+
 /** URL de um arquivo publicado (indices.json, contatos.json…): base do Astro + PUBLIC_DADOS_URL (padrão `data/`). */
 export function urlDados(
   arquivo: string,
@@ -17,10 +19,14 @@ export const linkTelegram = (bot: string, ibge?: string): string =>
   `https://t.me/${bot}${ibge ? `?start=${ibge}` : ""}`;
 
 /**
- * ID do vídeo tutorial da página de Ajuda (o trecho depois de "watch?v=" no YouTube). Preencha aqui quando o vídeo
- * for publicado, junto com a transcrição em src/conteudo/ajuda/transcricao.{pt,es,en}.md. Vazio, a Ajuda mostra
- * a capa com "Vídeo tutorial em produção". PUBLIC_AJUDA_VIDEO_ID, se definida no build, vale por cima.
+ * IDs do vídeo tutorial da página de Ajuda, um por idioma (o trecho depois de "watch?v=" no YouTube). Para publicar
+ * o vídeo de um idioma, preencha o ID dele aqui, e a capa public/ajuda/thumb_<idioma>.png.
+ * Vazio, a Ajuda daquele idioma mostra "Vídeo tutorial em produção".
  */
-export const VIDEO_AJUDA_ID = "";
+export const VIDEOS_AJUDA: Record<Idioma, string> = {
+  pt: "mNW0wHPR7Dk",
+  es: "ZG9tgfJpNuA",
+  en: "0gXHWRcEpro",
+};
 
-export const videoAjuda = (id: string | undefined = import.meta.env.PUBLIC_AJUDA_VIDEO_ID): string => (id || VIDEO_AJUDA_ID).trim();
+export const videoAjuda = (lang: Idioma, ids: Record<Idioma, string> = VIDEOS_AJUDA): string => (ids[lang] ?? "").trim();

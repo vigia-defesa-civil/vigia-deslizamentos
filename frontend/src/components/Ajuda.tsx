@@ -2,22 +2,18 @@ import "../styles/ajuda.css";
 import { CirclePlay } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { tradutor, type T } from "../i18n";
-import { mostrarVideo, paragrafos, SECOES_AJUDA, urlDoVideo } from "../lib/ajuda";
+import { mostrarVideo, SECOES_AJUDA, urlDoVideo } from "../lib/ajuda";
 import { videoAjuda } from "../lib/config";
 import type { Idioma } from "../lib/preferencias";
 import { rota } from "../lib/telas";
 
 const URL_README = "https://github.com/vigia-defesa-civil/vigia-deslizamentos#readme";
-const CAPA = `${import.meta.env.BASE_URL.replace(/\/?$/, "/")}ajuda/capa-mapa.jpg`;
-
-// Transcrição do vídeo por idioma (texto simples, um parágrafo por bloco). Vazia: o vídeo não entra (WCAG 1.2.1).
-const TRANSCRICOES = import.meta.glob<string>("../conteudo/ajuda/transcricao.*.md", { query: "?raw", import: "default", eager: true });
-const transcricao = (lang: Idioma) => TRANSCRICOES[`../conteudo/ajuda/transcricao.${lang}.md`] ?? "";
+const BASE = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const CAPA = `${BASE}ajuda/capa-mapa.jpg`;
 
 /** Página de Ajuda: o quadro do vídeo tutorial no topo e as dicas de uso de cada tela. */
-export default function Ajuda({ lang, videoId = videoAjuda() }: { lang: Idioma; videoId?: string }) {
+export default function Ajuda({ lang, videoId = videoAjuda(lang) }: { lang: Idioma; videoId?: string }) {
   const t = tradutor(lang);
-  const texto = transcricao(lang);
   return (
     <div className="ajuda">
       <header className="aj-top">
@@ -25,7 +21,7 @@ export default function Ajuda({ lang, videoId = videoAjuda() }: { lang: Idioma; 
         <h1>{t("Como usar o VIGIA")}</h1>
         <p>{t("O VIGIA é um sistema acadêmico de apoio à decisão. Não emite alerta oficial e não substitui o Cemaden nem a Defesa Civil.")}</p>
       </header>
-      <Video t={t} lang={lang} id={videoId} transcricao={texto} />
+      <Video t={t} lang={lang} id={videoId} />
       <section className="aj-dicas" aria-labelledby="aj-dicas-t">
         <h2 id="aj-dicas-t" className="sr-only">
           {t("Dicas de uso")}
@@ -65,13 +61,14 @@ export default function Ajuda({ lang, videoId = videoAjuda() }: { lang: Idioma; 
 }
 
 /**
- * Quadro 16:9 com a capa (o mapa do VIGIA). Sem ID ou sem transcrição: "Vídeo tutorial em produção", sem nada para
- * clicar. Com os dois: botão ▶; o player do YouTube (sem cookies) só carrega depois do clique (RNF05).
+ * Quadro 16:9. Com o ID do idioma: a capa local (thumb_<idioma>.png) com o botão ▶; o player do YouTube
+ * (youtube-nocookie.com, loading="lazy") só carrega depois do clique (RNF05). Sem ID: a capa do mapa com
+ * "Vídeo tutorial em produção", sem nada para clicar.
  */
-function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; transcricao: string }) {
+function Video({ t, lang, id }: { t: T; lang: Idioma; id: string }) {
   const [tocando, setTocando] = useState(false);
   const quadro = useRef<HTMLIFrameElement>(null);
-  const pronto = mostrarVideo(id, transcricao);
+  const pronto = mostrarVideo(id);
   useEffect(() => {
     if (tocando) quadro.current?.focus();
   }, [tocando]);
@@ -79,47 +76,38 @@ function Video({ t, lang, id, transcricao }: { t: T; lang: Idioma; id: string; t
     <section className="aj-video" aria-labelledby="aj-video-t">
       <h2 id="aj-video-t">{t("Tutorial em vídeo")}</h2>
       <div className="aj-quadro">
-        {!tocando && <img className="aj-capa-img" src={CAPA} alt="" width={1205} height={677} loading="eager" decoding="async" />}
         {!pronto ? (
-          <div className="aj-capa aj-producao">
-            <CirclePlay aria-hidden="true" />
-            <span className="aj-painel">
-              <b>{t("Vídeo tutorial em produção")}</b>
-              <small>{t("Enquanto isso, as dicas abaixo mostram como usar cada tela.")}</small>
-            </span>
-          </div>
+          <>
+            <img className="aj-capa-img" src={CAPA} alt="" width={1205} height={677} loading="eager" decoding="async" />
+            <div className="aj-capa aj-producao">
+              <CirclePlay aria-hidden="true" />
+              <span className="aj-painel">
+                <b>{t("Vídeo tutorial em produção")}</b>
+                <small>{t("Enquanto isso, as dicas abaixo mostram como usar cada tela.")}</small>
+              </span>
+            </div>
+          </>
         ) : tocando ? (
           <iframe
             ref={quadro}
             src={urlDoVideo(id, lang)}
-            title={t("Tutorial do VIGIA")}
-            allow="accelerometer; autoplay; encrypted-media; picture-in-picture"
+            title={t("Vídeo tutorial do VIGIA: como usar o mapa de risco de deslizamentos")}
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
             allowFullScreen
+            loading="lazy"
             referrerPolicy="strict-origin-when-cross-origin"
           />
         ) : (
-          <button type="button" className="aj-capa" onClick={() => setTocando(true)}>
-            <CirclePlay aria-hidden="true" />
-            <span className="aj-painel">
-              <b>{t("Assistir ao tutorial")}</b>
-              <small>{t("Abre um vídeo do YouTube, com legendas. Nada do YouTube carrega antes de você tocar.")}</small>
-            </span>
-          </button>
+          <>
+            <img className="aj-thumb" src={`${BASE}ajuda/thumb_${lang}.png`} alt="" width={1280} height={720} loading="eager" decoding="async" />
+            <button type="button" className="aj-play" onClick={() => setTocando(true)}>
+              <CirclePlay aria-hidden="true" />
+              <span className="sr-only">{t("Assistir ao tutorial")}</span>
+            </button>
+          </>
         )}
       </div>
-      {pronto && (
-        <>
-          <p className="aj-legendas">
-            <a href="#aj-transcricao">{t("Legendas e transcrição")}</a>
-          </p>
-          <details id="aj-transcricao" className="aj-transcricao" open>
-            <summary>{t("Transcrição do vídeo")}</summary>
-            {paragrafos(transcricao).map((p) => (
-              <p key={p}>{p}</p>
-            ))}
-          </details>
-        </>
-      )}
+      {pronto && !tocando && <p className="aj-aviso">{t("Abre um vídeo do YouTube, com legendas. Nada do YouTube carrega antes de você tocar.")}</p>}
     </section>
   );
 }

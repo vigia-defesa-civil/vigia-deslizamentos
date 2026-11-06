@@ -319,7 +319,7 @@ O VIGIA atende a **população** dos 28 municípios e as **coordenadorias munici
 | Áreas de risco | `/areas-de-risco` | Setores de risco geológico do SGB e ocorrências por município; estações do INMET como camada opcional |
 | Cartilha | `/cartilha` | Sinais de perigo, o que fazer antes/durante/depois, mochila de emergência, "não faça". Cada seção cita suas fontes oficiais: Defesa Civil Nacional (MDR), Serviço Geológico do Brasil (SGB), Defesa Civil de SC, Ministério das Comunicações, Defesa Civil do Paraná e SP Sempre Alerta |
 | Contatos | `/contatos` | Números de emergência, link para o painel oficial da Defesa Civil de SC e os 28 municípios em ordem alfabética, cada um com a fonte oficial e a data da consulta |
-| Ajuda | `/ajuda` | Quadro do vídeo tutorial no topo (capa do mapa; carrega só ao clicar, com legendas e transcrição) e dicas de uso de cada tela e do bot. Fica no rail do desktop e no "?" do topo no celular, fora da barra inferior |
+| Ajuda | `/ajuda` | Quadro do vídeo tutorial no topo (capa do mapa; carrega só ao clicar, com legendas) e dicas de uso de cada tela e do bot. Fica no rail do desktop e no "?" do topo no celular, fora da barra inferior |
 
 Em todas as telas: menu, seletor de idioma (botão "PT ▾" com PT, ES e EN), acessibilidade, "Alertas no Telegram" e, no topo, "Situação de dd/mm/aaaa" (o dia-alvo).
 
@@ -345,7 +345,7 @@ Em todas as telas: menu, seletor de idioma (botão "PT ▾" com PT, ES e EN), ac
 - **RF11** — Levar o usuário ao bot do Telegram, onde ele escolhe os municípios (`/start`), consulta a situação (`/status`) e cancela (`/parar`).
 - **RF12** — Enviar aviso aos inscritos quando um município atingir índice ≥ 1,00.
 - **RF13** — Oferecer português, espanhol e inglês, tema claro ou escuro (sem escolha, segue o sistema) e paleta de cores para daltonismo, lembrando a escolha do usuário.
-- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN e transcrição em texto. O vídeo só é carregado (via youtube-nocookie.com) quando o usuário pede; sem o ID do vídeo (`VIDEO_AJUDA_ID` em `frontend/src/lib/config.ts`, ou a variável de build `PUBLIC_AJUDA_VIDEO_ID`) ou sem a transcrição, o quadro mostra a capa com "Vídeo tutorial em produção".
+- **RF14** — Oferecer uma página de Ajuda com dicas de uso de cada tela e, quando houver, um vídeo tutorial com legendas em PT, ES e EN. O vídeo é incorporado do YouTube (youtube-nocookie.com), um por idioma: a página mostra a capa local (`public/ajuda/thumb_<idioma>.png`) e o player só carrega depois do clique (`loading="lazy"`). Os IDs ficam em `VIDEOS_AJUDA` em `frontend/src/lib/config.ts`; o idioma sem ID mostra o quadro com "Vídeo tutorial em produção".
 
 ### Requisitos não funcionais
 
@@ -426,7 +426,7 @@ vigia-deslizamentos/
 │   │   ├── lib/             # Regras e formatação das telas, com testes
 │   │   ├── i18n/            # Traduções ES e EN (o português é a chave)
 │   │   ├── styles/          # CSS por tela e tokens de cor
-│   │   ├── conteudo/        # Textos da Cartilha e transcrições do vídeo da Ajuda (ajuda/transcricao.{pt,es,en}.md)
+│   │   ├── conteudo/        # Textos da Cartilha
 │   │   ├── data/            # GeoJSON dos municípios
 │   │   └── fixtures/        # Dados de exemplo do npm run dev e dos testes
 │   ├── public/data/         # JSON publicados: índices, históricos, contatos, estações,
