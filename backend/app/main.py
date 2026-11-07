@@ -51,8 +51,10 @@ from app.config import (
 from app.modelos import banco
 from app.pipeline import Execucao, executar_pipeline
 
-#: Horas UTC em que o pipeline roda (`docs/decisoes/ensemble.md` §7).
-HORAS_DO_CRON = "3,9,15,21"
+#: Horas UTC em que o pipeline roda: toda hora. Os modelos só mudam a cada 6 h
+#: (`docs/decisoes/ensemble.md` §7), mas a chuva medida do Cemaden muda a cada ~10 min,
+#: e é ela que faz o índice subir durante o evento.
+HORAS_DO_CRON = "*"
 
 #: 1 h de tolerância para uma execução perdida (máquina suspensa, reinício) e
 #: `coalesce` para que várias perdidas virem uma só. `max_instances=1` impede

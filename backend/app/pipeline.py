@@ -11,7 +11,8 @@ publicação: os padrões são as de produção, e os testes as substituem por d
 Ordem e tolerância a falhas:
 
 1. coleta, município por município — uma falha manda **só** aquele município
-   para `municipios_sem_dados`;
+   para `municipios_sem_dados` —, e a troca das últimas 96 h da chuva
+   antecedente pela medida nos pluviômetros do Cemaden (`app.coleta.cemaden`);
 2. cálculo (`calcular` também isola falha de domínio por município);
 3. se nenhum município foi calculado, a execução para aqui: não grava, não
    publica e não avisa. O último `indices.json` continua no ar (UC06/RNF04) e a
@@ -36,7 +37,7 @@ from pathlib import Path
 
 from app.bot.regra_aviso import Aviso, decidir
 from app.calculo.agregacao import Resultado, calcular
-from app.coleta import inmet, open_meteo
+from app.coleta import cemaden, inmet, open_meteo
 from app.config import Config, Municipio
 from app.exportacao.bot_json import montar_bot_json
 from app.exportacao.exportar import montar_historico, montar_indices, serializar, serializar_compacto
@@ -226,6 +227,7 @@ def executar_pipeline(
     coletar: Callable[..., DadosMunicipio] = open_meteo.coletar,
     publicar: Callable[[bytes, Config, object, str], bool] = publicar_indices,
     comparar_com_inmet: Callable[..., None] = inmet.registrar_comparacao_24h,
+    chuva_observada: Callable[..., dict[str, DadosMunicipio]] = cemaden.aplicar,
 ) -> Execucao:
     """Roda uma execução completa e devolve o que ela produziu.
 
@@ -238,6 +240,8 @@ def executar_pipeline(
     conexão SQLite tem de ser a desta thread.
     """
     coletados = _coletar_todos(municipios, agora_utc, http, coletar)
+    # Pluviômetros do Cemaden nas últimas 96 h no lugar do modelo; `aplicar` nunca levanta.
+    coletados = chuva_observada(coletados, municipios, agora_utc, http)
     resultado = calcular(municipios, coletados, agora_utc)
 
     if not resultado.municipios:

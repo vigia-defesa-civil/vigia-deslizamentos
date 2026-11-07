@@ -71,9 +71,12 @@ def antecedente_zerada() -> dict[datetime, float]:
 
 
 def previsao(rtotal_d0: float) -> dict[datetime, float]:
-    """96 rótulos de 2026-10-01T01:00Z a 2026-10-05T00:00Z, chuva só em D0."""
+    """96 rótulos de 2026-10-01T01:00Z a 2026-10-05T00:00Z, chuva só em D0.
+
+    A chuva fica numa hora de D0 posterior a `AGORA`: as que já passaram vêm da antecedente.
+    """
     serie = _serie(datetime(2026, 10, 1, 1, 0, tzinfo=UTC), 96)
-    serie[datetime(2026, 10, 1, 1, 0, tzinfo=UTC)] = rtotal_d0
+    serie[datetime(2026, 10, 1, 13, 0, tzinfo=UTC)] = rtotal_d0
     return serie
 
 
@@ -149,6 +152,7 @@ def executar(
         relogio=relogio,
         coletar=coleta_falsa(por_ibge),
         publicar=publicacao,
+        chuva_observada=lambda coletados, *_: coletados,
     )
     return execucao, publicacao, conn
 
