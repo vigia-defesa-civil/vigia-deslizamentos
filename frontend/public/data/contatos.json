@@ -5,11 +5,11 @@
     "verificado": false,
     "responsavel": null,
     "telefone": "(47) 3534-4212",
-    "email": null,
+    "email": "gabinete@agrolandia.sc.gov.br",
     "endereco": "Rua dos Pioneiros, 109 — Centro, Agrolândia/SC, 88420-000",
     "site": "agrolandia.sc.gov.br",
-    "fonte": "https://agrolandia.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://agrolandia.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -21,8 +21,8 @@
     "email": "prefeitura@agronomica.sc.gov.br",
     "endereco": "Rua 7 de Setembro, 215 — Centro, Agronômica/SC, 89188-000",
     "site": "agronomica.sc.gov.br",
-    "fonte": "https://agronomica.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://agronomica.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -34,8 +34,8 @@
     "email": "prefeitura@atalanta.sc.gov.br",
     "endereco": "Avenida XV de Novembro, 1030 — Atalanta/SC, 88410-000",
     "site": "atalanta.sc.gov.br",
-    "fonte": "https://atalanta.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://atalanta.sc.gov.br/contato.html",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -43,26 +43,26 @@
     "nome": "Aurora",
     "verificado": false,
     "responsavel": null,
-    "telefone": "(47) 3524-0144",
+    "telefone": "(47) 3524-0090",
     "email": "defesacivil@aurora.sc.gov.br",
-    "endereco": "Rodovia SC 350, nº 408 — Centro, Aurora/SC",
+    "endereco": "Rodovia SC 350, nº 408, km 364 — Centro, Aurora/SC, 89186-000",
     "site": "aurora.atende.net",
     "fonte": "https://aurora.atende.net/cidadao/pagina/defesa-civil",
-    "consultado_em": "2026-10-31",
-    "telefone_de": "prefeitura"
+    "consultado_em": "2026-11-07",
+    "telefone_de": "defesa_civil"
   },
   {
     "ibge": "4202859",
     "nome": "Braço do Trombudo",
     "verificado": false,
     "responsavel": null,
-    "telefone": null,
+    "telefone": "(47) 93386-5851",
     "email": "administracao@bracodotrombudo.sc.gov.br",
     "endereco": "Praça da Independência, 25 — Centro, Braço do Trombudo/SC, 89178-000",
     "site": "bracodotrombudo.sc.gov.br",
     "fonte": "https://bracodotrombudo.sc.gov.br/contato/",
-    "consultado_em": "2026-10-31",
-    "telefone_de": null
+    "consultado_em": "2026-11-07",
+    "telefone_de": "prefeitura"
   },
   {
     "ibge": "4204194",
@@ -71,10 +71,10 @@
     "responsavel": null,
     "telefone": "(47) 3537-0073",
     "email": "administracao@chapadaodolageado.sc.gov.br",
-    "endereco": "Rua Allan Régis Inácio, nº 15 — Centro, Chapadão do Lageado/SC",
+    "endereco": "Rua Allan Régis Inácio, nº 15 — Centro, Chapadão do Lageado/SC, 88407-000",
     "site": "chapadaodolageado.atende.net",
     "fonte": "https://chapadaodolageado.atende.net/cidadao",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -86,22 +86,23 @@
     "email": "prefeitura@donaemma.sc.gov.br",
     "endereco": "Rua Alberto Koglin, 3493 — Centro, Dona Emma/SC, 89155-000",
     "site": "donaemma.sc.gov.br",
-    "fonte": "https://donaemma.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://donaemma.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
     "ibge": "4206900",
     "nome": "Ibirama",
     "verificado": true,
-    "responsavel": null,
+    "responsavel": "José Eduardo do Rosário",
     "telefone": "(47) 98838-5645",
     "email": "defesacivil@ibirama.sc.gov.br",
-    "endereco": "R. L Müler, 309-237 — Centro, Ibirama/SC, 89140-000",
+    "endereco": "Rua Lauro Müller, s/n — Centro, Ibirama/SC, 89140-000",
     "site": "www.defesacivilibirama.com.br",
     "fonte": "https://ibirama.atende.net/subportal/diretoria-de-protecao-e-defesa-civil",
-    "consultado_em": "2026-10-31",
-    "telefone_de": "defesa_civil"
+    "consultado_em": "2026-11-07",
+    "telefone_de": "defesa_civil",
+    "cargo": "diretor"
   },
   {
     "ibge": "4207403",
@@ -112,8 +113,8 @@
     "email": "prefeitura@imbuia.sc.gov.br",
     "endereco": "Avenida Bernardino de Andrade, 86 — Centro, Imbuia/SC, 88440-000",
     "site": "imbuia.sc.gov.br",
-    "fonte": "https://imbuia.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://imbuia.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -126,7 +127,7 @@
     "endereco": "Rua Joaquim Boing, nº 40 — Centro, Ituporanga/SC",
     "site": "defesacivil.ituporanga.sc.gov.br",
     "fonte": "https://defesacivil.ituporanga.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "defesa_civil"
   },
   {
@@ -136,10 +137,10 @@
     "responsavel": null,
     "telefone": "(47) 3352-7111",
     "email": "gabinete@pmjb.sc.gov.br",
-    "endereco": "Avenida 26 de Abril, nº 655 — Centro, José Boiteux/SC",
+    "endereco": "Avenida 26 de Abril, nº 655 — Centro, José Boiteux/SC, 89145-000",
     "site": "joseboiteux.atende.net",
     "fonte": "https://joseboiteux.atende.net/",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -152,7 +153,7 @@
     "endereco": "Rua XV de Novembro, 408 — Centro, Laurentino/SC, 89170-000",
     "site": "laurentino.sc.gov.br",
     "fonte": "https://laurentino.sc.gov.br/defesa-civil/",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "defesa_civil"
   },
   {
@@ -162,23 +163,23 @@
     "responsavel": null,
     "telefone": "(47) 3523-9400",
     "email": "gabinete@lontras.sc.gov.br",
-    "endereco": "Praça Henrique Schroeder, nº 1 — Centro, Lontras/SC",
+    "endereco": "Praça Henrique Schroeder, nº 1 — Centro, Lontras/SC, 89182-000",
     "site": "lontras.atende.net",
     "fonte": "https://lontras.atende.net/",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
     "ibge": "4210852",
     "nome": "Mirim Doce",
     "verificado": false,
-    "responsavel": null,
+    "responsavel": "Everton Borghesan",
     "telefone": "(47) 3565-0026",
     "email": null,
     "endereco": "Rua Alfredo Cordeiro, 220 — Centro, Mirim Doce/SC, 89194-000",
     "site": "mirimdoce.sc.gov.br",
     "fonte": "https://mirimdoce.sc.gov.br/defesa-civil/",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -190,8 +191,8 @@
     "email": "administracao@petrolandia.com.br",
     "endereco": "Rua Prefeito Frederico Probst, 67 — Centro, Petrolândia/SC, 88430-000",
     "site": "petrolandia.sc.gov.br",
-    "fonte": "https://petrolandia.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://petrolandia.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -203,8 +204,8 @@
     "email": "gabinete@pousoredondo.sc.gov.br",
     "endereco": "Rua Antônio Carlos Thiesen, 74 — Independência, Pouso Redondo/SC, 89172-000",
     "site": "pousoredondo.sc.gov.br",
-    "fonte": "https://pousoredondo.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://pousoredondo.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -216,21 +217,21 @@
     "email": null,
     "endereco": null,
     "site": "pdc.presidentegetulio.sc.gov.br",
-    "fonte": "https://pdc.presidentegetulio.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://pdc.presidentegetulio.sc.gov.br/ajuda",
+    "consultado_em": "2026-11-07",
     "telefone_de": "defesa_civil"
   },
   {
     "ibge": "4214102",
     "nome": "Presidente Nereu",
     "verificado": false,
-    "responsavel": null,
+    "responsavel": "Sidinei Schwartz",
     "telefone": "(47) 98828-3350",
     "email": "defesacivil@presidentenereu.sc.gov.br",
-    "endereco": "Rua Leão Dehon, nº 50 — Centro, Presidente Nereu/SC",
+    "endereco": "Rua Leão Dehon, nº 50 — Centro, Presidente Nereu/SC, 89184-000",
     "site": "presidentenereu.atende.net",
     "fonte": "https://presidentenereu.atende.net/cidadao/pagina/defesa-civil",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "defesa_civil"
   },
   {
@@ -240,10 +241,10 @@
     "responsavel": null,
     "telefone": "(47) 3564-8100",
     "email": "prefeitura@riodocampo.sc.gov.br",
-    "endereco": "Rua 29 de Dezembro, nº 70 — Centro, Rio do Campo/SC",
+    "endereco": "Rua 29 de Dezembro, nº 70 — Centro, Rio do Campo/SC, 89198-000",
     "site": "riodocampo.atende.net",
     "fonte": "https://riodocampo.atende.net/",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -255,8 +256,8 @@
     "email": null,
     "endereco": "Rua Paulo Sardagna, 797 — Bela Vista, Rio do Oeste/SC, 89180-000",
     "site": "riodooeste.sc.gov.br",
-    "fonte": "https://riodooeste.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://riodooeste.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -269,7 +270,7 @@
     "endereco": "Rua Mafalda Lingner Porto, nº 333 — Progresso, Rio do Sul/SC",
     "site": "defesacivil.riodosul.sc.gov.br",
     "fonte": "https://www.riodosul.sc.gov.br/cidadao/pagina/defesa-civil",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "defesa_civil"
   },
   {
@@ -279,10 +280,10 @@
     "responsavel": null,
     "telefone": "(47) 3563-0266",
     "email": null,
-    "endereco": "Rua do Santuário, nº 162 — Centro, Salete/SC",
+    "endereco": "Rua do Santuário, nº 162 — Centro, Salete/SC, 89196-000",
     "site": "salete.atende.net",
     "fonte": "https://salete.atende.net/",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -292,10 +293,10 @@
     "responsavel": null,
     "telefone": "(47) 3556-0044",
     "email": "prefeitura@santaterezinha.sc.gov.br",
-    "endereco": "Avenida Bruno Pieczarka, 154 – Centro, Santa Terezinha/SC, 89199-000",
+    "endereco": "Avenida Bruno Pieczarka, 154 — Centro, Santa Terezinha/SC, 89199-000",
     "site": "santaterezinha.sc.gov.br",
     "fonte": "https://santaterezinha.sc.gov.br/contato/",
-    "consultado_em": "2026-11-05",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -303,13 +304,13 @@
     "nome": "Taió",
     "verificado": false,
     "responsavel": null,
-    "telefone": null,
+    "telefone": "(47) 99208-6747",
     "email": null,
     "endereco": "Avenida Luiz Bertoli, nº 44 — Centro, Taió/SC, 89190-000",
     "site": "taio.atende.net",
     "fonte": "https://taio.atende.net/",
-    "consultado_em": "2026-10-31",
-    "telefone_de": null
+    "consultado_em": "2026-11-07",
+    "telefone_de": "defesa_civil"
   },
   {
     "ibge": "4218608",
@@ -321,21 +322,21 @@
     "endereco": "Praça Arthur Siewerdt, 01 — Centro, Trombudo Central/SC, 89176-000",
     "site": "trombudocentral.sc.gov.br",
     "fonte": "https://www.trombudocentral.sc.gov.br/galeria/defesa-civil/",
-    "consultado_em": "2026-10-31",
+    "consultado_em": "2026-11-07",
     "telefone_de": "defesa_civil"
   },
   {
     "ibge": "4219200",
     "nome": "Vidal Ramos",
     "verificado": false,
-    "responsavel": null,
-    "telefone": "(47) 3356-2300",
-    "email": "prefeitura@vidalramos.sc.gov.br",
+    "responsavel": "Francisco de Assis Velho Junior",
+    "telefone": "(47) 99721-9870",
+    "email": "defesacivil@vidalramos.sc.gov.br",
     "endereco": "Avenida Jorge Lacerda, nº 1180 — Centro, Vidal Ramos/SC, 88443-000",
     "site": "vidalramos.sc.gov.br",
-    "fonte": "https://vidalramos.sc.gov.br/",
-    "consultado_em": "2026-10-31",
-    "telefone_de": "prefeitura"
+    "fonte": "https://vidalramos.sc.gov.br/defesa-civil/",
+    "consultado_em": "2026-11-07",
+    "telefone_de": "defesa_civil"
   },
   {
     "ibge": "4219358",
@@ -346,8 +347,8 @@
     "email": "vitormeireles@vitormeireles.sc.gov.br",
     "endereco": "Rua Santa Catarina, 2266 — Centro, Vitor Meireles/SC, 89148-000",
     "site": "vitormeireles.sc.gov.br",
-    "fonte": "https://vitormeireles.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://vitormeireles.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   },
   {
@@ -359,8 +360,8 @@
     "email": "gabinete@witmarsum.sc.gov.br",
     "endereco": "Rua 07 de Setembro, 1520 — Centro, Witmarsum/SC, 89157-000",
     "site": "witmarsum.sc.gov.br",
-    "fonte": "https://witmarsum.sc.gov.br/",
-    "consultado_em": "2026-10-31",
+    "fonte": "https://witmarsum.sc.gov.br/contato/",
+    "consultado_em": "2026-11-07",
     "telefone_de": "prefeitura"
   }
 ]

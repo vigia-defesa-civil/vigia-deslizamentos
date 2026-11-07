@@ -77,6 +77,8 @@ export interface Contato {
   nome: string;
   verificado: boolean;
   responsavel: string | null;
+  /** Cargo do responsável; sem ele, coordenador(a). */
+  cargo?: "coordenador" | "diretor" | null;
   telefone: string | null;
   email: string | null;
   endereco: string | null;

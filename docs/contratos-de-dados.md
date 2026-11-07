@@ -177,7 +177,8 @@ Contatos de cada município, versionados. O site exibe, em ordem alfabética, os
 | `ibge` | string | Município |
 | `nome` | string | Nome do município |
 | `verificado` | booleano | Se a equipe confirmou o contato com a prefeitura. Só nesses o cartão mostra o botão de WhatsApp |
-| `responsavel` | string ou nulo | Coordenador(a) municipal de Defesa Civil |
+| `responsavel` | string ou nulo | Responsável pela Defesa Civil municipal |
+| `cargo` | `"coordenador"`, `"diretor"` ou ausente | Cargo do responsável; ausente = coordenador(a) |
 | `telefone` | string ou nulo | Telefone de exibição, ex.: "(47) 98838-5645" |
 | `email` | string ou nulo | E-mail |
 | `endereco` | string ou nulo | Endereço completo, usado no "Como chegar" |

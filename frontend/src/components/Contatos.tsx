@@ -2,7 +2,7 @@ import "../styles/contatos.css";
 import { Bell, Copy, ExternalLink, Globe, Mail, MapPin, MessageCircle, Phone, Route, User } from "lucide-react";
 import { useEffect, useState, type ChangeEvent } from "react";
 import { tradutor } from "../i18n";
-import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, mostraEmergencia, porNome, urlComoChegar } from "../lib/contatos";
+import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, porNome, urlComoChegar } from "../lib/contatos";
 import { formatarData } from "../lib/formato";
 import { carregar, lerContatos, type Resultado } from "../lib/dados";
 import type { Idioma } from "../lib/preferencias";
@@ -153,7 +153,7 @@ export default function Contatos({ lang, municipios }: Props) {
                     </dt>
                     <dd>
                       {c.responsavel}
-                      <small>{t("Coordenador(a) municipal de Defesa Civil")}</small>
+                      <small>{t(c.cargo === "diretor" ? "Diretor(a) de Defesa Civil" : "Coordenador(a) de Defesa Civil")}</small>
                     </dd>
                   </>
                 )}
@@ -189,23 +189,6 @@ export default function Contatos({ lang, municipios }: Props) {
                       <span className="sr-only">{t("Endereço")}</span>
                     </dt>
                     <dd>{c.endereco}</dd>
-                  </>
-                )}
-                {mostraEmergencia(c) && (
-                  <>
-                    <dt>
-                      <Phone aria-hidden="true" />
-                      <span className="sr-only">{t("Emergência")}</span>
-                    </dt>
-                    <dd className="emerg-cc">
-                      <a className="ph" href="tel:199">
-                        199
-                      </a>{" "}
-                      {t("Defesa Civil")} · <a className="ph" href="tel:193">
-                        193
-                      </a>{" "}
-                      {t("Bombeiros")}
-                    </dd>
                   </>
                 )}
                 {c.site && (

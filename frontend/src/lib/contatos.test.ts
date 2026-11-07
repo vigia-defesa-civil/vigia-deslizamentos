@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import contatos from "../fixtures/contatos.exemplo.json";
 import { tradutor } from "../i18n";
 import { lerContatos } from "./dados";
-import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, mostraEmergencia, porNome, urlComoChegar } from "./contatos";
+import { filtrarContatos, hrefSite, hrefTelefone, hrefWhatsApp, porNome, urlComoChegar } from "./contatos";
 
 const pt = tradutor("pt");
 const verificados = (() => {
@@ -53,15 +53,6 @@ describe("ordem alfabética", () => {
     const lista = [{ nome: "Taió" }, { nome: "Agronômica" }, { nome: "Ibirama" }, { nome: "Agrolândia" }, { nome: "Águas" }];
     expect(porNome(lista).map((x) => x.nome)).toEqual(["Agrolândia", "Agronômica", "Águas", "Ibirama", "Taió"]);
     expect(lista[0].nome).toBe("Taió");
-  });
-});
-
-describe("números de emergência no cartão", () => {
-  it("aparecem quando o cartão não tem telefone da própria Defesa Civil", () => {
-    expect(mostraEmergencia({ ...ibirama, verificado: false, telefone_de: "prefeitura" })).toBe(true);
-    expect(mostraEmergencia({ ...ibirama, verificado: false, telefone: null, telefone_de: null })).toBe(true);
-    expect(mostraEmergencia({ ...ibirama, verificado: false, telefone_de: "defesa_civil" })).toBe(false);
-    expect(mostraEmergencia(ibirama)).toBe(false);
   });
 });
 
