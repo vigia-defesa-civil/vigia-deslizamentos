@@ -96,7 +96,7 @@ $$EfR = \sum_{t=0}^{168} Rh_t \cdot 0{,}5^{\frac{t}{MV}}$$
 
 Onde `Rh` é a chuva horária entre a meia-noite do dia-alvo e as 168 horas anteriores, e `MV` é o parâmetro de decaimento por meia-vida. Na ausência de estudos específicos para o município, o GeoRisk adota **MV = 24 horas** — valor que o VIGIA usa como padrão para os 28 municípios.
 
-O período antecedente é preenchido prioritariamente com **dados observados**; onde não houver observação disponível, completa-se com dados de previsão numérica.
+O período antecedente é preenchido prioritariamente com **dados observados**; onde não houver observação disponível, completa-se com dados de previsão numérica. No VIGIA, as **últimas 96 horas** vêm dos pluviômetros do **Cemaden** (estação do próprio município ou, sem estação ativa, a do vizinho mais próximo até 20 km), e as horas mais antigas, do Open-Meteo. No dia-alvo D0, as horas que já passaram também entram no `Rtotal` pela chuva medida, e só as que faltam vêm da previsão. Motivo: em 07/11/2026 o modelo do Open-Meteo estimava ~53 mm na semana em Rio do Sul, enquanto os pluviômetros mediam ~100 mm em 24 h.
 
 ### Subíndice de risco
 
@@ -180,7 +180,7 @@ O sistema segue o fluxo:
 4. **Classificação:** enquadramento do índice nas classes de risco e cálculo das probabilidades complementares;
 5. **Publicação e notificação:** gravação no banco, publicação do `indices.json` consumido pelo site e envio de mensagem via Telegram aos inscritos quando o gatilho é atingido.
 
-O pipeline é executado de forma agendada, **a cada 6 horas**, após a disponibilização das rodadas 00, 06, 12 e 18 UTC dos modelos de previsão.
+O pipeline é executado de forma agendada, **de hora em hora**: os modelos de previsão só mudam a cada 6 horas (rodadas 00, 06, 12 e 18 UTC), mas a chuva medida pelo Cemaden muda a cada ~10 minutos.
 
 ## Dados e fontes
 
@@ -190,6 +190,7 @@ O pipeline é executado de forma agendada, **a cada 6 horas**, após a disponibi
 |-------|--------------|------------------|
 | **[Open-Meteo](https://open-meteo.com/)** | Previsão de precipitação e histórico horário | Fonte principal de previsão (`Rtotal`) e de chuva observada para compor a chuva efetiva antecedente. API REST gratuita, sem chave para uso não comercial. |
 | **[Open-Meteo](https://open-meteo.com/) — arquivo histórico (ERA5)** | Chuva horária de reanálise (ERA5) | Reconstrução dos dias anteriores ao início do sistema na tela Dados (`historico_reconstruido.json`), sempre marcada como estimativa. Consultado por script, sem entrar no cálculo do índice. |
+| **[Cemaden](https://www.gov.br/cemaden/)** — pluviômetros | Chuva acumulada em 1, 3, 6, 12, 24, 48, 72 e 96 h por estação | Chuva observada das últimas 96 h da chuva efetiva antecedente. JSON público do mapa interativo (`resources.cemaden.gov.br/graficos/interativo/getJson2.php?uf=SC`), sem token e sem garantia de estabilidade: se falhar, o pipeline registra o erro e usa o Open-Meteo. |
 | **[INMET](https://portal.inmet.gov.br/)** — API de estações | Precipitação horária e diária por estação automática | Fonte de observação para comparação e validação da chuva antecedente na região. |
 | **[IBGE — Localidades e Malhas](https://servicodados.ibge.gov.br/api/docs/localidades)** | Código, limites municipais e hierarquia geográfica | Identificação dos municípios e polígonos em GeoJSON para o mapa. Consumido uma vez e versionado no repositório. |
 
@@ -252,7 +253,7 @@ A RADIAN divide um sistema de apoio à decisão para desastres naturais em duas 
 | Sistemas de Gerenciamento de Dados e Conhecimento | Banco SQLite (índices calculados e inscritos do bot), malhas IBGE e estações |
 | Sistemas de Suporte | Privacidade (LGPD): o site não coleta dados pessoais; o bot guarda só o chat e os municípios escolhidos |
 | Sistemas de Infraestrutura Computacional | Coleta (Open-Meteo, INMET), cálculo e integração com IBGE e Telegram |
-| Ecossistema | Open-Meteo, INMET, IBGE, Cemaden (referência metodológica), Defesa Civil SC (link para o painel oficial), Telegram, OpenStreetMap, Google Maps (links "como chegar") |
+| Ecossistema | Open-Meteo, Cemaden (pluviômetros e referência metodológica), INMET, IBGE, Defesa Civil SC (link para o painel oficial), Telegram, OpenStreetMap, Google Maps (links "como chegar") |
 
 Não se aplicam ao projeto o módulo Planejamento da Execução (abrigos, doações, resgates) e as macrofuncionalidades de decisão multicritério, plataforma colaborativa, governança/auditoria e atuação sobre sistemas físicos.
 
@@ -270,7 +271,7 @@ Não se aplicam ao projeto o módulo Planejamento da Execução (abrigos, doaç�
 
 ### Fluxo de dados
 
-O pipeline roda no GitHub Actions 4 vezes por dia, grava os resultados no SQLite e publica um arquivo `indices.json` junto do frontend no GitHub Pages. O site lê esse arquivo em vez de consultar o backend a cada visita; assim, se o backend ficar fora do ar, o site continua exibindo o último índice publicado, com data e hora. A publicação é feita por commit automático do arquivo no repositório, pela API do GitHub, com um token restrito a este repositório.
+O pipeline roda no GitHub Actions de hora em hora, grava os resultados no SQLite e publica um arquivo `indices.json` junto do frontend no GitHub Pages. O site lê esse arquivo em vez de consultar o backend a cada visita; assim, se o backend ficar fora do ar, o site continua exibindo o último índice publicado, com data e hora. A publicação é feita por commit automático do arquivo no repositório, pela API do GitHub, com um token restrito a este repositório.
 
 O bot tem duas metades. Um **Cloudflare Worker** (`bot-worker/`) recebe as mensagens do Telegram por webhook, responde `/start`, `/status` e `/parar` (e `/simular`, enquanto a demonstração estiver ativa) e guarda os inscritos num banco D1. O **pipeline** consulta o Worker para saber quem avisar e envia os avisos. Os textos das respostas são escritos pelo backend em um `bot.json`, que o Worker lê. Com 28 municípios, o teclado do `/start` é agrupado por região: "Região de Rio do Sul" e "Região de Ituporanga" abrem a lista de municípios do grupo, com "Todos da Região de …" e "Voltar"; o "Todos" global segue no menu principal. O `vigia.db` e o `bot.json` ficam na branch `estado`, que só o pipeline escreve (contrato em [docs/contratos-de-dados.md](docs/contratos-de-dados.md)). Operação e deploy em [backend/README.md](backend/README.md).
 

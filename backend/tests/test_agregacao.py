@@ -147,6 +147,14 @@ def test_somar_rtotal_soma_as_24_horas_do_dia_civil_do_dia_alvo():
     assert somar_rtotal(date(2026, 10, 1), previsao) == pytest.approx(24.0)
 
 
+def test_somar_rtotal_usa_a_chuva_observada_nas_horas_que_ja_passaram():
+    agora = datetime(2026, 10, 1, 12, 0, tzinfo=UTC)
+    previsao = serie(datetime(2026, 10, 1, 1, 0, tzinfo=UTC), 24, 1.0)
+    observada = serie(datetime(2026, 10, 1, 1, 0, tzinfo=UTC), 12, 10.0)
+    # 12 horas observadas (01..12Z) a 10 mm e 12 previstas (13Z..00Z) a 1 mm.
+    assert somar_rtotal(date(2026, 10, 1), previsao, observada, agora) == pytest.approx(132.0)
+
+
 def test_somar_rtotal_sem_a_meia_noite_do_dia_seguinte_levanta_erro():
     previsao = serie(datetime(2026, 10, 1, 1, 0, tzinfo=UTC), 23, 1.0)
 
@@ -276,7 +284,10 @@ def antecedente_de_teste(chuva_na_meia_noite: float = 0.0) -> dict[datetime, flo
 
 
 def previsao_de_teste(rtotal: float) -> dict[datetime, float]:
-    """Série de um membro com todo o `rtotal` de D0 no rótulo `2026-10-01T01:00Z`.
+    """Série de um membro com todo o `rtotal` de D0 no rótulo `2026-10-01T13:00Z`.
+
+    É a primeira hora depois de `AGORA` (12:00Z): as horas de D0 até `AGORA` vêm
+    da antecedente, que é zerada, e só as seguintes vêm da previsão.
 
     Os rótulos vizinhos de fora da janela do `Rtotal` levam valores-engodo:
     uma janela deslocada por uma hora produziria um resultado absurdo.
@@ -287,7 +298,7 @@ def previsao_de_teste(rtotal: float) -> dict[datetime, float]:
         datetime(2026, 10, 2, 1, 0, tzinfo=UTC): 1000.0,
     }
     serie_previsao.update(serie(datetime(2026, 10, 1, 1, 0, tzinfo=UTC), 24))
-    serie_previsao[datetime(2026, 10, 1, 1, 0, tzinfo=UTC)] = rtotal
+    serie_previsao[datetime(2026, 10, 1, 13, 0, tzinfo=UTC)] = rtotal
     return serie_previsao
 
 
@@ -404,7 +415,7 @@ def test_membro_com_peso_zero_fica_fora_do_calculo_e_da_contagem():
 def test_membro_sem_as_24_horas_do_dia_alvo_fica_fora_daquele_dia():
     municipio = municipio_de_teste(quantidade_de_pontos=1)
     previsao_incompleta = previsao_de_teste(900.0)
-    del previsao_incompleta[datetime(2026, 10, 1, 7, 0, tzinfo=UTC)]
+    del previsao_incompleta[datetime(2026, 10, 1, 18, 0, tzinfo=UTC)]  # hora futura: vem da previsão
     dados = DadosMunicipio(
         ibge=municipio.ibge,
         antecedente=[antecedente_de_teste()],
@@ -534,11 +545,12 @@ def previsao_de_quatro_dias(
     """Série de um membro de 2026-10-01T01:00Z a 2026-10-05T00:00Z (96 rótulos).
 
     O `rtotal` de cada dia-alvo fica todo no rótulo `T01:00Z` do respectivo
-    dia; os demais rótulos ficam em zero.
+    dia, menos o do D0, que fica em `T13:00Z`: é a primeira hora depois de
+    `AGORA`, e as anteriores vêm da antecedente. Os demais rótulos ficam em zero.
     """
     serie_previsao = serie(datetime(2026, 10, 1, 1, 0, tzinfo=UTC), 96)
     primeiros_rotulos = (
-        datetime(2026, 10, 1, 1, 0, tzinfo=UTC),
+        datetime(2026, 10, 1, 13, 0, tzinfo=UTC),
         datetime(2026, 10, 2, 1, 0, tzinfo=UTC),
         datetime(2026, 10, 3, 1, 0, tzinfo=UTC),
         datetime(2026, 10, 4, 1, 0, tzinfo=UTC),
@@ -594,10 +606,10 @@ def test_calcular_devolve_os_quatro_dias_alvo_a_partir_da_data_utc_de_agora():
     assert resultado_do_municipio.dias[0].classe == 3
     assert resultado_do_municipio.dias[0].rtotal_mm == pytest.approx(90.0)
     assert resultado_do_municipio.dias[0].n_membros == 3
-    # D1–D3 sem chuva prevista e sem chuva antecedente.
+    # D1–D3 sem chuva prevista: só a do D0 (13:00Z), decaindo pela meia-vida de 24 h.
     for dia in resultado_do_municipio.dias[1:]:
-        assert dia.indice == pytest.approx(0.0)
-        assert dia.classe == 1
+        horas_desde_a_chuva = 11 + 24 * (dia.d - 1)
+        assert dia.indice == pytest.approx(0.9 * 0.5 ** (horas_desde_a_chuva / 24))
         assert dia.rtotal_mm == pytest.approx(0.0)
         assert dia.n_membros == 3
 

@@ -13,7 +13,8 @@ marca o **fim** da hora, isto é, cobre `[T−1h, T)`. Daí, para o dia-alvo `D`
 - janela do EfR: 169 rótulos, `meia-noite(D) − t horas` para `t = 0..168` —
   do rótulo `D T00:00Z` (a hora que termina na meia-noite de `D`) até
   `(D−7)T00:00Z`;
-- `Rtotal(D)`: os 24 rótulos `D T01:00Z` … `(D+1)T00:00Z`.
+- `Rtotal(D)`: os 24 rótulos `D T01:00Z` … `(D+1)T00:00Z`; os que já passaram
+  (`<= agora_utc`, no D0) vêm da chuva observada, os outros da previsão.
 
 As duas janelas são **adjacentes**: o EfR termina no rótulo `D T00:00Z` e o
 `Rtotal` começa no rótulo `D T01:00Z`. Nenhuma hora física é contada duas
@@ -173,15 +174,27 @@ def janela_efr(
     ]
 
 
-def somar_rtotal(dia_alvo: date, previsao: dict[datetime, float]) -> float:
-    """Soma a chuva prevista pelo membro para as 24 horas do dia-alvo.
+def somar_rtotal(
+    dia_alvo: date,
+    previsao: dict[datetime, float],
+    antecedente: dict[datetime, float] | None = None,
+    agora_utc: datetime | None = None,
+) -> float:
+    """Soma a chuva das 24 horas do dia-alvo.
 
-    Vem toda da série do membro: `Rtotal` é, por definição, o total previsto
-    para o dia-alvo pelo respectivo modelo. Levanta `HoraAusenteError` se
-    faltar qualquer uma das 24 horas.
+    Com `antecedente` e `agora_utc`, as horas que já passaram (rótulo
+    `<= agora_utc`, caso do D0) vêm da chuva observada e só as futuras vêm da
+    previsão do membro, como em `janela_efr`: a chuva que já caiu hoje não é
+    trocada pelo que o modelo achava que ia cair. Sem eles, é toda da previsão.
+    Levanta `HoraAusenteError` se faltar qualquer uma das 24 horas.
     """
+    def serie(rotulo: datetime) -> dict[datetime, float]:
+        if antecedente is not None and agora_utc is not None and rotulo <= agora_utc:
+            return antecedente
+        return previsao
+
     return sum(
-        _valor(previsao, rotulo, "Rtotal") for rotulo in rotulos_rtotal(dia_alvo)
+        _valor(serie(rotulo), rotulo, "Rtotal") for rotulo in rotulos_rtotal(dia_alvo)
     )
 
 
@@ -256,7 +269,9 @@ def _ponto_de_maior_subindice(
             agora_utc,
         )
         efr_ponto = efr(valores, municipio.mv_h)
-        rtotal_ponto = somar_rtotal(dia_alvo, membro.chuva[indice_ponto])
+        rtotal_ponto = somar_rtotal(
+            dia_alvo, membro.chuva[indice_ponto], dados.antecedente[indice_ponto], agora_utc
+        )
         por_ponto.append(
             _PontoEscolhido(
                 sub=subindice(efr_ponto, rtotal_ponto, municipio.limiar_mm),

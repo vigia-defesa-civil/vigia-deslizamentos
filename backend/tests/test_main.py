@@ -199,10 +199,8 @@ def test_configurar_log_poe_o_httpx_em_warning_para_nao_vazar_o_token(tmp_path):
 # --- horários do agendador ----------------------------------------------------
 
 
-def test_horarios_do_cron_sao_os_decididos_na_tarefa_0():
-    # 9 h depois de cada rodada sinótica (docs/decisoes/ensemble.md §7): a
-    # rodada mais lenta (ECMWF) leva ~8 h para ficar disponível.
-    assert modulo_main.HORAS_DO_CRON == "3,9,15,21"
+def test_pipeline_roda_toda_hora_para_acompanhar_a_chuva_medida():
+    assert modulo_main.HORAS_DO_CRON == "*"
 
 
 def test_agendador_usa_utc_e_as_protecoes_contra_execucao_sobreposta():
@@ -215,7 +213,7 @@ def test_agendador_usa_utc_e_as_protecoes_contra_execucao_sobreposta():
     assert job.misfire_grace_time == 3600
     assert job.coalesce is True
     assert job.max_instances == 1
-    assert str(job.trigger.fields[job.trigger.FIELD_NAMES.index("hour")]) == "3,9,15,21"
+    assert str(job.trigger.fields[job.trigger.FIELD_NAMES.index("hour")]) == "*"
 
 
 # --- token rejeitado não pode vazar no traceback (RNF06) ----------------------
@@ -287,7 +285,7 @@ def _dados_de_teste(ibge: str) -> DadosMunicipio:
         datetime(2026, 10, 1, 1, 0, tzinfo=UTC) + timedelta(hours=k): 0.0
         for k in range(96)
     }
-    previsao[datetime(2026, 10, 1, 1, 0, tzinfo=UTC)] = 120.0
+    previsao[datetime(2026, 10, 1, 22, 0, tzinfo=UTC)] = 120.0  # depois de AGORA: vem da previsão
     return DadosMunicipio(
         ibge=ibge,
         antecedente=[antecedente],
@@ -440,6 +438,7 @@ def test_ciclo_completo_em_arquivo_grava_o_banco_e_a_classe_notificada(
             ),
             publicar=lambda conteudo, cfg, http_, caminho: True,
             comparar_com_inmet=lambda *_args, **_kwargs: None,
+            chuva_observada=lambda coletados, *_args: coletados,
         )
 
     monkeypatch.setattr(modulo_main, "executar_pipeline", pipeline_com_coleta_dublada)
