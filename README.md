@@ -180,7 +180,7 @@ O sistema segue o fluxo:
 4. **Classificação:** enquadramento do índice nas classes de risco e cálculo das probabilidades complementares;
 5. **Publicação e notificação:** gravação no banco, publicação do `indices.json` consumido pelo site e envio de mensagem via Telegram aos inscritos quando o gatilho é atingido.
 
-O pipeline é executado de forma agendada, **de hora em hora**: os modelos de previsão só mudam a cada 6 horas (rodadas 00, 06, 12 e 18 UTC), mas a chuva medida pelo Cemaden muda a cada ~10 minutos.
+O pipeline é executado de forma agendada, **a cada 30 minutos**: os modelos de previsão só mudam a cada 6 horas (rodadas 00, 06, 12 e 18 UTC), mas a chuva medida pelo Cemaden muda a cada ~10 minutos.
 
 ## Dados e fontes
 
@@ -271,7 +271,7 @@ Não se aplicam ao projeto o módulo Planejamento da Execução (abrigos, doaç�
 
 ### Fluxo de dados
 
-O pipeline roda no GitHub Actions de hora em hora, grava os resultados no SQLite e publica um arquivo `indices.json` junto do frontend no GitHub Pages. O site lê esse arquivo em vez de consultar o backend a cada visita; assim, se o backend ficar fora do ar, o site continua exibindo o último índice publicado, com data e hora. A publicação é feita por commit automático do arquivo no repositório, pela API do GitHub, com um token restrito a este repositório.
+O pipeline roda no GitHub Actions a cada 30 minutos, grava os resultados no SQLite e publica um arquivo `indices.json` junto do frontend no GitHub Pages. O site lê esse arquivo em vez de consultar o backend a cada visita; assim, se o backend ficar fora do ar, o site continua exibindo o último índice publicado, com data e hora. A publicação é feita por commit automático do arquivo no repositório, pela API do GitHub, com um token restrito a este repositório.
 
 O bot tem duas metades. Um **Cloudflare Worker** (`bot-worker/`) recebe as mensagens do Telegram por webhook, responde `/start`, `/status` e `/parar` (e `/simular`, enquanto a demonstração estiver ativa) e guarda os inscritos num banco D1. O **pipeline** consulta o Worker para saber quem avisar e envia os avisos. Os textos das respostas são escritos pelo backend em um `bot.json`, que o Worker lê. Com 28 municípios, o teclado do `/start` é agrupado por região: "Região de Rio do Sul" e "Região de Ituporanga" abrem a lista de municípios do grupo, com "Todos da Região de …" e "Voltar"; o "Todos" global segue no menu principal. O `vigia.db` e o `bot.json` ficam na branch `estado`, que só o pipeline escreve (contrato em [docs/contratos-de-dados.md](docs/contratos-de-dados.md)). Operação e deploy em [backend/README.md](backend/README.md).
 

@@ -55,6 +55,8 @@ from app.pipeline import Execucao, executar_pipeline
 #: (`docs/decisoes/ensemble.md` §7), mas a chuva medida do Cemaden muda a cada ~10 min,
 #: e é ela que faz o índice subir durante o evento.
 HORAS_DO_CRON = "*"
+#: Minutos de cada hora: a cada 30 min, para acompanhar a chuva medida durante o evento.
+MINUTOS_DO_CRON = "0,30"
 
 #: 1 h de tolerância para uma execução perdida (máquina suspensa, reinício) e
 #: `coalesce` para que várias perdidas virem uma só. `max_instances=1` impede
@@ -239,7 +241,7 @@ def montar_agendador(job: Callable[[], Coroutine | None]) -> AsyncIOScheduler:
     agendador = AsyncIOScheduler(timezone=timezone.utc)
     agendador.add_job(
         job,
-        trigger=CronTrigger(hour=HORAS_DO_CRON, minute=0, timezone=timezone.utc),
+        trigger=CronTrigger(hour=HORAS_DO_CRON, minute=MINUTOS_DO_CRON, timezone=timezone.utc),
         misfire_grace_time=TOLERANCIA_DE_ATRASO_S,
         coalesce=True,
         max_instances=1,
@@ -303,7 +305,7 @@ def _rodar_para_sempre(
         agendador = montar_agendador(job)
         agendador.start()
         agendadores.append(agendador)
-        _log.info("agendador no ar: horas %s UTC", HORAS_DO_CRON)
+        _log.info("agendador no ar: horas %s, minutos %s UTC", HORAS_DO_CRON, MINUTOS_DO_CRON)
 
     async def ao_encerrar(_aplicacao) -> None:
         for agendador in agendadores:
