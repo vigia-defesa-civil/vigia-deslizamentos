@@ -58,7 +58,7 @@ MUNICIPIOS_EXTRAS = (
         "microrregiao": {"codigo": "42011", "nome": "Rio do Sul"},
     },
 )
-MV_H = 24
+MV_H = 48
 TIMEOUT_S = 30
 
 _log = logging.getLogger(__name__)

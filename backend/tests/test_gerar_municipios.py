@@ -94,7 +94,7 @@ def test_mescla_preserva_o_atual_e_acrescenta_o_novo():
         "nome": "Lontras",
         "limiar_mm": LIMIAR_DEMONSTRACAO_MM,
         "fonte_limiar": FONTE_LIMIAR_DEMONSTRACAO,
-        "mv_h": 24,
+        "mv_h": 48,
         "pontos": [{"lat": -27.0, "lon": -49.5}],
         "microrregiao": {"codigo": "42011", "nome": "Rio do Sul"},
     }
@@ -170,7 +170,7 @@ def test_arquivo_versionado_tem_os_28_e_os_6_atuais_intactos():
             "nome": nome,
             "limiar_mm": LIMIAR_DEMONSTRACAO_MM,
             "fonte_limiar": FONTE_LIMIAR_DEMONSTRACAO,
-            "mv_h": 24,
+            "mv_h": 48,
             "pontos": [{"lat": lat, "lon": lon}],
         }
 

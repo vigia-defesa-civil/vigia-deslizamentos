@@ -94,7 +94,7 @@ A chuva efetiva antecedente (`EfR`) é a parcela da chuva pretérita que ainda i
 
 $$EfR = \sum_{t=0}^{168} Rh_t \cdot 0{,}5^{\frac{t}{MV}}$$
 
-Onde `Rh` é a chuva horária entre a meia-noite do dia-alvo e as 168 horas anteriores, e `MV` é o parâmetro de decaimento por meia-vida. Na ausência de estudos específicos para o município, o GeoRisk adota **MV = 24 horas** — valor que o VIGIA usa como padrão para os 28 municípios.
+Onde `Rh` é a chuva horária entre a meia-noite do dia-alvo e as 168 horas anteriores, e `MV` é o parâmetro de decaimento por meia-vida. Na ausência de estudos específicos para o município, o GeoRisk adota **MV = 24 horas**. O VIGIA usa **MV = 48 horas** nos 28 municípios: com 24 h, depois de ~190 mm em 4 dias (Rio do Sul, 07/11/2026), o índice caía para "baixo" já no dia seguinte, com o solo ainda encharcado. Com 48 h o efeito da chuva dura cerca de um dia a mais; 72 h (padrão japonês para deslizamentos) mantinha "moderado" por 3 dias após a chuva parar. Valor provisório até haver calibração com ocorrências da região.
 
 O período antecedente é preenchido prioritariamente com **dados observados**; onde não houver observação disponível, completa-se com dados de previsão numérica. No VIGIA, as **últimas 96 horas** vêm dos pluviômetros do **Cemaden** (estação do próprio município ou, sem estação ativa, a do vizinho mais próximo até 20 km), e as horas mais antigas, do Open-Meteo. No dia-alvo D0, as horas que já passaram também entram no `Rtotal` pela chuva medida, e só as que faltam vêm da previsão. Motivo: em 07/11/2026 o modelo do Open-Meteo estimava ~53 mm na semana em Rio do Sul, enquanto os pluviômetros mediam ~100 mm em 24 h.
 
@@ -154,7 +154,7 @@ Conforme o manual, essas probabilidades são **informação secundária** — o 
 | Modelos de previsão | 15 a 25 rodadas de GEFS, GFS, WRF, Eta e ECMWF, obtidas direto da fonte | Modelos e ensembles disponibilizados via API pública (a definir na integração) |
 | Pesos do ensemble | Recalibrados periodicamente por matriz de confusão contra ocorrências reais | Pesos fixos por recência e horário de assimilação, **sem calibração** |
 | Limiar crítico | Calibrado por município pelo Cemaden | Parâmetro de configuração, com fonte documentada; 100 mm de demonstração nos 28 municípios, até haver limiar oficial |
-| Meia-vida (MV) | Valor por município quando há estudo disponível | 24 horas (padrão) para todos os municípios |
+| Meia-vida (MV) | Valor por município quando há estudo disponível | 48 horas para todos os municípios (provisório; o padrão GeoRisk é 24 h) |
 | Validação | Matriz de confusão contra o REINDESC (2017–presente) | Sem validação estatística — ver limitações |
 
 ### Limitações conhecidas
