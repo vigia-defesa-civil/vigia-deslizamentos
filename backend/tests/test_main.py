@@ -201,6 +201,7 @@ def test_configurar_log_poe_o_httpx_em_warning_para_nao_vazar_o_token(tmp_path):
 
 def test_pipeline_roda_toda_hora_para_acompanhar_a_chuva_medida():
     assert modulo_main.HORAS_DO_CRON == "*"
+    assert modulo_main.MINUTOS_DO_CRON == "0,30"
 
 
 def test_agendador_usa_utc_e_as_protecoes_contra_execucao_sobreposta():
@@ -214,6 +215,7 @@ def test_agendador_usa_utc_e_as_protecoes_contra_execucao_sobreposta():
     assert job.coalesce is True
     assert job.max_instances == 1
     assert str(job.trigger.fields[job.trigger.FIELD_NAMES.index("hour")]) == "*"
+    assert str(job.trigger.fields[job.trigger.FIELD_NAMES.index("minute")]) == "0,30"
 
 
 # --- token rejeitado não pode vazar no traceback (RNF06) ----------------------

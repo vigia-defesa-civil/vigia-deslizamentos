@@ -2,9 +2,9 @@ name: Pipeline
 
 on:
   schedule:
-    # Toda hora, como o HORAS_DO_CRON, no minuto 17 para fugir do pico de :00 do GitHub.
-    # ~115 chamadas ao Open-Meteo por execução: ~2.760 por dia, limite de 10.000.
-    - cron: "17 * * * *"
+    # A cada 30 min, como o HORAS_DO_CRON/MINUTOS_DO_CRON, nos minutos 17 e 47 para fugir do pico de :00 do GitHub.
+    # ~115 chamadas ao Open-Meteo por execução: ~5.520 por dia, limite de 10.000.
+    - cron: "17,47 * * * *"
   workflow_dispatch:
 
 # O estado (vigia.db e bot.json) é commitado na branch estado com o GITHUB_TOKEN.

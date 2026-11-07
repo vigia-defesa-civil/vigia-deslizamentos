@@ -1,7 +1,7 @@
 # Backend do VIGIA Deslizamentos
 
 Calcula o índice de risco de deslizamento dos 28 municípios do Alto Vale do
-Itajaí a cada 6 horas, grava no SQLite, publica o `indices.json` que o site lê e
+Itajaí a cada 30 minutos, grava no SQLite, publica o `indices.json` que o site lê e
 avisa pelo Telegram quem estiver inscrito. Roda no GitHub Actions; o bot que
 atende os comandos é um Cloudflare Worker (`bot-worker/`).
 
