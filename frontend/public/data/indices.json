@@ -1,36 +1,8 @@
 {
   "schema_version": 1,
-  "gerado_em": "2026-11-21T00:00:12.401261+00:00",
-  "dia_alvo_d0": "2026-11-20",
-  "municipios_sem_dados": [
-    "4200309",
-    "4201802",
-    "4201901",
-    "4202859",
-    "4204194",
-    "4205100",
-    "4206900",
-    "4207403",
-    "4208500",
-    "4209151",
-    "4209508",
-    "4209904",
-    "4210852",
-    "4212700",
-    "4213708",
-    "4214003",
-    "4214102",
-    "4214508",
-    "4214607",
-    "4214805",
-    "4215307",
-    "4215679",
-    "4217808",
-    "4218608",
-    "4219200",
-    "4219358",
-    "4219408"
-  ],
+  "gerado_em": "2026-11-21T07:16:01.243640+00:00",
+  "dia_alvo_d0": "2026-11-21",
+  "municipios_sem_dados": [],
   "municipios": [
     {
       "ibge": "4200200",
@@ -40,27 +12,13 @@
       "mv_h": 48,
       "dias": [
         {
-          "dia_alvo": "2026-11-20",
-          "d": 0,
-          "indice": 0.7686636191383581,
-          "classe": 3,
-          "efr_mm": 30.25361612960469,
-          "rtotal_mm": 46.61274578423112,
-          "n_membros": 6,
-          "prob": {
-            "pontuais": 0.0,
-            "esparsos": 0.0,
-            "generalizados": 0.0
-          }
-        },
-        {
           "dia_alvo": "2026-11-21",
-          "d": 1,
-          "indice": 0.6998879915756598,
-          "classe": 2,
-          "efr_mm": 63.471123667964314,
-          "rtotal_mm": 6.517675489601673,
-          "n_membros": 6,
+          "d": 0,
+          "indice": 0.3121962973466233,
+          "classe": 1,
+          "efr_mm": 26.200790103309533,
+          "rtotal_mm": 5.018839631352797,
+          "n_membros": 5,
           "prob": {
             "pontuais": 0.0,
             "esparsos": 0.0,
@@ -69,12 +27,12 @@
         },
         {
           "dia_alvo": "2026-11-22",
-          "d": 2,
-          "indice": 0.7515998479055434,
-          "classe": 3,
-          "efr_mm": 50.70117215223975,
-          "rtotal_mm": 24.458812638314576,
-          "n_membros": 6,
+          "d": 1,
+          "indice": 0.49120396247895587,
+          "classe": 2,
+          "efr_mm": 23.308519215083095,
+          "rtotal_mm": 25.811877032812497,
+          "n_membros": 5,
           "prob": {
             "pontuais": 0.0,
             "esparsos": 0.0,
@@ -83,12 +41,26 @@
         },
         {
           "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.37298945902199654,
+          "classe": 1,
+          "efr_mm": 36.132324793256394,
+          "rtotal_mm": 1.1666211089432557,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
           "d": 3,
-          "indice": 0.5539529587288581,
+          "indice": 0.494837941491781,
           "classe": 2,
-          "efr_mm": 54.15411972779887,
-          "rtotal_mm": 1.241176145086946,
-          "n_membros": 6,
+          "efr_mm": 26.35471562977021,
+          "rtotal_mm": 23.129078519407894,
+          "n_membros": 5,
           "prob": {
             "pontuais": 0.0,
             "esparsos": 0.0,
@@ -97,11 +69,6 @@
         }
       ],
       "historico": [
-        {
-          "dia_alvo": "2026-11-05",
-          "indice": 0.3520251346862718,
-          "classe": 1
-        },
         {
           "dia_alvo": "2026-11-06",
           "indice": 0.19869421452649386,
@@ -171,13 +138,4014 @@
           "dia_alvo": "2026-11-19",
           "indice": 0.33307642152043826,
           "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7686636191383581,
+          "classe": 3
         }
       ],
       "chuva_acum_mm": {
-        "24h": 45.4,
-        "48h": 71.2,
-        "72h": 72.6,
-        "96h": 73.6
+        "24h": 14.1,
+        "48h": 16.0,
+        "72h": 26.4,
+        "96h": 30.8
+      }
+    },
+    {
+      "ibge": "4200309",
+      "nome": "Agronômica",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.274657693014829,
+          "classe": 1,
+          "efr_mm": 21.699386887266204,
+          "rtotal_mm": 5.766382414216698,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5038916262103256,
+          "classe": 2,
+          "efr_mm": 20.949845213569567,
+          "rtotal_mm": 29.439317407462994,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.39492518483199496,
+          "classe": 1,
+          "efr_mm": 38.33613626231134,
+          "rtotal_mm": 1.1563822208881571,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.47916206435162334,
+          "classe": 2,
+          "efr_mm": 27.770950511293098,
+          "rtotal_mm": 20.145255923869243,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.17373745737284602,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.4531207815247704,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.3606780656313951,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.25280754575093034,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.17195854047273346,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.14708202127173206,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.24303401482478057,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.1854051776411042,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.13372102511805858,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.230731660891491,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.21680879762839517,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.18286167212710308,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.16161832185896038,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.22261756742259997,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7551827274795955,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 14.4,
+        "48h": 16.5,
+        "72h": 23.400000000000002,
+        "96h": 24.900000000000002
+      }
+    },
+    {
+      "ibge": "4201802",
+      "nome": "Atalanta",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.3312672503742808,
+          "classe": 1,
+          "efr_mm": 27.31686151726978,
+          "rtotal_mm": 5.809863520158307,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5233690404552472,
+          "classe": 2,
+          "efr_mm": 24.913013306729493,
+          "rtotal_mm": 27.42389073879523,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.40266152365529123,
+          "classe": 2,
+          "efr_mm": 39.060213849122874,
+          "rtotal_mm": 1.205938516406249,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.4863749665853737,
+          "classe": 2,
+          "efr_mm": 28.339271476465008,
+          "rtotal_mm": 20.298225182072365,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.20824058213120467,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.5329242715285227,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4249251866263161,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.30075734385415887,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.21130896440788433,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.1778618408635814,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.19231412752511604,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.19969753803314266,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.14847410677552864,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.21431431806608742,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.2500640950369872,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.24074462645644135,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.2230816590493873,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.3385546437694121,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7218502373541906,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 14.6,
+        "48h": 19.2,
+        "72h": 30.4,
+        "96h": 33.3
+      }
+    },
+    {
+      "ibge": "4201901",
+      "nome": "Aurora",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.2952918869349341,
+          "classe": 1,
+          "efr_mm": 23.397584620364295,
+          "rtotal_mm": 6.131604073129112,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5408247862506868,
+          "classe": 2,
+          "efr_mm": 22.489304550438735,
+          "rtotal_mm": 31.59317407462994,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.4384805002785759,
+          "classe": 2,
+          "efr_mm": 41.543886329378964,
+          "rtotal_mm": 2.304163698478616,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.48355921080733555,
+          "classe": 2,
+          "efr_mm": 30.925204416568256,
+          "rtotal_mm": 17.430716664165296,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.17911701790279713,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.4187435222801301,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.3672555681364981,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.8892664469461623,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 1.1736612182280577,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 1.5524942852880443,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 1.3395691875646814,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.25399552154481025,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.18552071738693007,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.3229822311334065,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.2200329063911712,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.19591039874768318,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.1682005412283654,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.2345501714555555,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.5457571161374926,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 16.4,
+        "48h": 18.8,
+        "72h": 25.2,
+        "96h": 27.2
+      }
+    },
+    {
+      "ibge": "4202859",
+      "nome": "Braço do Trombudo",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.32517690972285934,
+          "classe": 1,
+          "efr_mm": 27.814414682771133,
+          "rtotal_mm": 4.7032762895147995,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5088428163516172,
+          "classe": 2,
+          "efr_mm": 24.173428684483277,
+          "rtotal_mm": 26.710852950678447,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.3948900193316994,
+          "classe": 1,
+          "efr_mm": 38.018080452577834,
+          "rtotal_mm": 1.4709214805921047,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.5200631898981523,
+          "classe": 2,
+          "efr_mm": 27.902906027130186,
+          "rtotal_mm": 24.103412962685034,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.2035982976564722,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.5523579578796736,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4485499211542161,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.318141983765792,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.21826326912231633,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.17426527655565416,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.3554155703738298,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.1285052157964975,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.12140282088067093,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.20576668787507568,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.21104593428844834,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.21394540591702332,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.1923840895454999,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.36545181655169606,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7772529257457129,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 12.9,
+        "48h": 15.1,
+        "72h": 33.3,
+        "96h": 36.3
+      }
+    },
+    {
+      "ibge": "4204194",
+      "nome": "Chapadão do Lageado",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.3454922608112079,
+          "classe": 1,
+          "efr_mm": 26.578884011538126,
+          "rtotal_mm": 7.970342069582665,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.4358669082695786,
+          "classe": 2,
+          "efr_mm": 26.589489727019544,
+          "rtotal_mm": 16.997201099938316,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.3304706735982586,
+          "classe": 1,
+          "efr_mm": 31.74365439714083,
+          "rtotal_mm": 1.3034129626850328,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.39973657137760304,
+          "classe": 1,
+          "efr_mm": 23.448878990001262,
+          "rtotal_mm": 16.524778147759047,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.1555072446200529,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.4003999201859812,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.45525915038320675,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.8781220190307898,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 1.175302327469196,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 1.5927057197598762,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 1.361596881063024,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.2129059519713603,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.16414769262984907,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.33681554328962215,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.24844559230427524,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.21279699383970355,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.1833864644910269,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.23412128105837907,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.5170034165128004,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 15.899999999999999,
+        "48h": 19.099999999999998,
+        "72h": 29.8,
+        "96h": 32.7
+      }
+    },
+    {
+      "ibge": "4205100",
+      "nome": "Dona Emma",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.311667201405656,
+          "classe": 1,
+          "efr_mm": 22.284296995057794,
+          "rtotal_mm": 8.88242314550781,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5931777443912063,
+          "classe": 2,
+          "efr_mm": 24.317911112290872,
+          "rtotal_mm": 34.99986332682977,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.46535922204378327,
+          "classe": 2,
+          "efr_mm": 45.605205540213035,
+          "rtotal_mm": 0.9307166641652947,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.49652764775778047,
+          "classe": 2,
+          "efr_mm": 33.021911438442515,
+          "rtotal_mm": 16.63085333733553,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.23530422026163647,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.9542903110056026,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.399308593568268,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.27249162111777203,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.18516490198464208,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.13597347420405168,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.1507969958057103,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.17789632142148318,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.1181435362574065,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.1853217600038655,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.15887690612933075,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.13115481879978025,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.13567944172042973,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.22755441768415657,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7917926548281039,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 10.2,
+        "48h": 17.9,
+        "72h": 27.2,
+        "96h": 28.8
+      }
+    },
+    {
+      "ibge": "4206900",
+      "nome": "Ibirama",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.4358462044849339,
+          "classe": 2,
+          "efr_mm": 32.71339096994691,
+          "rtotal_mm": 10.871229478546482,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.6346772884721577,
+          "classe": 2,
+          "efr_mm": 33.41325811742547,
+          "rtotal_mm": 30.05447072979029,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.4905145036662597,
+          "classe": 2,
+          "efr_mm": 47.44639925918355,
+          "rtotal_mm": 1.6050511074424323,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.5011509665704644,
+          "classe": 2,
+          "efr_mm": 34.719260355525066,
+          "rtotal_mm": 15.395836301521387,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.15729521125980725,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.3823717705475376,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.34162955354680896,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.23973353632611918,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.3375274193554438,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.14535624059516572,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.2283929681668978,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.21528011857443696,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.16487498239828285,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.4772137938386906,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.29926314037468366,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.2591353761058226,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.23619205352136954,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.3679233278082519,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.6767033987221964,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 15.2,
+        "48h": 24.8,
+        "72h": 36.8,
+        "96h": 40.4
+      }
+    },
+    {
+      "ibge": "4207403",
+      "nome": "Imbuia",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.4623702821074187,
+          "classe": 2,
+          "efr_mm": 30.890355027713483,
+          "rtotal_mm": 15.346673183028392,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5959964279996344,
+          "classe": 2,
+          "efr_mm": 34.699642799963435,
+          "rtotal_mm": 24.900000000000002,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.4439710055320581,
+          "classe": 2,
+          "efr_mm": 43.64413129500269,
+          "rtotal_mm": 0.7529692582031244,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.45737451301592763,
+          "classe": 2,
+          "efr_mm": 31.33581315683536,
+          "rtotal_mm": 14.4016381447574,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.17909095487219046,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.8970901624608304,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4484839852313794,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.8923069960807084,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.38041906269055076,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 1.5900790574049504,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.16097580013870644,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.16002695298548147,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.12590936148220613,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.12848412161535594,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.2657726421495122,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.22438229092025977,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.18865719033726117,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.2744906692148201,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.618172066294824,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 26.03,
+        "48h": 33.71,
+        "72h": 46.47,
+        "96h": 47.27
+      }
+    },
+    {
+      "ibge": "4208500",
+      "nome": "Ituporanga",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.28699798242599794,
+          "classe": 1,
+          "efr_mm": 22.39003674399781,
+          "rtotal_mm": 6.309761498601983,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.46919368950439433,
+          "classe": 2,
+          "efr_mm": 21.980051542976437,
+          "rtotal_mm": 24.939317407462994,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.362926911699425,
+          "classe": 1,
+          "efr_mm": 35.264500059498424,
+          "rtotal_mm": 1.0281911104440786,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.419229090676752,
+          "classe": 2,
+          "efr_mm": 25.634035364694117,
+          "rtotal_mm": 16.288873702981086,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.1836958230252698,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.403466387745879,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4232859835497858,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.8933537817948425,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 1.181823680031096,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 1.5790684679996254,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 1.3586027500877131,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.1369648083887089,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.10501581550383532,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.3212304734443696,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.19655442243311827,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.17506309582316282,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.14660213095429306,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.2480681537351433,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.5166844545902577,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 15.299999999999999,
+        "48h": 16.599999999999998,
+        "72h": 24.0,
+        "96h": 26.7
+      }
+    },
+    {
+      "ibge": "4209151",
+      "nome": "José Boiteux",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.3595937523359686,
+          "classe": 1,
+          "efr_mm": 24.969100147299528,
+          "rtotal_mm": 10.990275086297332,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.7677953589762574,
+          "classe": 3,
+          "efr_mm": 28.223563696248284,
+          "rtotal_mm": 48.55597220137745,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.3931740746299345,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.6107896571633292,
+          "classe": 2,
+          "efr_mm": 60.30121831037076,
+          "rtotal_mm": 0.7777474059621703,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.6058499159345745,
+          "classe": 2,
+          "efr_mm": 43.249701211302835,
+          "rtotal_mm": 17.33529038215461,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.29259866247059485,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.9394914394844114,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.40751329982980183,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.2885022604454209,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.19707422277310843,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.14582322164574607,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.16443883452930078,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.2389273921787897,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.1641090637605138,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.4083439549880714,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.2219337302669286,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.1898312517066013,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.15814095619072663,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.2943834873836628,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.5771259681687334,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 9.4,
+        "48h": 20.5,
+        "72h": 29.8,
+        "96h": 32.1
+      }
+    },
+    {
+      "ibge": "4209508",
+      "nome": "Laurentino",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.2529127846492713,
+          "classe": 1,
+          "efr_mm": 19.3346228976985,
+          "rtotal_mm": 5.9566555672286245,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.4701820285293369,
+          "classe": 2,
+          "efr_mm": 19.426803596231387,
+          "rtotal_mm": 27.5913992567023,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.3634977549509138,
+          "classe": 1,
+          "efr_mm": 35.272028089129215,
+          "rtotal_mm": 1.0777474059621703,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.469892370704052,
+          "classe": 2,
+          "efr_mm": 25.74309373757214,
+          "rtotal_mm": 21.24614333283306,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.1578443832651672,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.5179845557624442,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4273880611301181,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.29886119411774426,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.19816961876591213,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.14748413279292416,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.21418396844703114,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.19404209880145926,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.1434928383897725,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.2867209850177691,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.21046411286296202,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.16848153582302436,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.15578373327191722,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.3023663365058944,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.5132574117915483,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 9.6,
+        "48h": 13.9,
+        "72h": 21.9,
+        "96h": 23.3
+      }
+    },
+    {
+      "ibge": "4209904",
+      "nome": "Lontras",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.3238338733913009,
+          "classe": 1,
+          "efr_mm": 26.092704166607458,
+          "rtotal_mm": 6.290683172522628,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5613169326089246,
+          "classe": 2,
+          "efr_mm": 24.499201778799538,
+          "rtotal_mm": 31.632491482092927,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.45303653768102237,
+          "classe": 2,
+          "efr_mm": 42.29177673528974,
+          "rtotal_mm": 3.0118770328124977,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.49446189498459175,
+          "classe": 2,
+          "efr_mm": 32.17274246414585,
+          "rtotal_mm": 17.273447034313318,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.13349576632506968,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.5074429430967112,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4185693273514521,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.2939311972006843,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.526738490702677,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.17120029262263023,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.316035978740262,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.17656774075413348,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.13095602920003213,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.46956285342278187,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.22487952857836624,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.21163371531943864,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.18871146298482264,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.31947035195876355,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7666470420992111,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 16.1,
+        "48h": 20.1,
+        "72h": 27.1,
+        "96h": 29.9
+      }
+    },
+    {
+      "ibge": "4210852",
+      "nome": "Mirim Doce",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.4052684238847988,
+          "classe": 2,
+          "efr_mm": 30.360824242721932,
+          "rtotal_mm": 10.166018145757947,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5735370727647403,
+          "classe": 2,
+          "efr_mm": 29.55855434080382,
+          "rtotal_mm": 27.795152935670217,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.44574339216439546,
+          "classe": 2,
+          "efr_mm": 42.507718107496295,
+          "rtotal_mm": 2.066621108943256,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.5480539419345436,
+          "classe": 2,
+          "efr_mm": 31.83727161292393,
+          "rtotal_mm": 22.96812258053042,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.16771993291472592,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.5157613697063881,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.5901446498682329,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.4932298063913539,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.41902280654143104,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.22861419312386622,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.20950393874742038,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.20703392768213866,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.17354439445400444,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.06152410923732461,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.2723106867217327,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.23759358623186005,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.23053608643549647,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.265967926717386,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.441051959308012,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 21.39,
+        "48h": 36.19,
+        "72h": 43.57,
+        "96h": 44.77
+      }
+    },
+    {
+      "ibge": "4212700",
+      "nome": "Petrolândia",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.3290150405438879,
+          "classe": 1,
+          "efr_mm": 27.41604331409274,
+          "rtotal_mm": 5.485460740296053,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.45612634081353365,
+          "classe": 2,
+          "efr_mm": 24.71543298141505,
+          "rtotal_mm": 20.897201099938318,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.3475005708361343,
+          "classe": 1,
+          "efr_mm": 33.62275338213316,
+          "rtotal_mm": 1.127303701480262,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.41593265616821684,
+          "classe": 2,
+          "efr_mm": 24.47975043925179,
+          "rtotal_mm": 17.113515177569898,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.21187810910603092,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.40480268348787884,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.44708970399535053,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.8951226241337847,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 1.1964554068767754,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 1.592474286094272,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 1.3587488272217974,
+          "classe": 4
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.2508914396392131,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.19248086110443346,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.33648218797530066,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.24252112369939374,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.2453709527064248,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.2254374223360391,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.24716355562675243,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7085869755670328,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 16.900000000000002,
+        "48h": 20.7,
+        "72h": 30.0,
+        "96h": 33.5
+      }
+    },
+    {
+      "ibge": "4213708",
+      "nome": "Pouso Redondo",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.33101122497160496,
+          "classe": 1,
+          "efr_mm": 28.62893823970778,
+          "rtotal_mm": 4.472184257452713,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.4780953367599722,
+          "classe": 2,
+          "efr_mm": 24.322708137284227,
+          "rtotal_mm": 23.486825538712985,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.362534654314856,
+          "classe": 1,
+          "efr_mm": 35.332987655375405,
+          "rtotal_mm": 0.9204777761101965,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.45146985257709527,
+          "classe": 2,
+          "efr_mm": 25.36848711595377,
+          "rtotal_mm": 19.778498141755755,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.17693487425251053,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.5175791164430188,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.41147956740575375,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.32298318111736163,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.2310172886765031,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.18372128655252482,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.3510066070906225,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.2104872166160873,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.20635626844150792,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.33106622966231053,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.27720501543185094,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.2868926074235507,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.25847187142372385,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.39709656785069075,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7492559789774048,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 11.9,
+        "48h": 14.3,
+        "72h": 32.8,
+        "96h": 37.7
+      }
+    },
+    {
+      "ibge": "4214003",
+      "nome": "Presidente Getúlio",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.2939586529152795,
+          "classe": 1,
+          "efr_mm": 22.608391038577707,
+          "rtotal_mm": 6.787474252950243,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5105321314288257,
+          "classe": 2,
+          "efr_mm": 22.540722047446724,
+          "rtotal_mm": 28.51249109543584,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.3993728902955068,
+          "classe": 1,
+          "efr_mm": 38.57408088329245,
+          "rtotal_mm": 1.3632081462582228,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.460243988564386,
+          "classe": 2,
+          "efr_mm": 28.449927739991224,
+          "rtotal_mm": 17.57447111644737,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.20516606382631986,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.9368841025013,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.3637405689154036,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.24996263199814456,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.34907156055396615,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.12740996985670294,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.1814199311241258,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.15529079288011552,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.1125520858851582,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.1828080013137272,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.17656533526090087,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.14838448282314468,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.1496695516759896,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.2826234700597097,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.818939872495597,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 9.8,
+        "48h": 17.0,
+        "72h": 27.3,
+        "96h": 29.3
+      }
+    },
+    {
+      "ibge": "4214102",
+      "nome": "Presidente Nereu",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.4830516275125429,
+          "classe": 2,
+          "efr_mm": 32.04773863910378,
+          "rtotal_mm": 16.257424112150513,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.6428543033625651,
+          "classe": 2,
+          "efr_mm": 36.33054958695553,
+          "rtotal_mm": 27.95488074930099,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.5041300690876667,
+          "classe": 2,
+          "efr_mm": 47.24979876250844,
+          "rtotal_mm": 3.1632081462582224,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.485990336546318,
+          "classe": 2,
+          "efr_mm": 35.76906772626009,
+          "rtotal_mm": 12.829965928371713,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.1640128522009528,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.912253307968823,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4010271540534844,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.2855467154603471,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.37342543568510067,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.2058501710219837,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.14704475344497653,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.19262760280870797,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.14217526046427162,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.14873915901280163,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.29906894965784536,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.2952204533203278,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.24686969218946278,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.3279694642081158,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.589813000724247,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 26.03,
+        "48h": 33.71,
+        "72h": 46.47,
+        "96h": 47.27
+      }
+    },
+    {
+      "ibge": "4214508",
+      "nome": "Rio do Campo",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.2302571701520489,
+          "classe": 1,
+          "efr_mm": 11.13072256492391,
+          "rtotal_mm": 11.89499445028098,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5048762029672816,
+          "classe": 2,
+          "efr_mm": 17.273627729705154,
+          "rtotal_mm": 33.21399256702301,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.41415916500041006,
+          "classe": 2,
+          "efr_mm": 38.029705023951365,
+          "rtotal_mm": 3.3862114760896356,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.5018822289375434,
+          "classe": 2,
+          "efr_mm": 29.91907623108987,
+          "rtotal_mm": 20.269146662664472,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.19851401205059033,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.3917558862157883,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.3146745653774706,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.21341750382827024,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.14525142497827553,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.109609861928167,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.13316748334600093,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.1060552589669846,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.07985086997018209,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.03272275643210096,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.33642221525135074,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.26149370126624993,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.23702703604211825,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.28975241784599415,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.5853068746534386,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 13.65,
+        "48h": 14.25,
+        "72h": 15.45,
+        "96h": 16.05
+      }
+    },
+    {
+      "ibge": "4214607",
+      "nome": "Rio do Oeste",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.26371615659946124,
+          "classe": 1,
+          "efr_mm": 17.726871777143906,
+          "rtotal_mm": 8.644743882802217,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.4499381036627832,
+          "classe": 2,
+          "efr_mm": 20.82302555885645,
+          "rtotal_mm": 24.170784807421875,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.35282010227330757,
+          "classe": 1,
+          "efr_mm": 34.125628006442604,
+          "rtotal_mm": 1.1563822208881571,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.44920963060543595,
+          "classe": 2,
+          "efr_mm": 25.090246396378294,
+          "rtotal_mm": 19.830716664165298,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.13962369807730649,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.9385526641356113,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.37678060645378986,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.26271189600396716,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.17363904507236805,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.12822313998466164,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.34914052118033134,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.2292108223616858,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.1645396565110791,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.17671995469438093,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.16322678004271773,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.13090952653360052,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.12788215393801575,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.2422079480751862,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.8354862919304195,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 8.4,
+        "48h": 12.2,
+        "72h": 22.3,
+        "96h": 23.5
+      }
+    },
+    {
+      "ibge": "4214805",
+      "nome": "Rio do Sul",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.27057041146194816,
+          "classe": 1,
+          "efr_mm": 21.887484464019643,
+          "rtotal_mm": 5.169556682175172,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5018624949608912,
+          "classe": 2,
+          "efr_mm": 20.471710236385178,
+          "rtotal_mm": 29.714539259703947,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.3852931008655559,
+          "classe": 1,
+          "efr_mm": 37.45156268059341,
+          "rtotal_mm": 1.0777474059621703,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.4798511425287489,
+          "classe": 2,
+          "efr_mm": 27.25009721706075,
+          "rtotal_mm": 20.735017035814145,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.14683872513499965,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.4825760284469311,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4050468842870051,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.28480003391281267,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.5302806249973636,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.1424699958307019,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.3381341899811659,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.25394428795475316,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.18594035642761247,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.46226187887844766,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.2708709239663457,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.22635328138113261,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.19730652609890517,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.3154377457407828,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7903596518694387,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 11.4,
+        "48h": 14.9,
+        "72h": 23.5,
+        "96h": 25.6
+      }
+    },
+    {
+      "ibge": "4215307",
+      "nome": "Salete",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.2328719905726193,
+          "classe": 1,
+          "efr_mm": 9.662410003393383,
+          "rtotal_mm": 13.624789053868545,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.44800722486199107,
+          "classe": 2,
+          "efr_mm": 17.95082547439814,
+          "rtotal_mm": 26.849897011800973,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.36423327627914304,
+          "classe": 1,
+          "efr_mm": 33.74646763091595,
+          "rtotal_mm": 2.6768599969983535,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.42167956550481445,
+          "classe": 2,
+          "efr_mm": 26.22863914301845,
+          "rtotal_mm": 15.939317407462992,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.18715814680981077,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.4031902436128385,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.3170769018547572,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.2176380337090286,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.14453522824064277,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.11553025981934979,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.12678164815969215,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.09535862313924952,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.07045268295833126,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.11174089895351261,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.24662802144334978,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.19832076416366165,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.18763549609320737,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.36741578018598603,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.6008891213303728,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 13.65,
+        "48h": 14.25,
+        "72h": 15.45,
+        "96h": 16.05
+      }
+    },
+    {
+      "ibge": "4215679",
+      "nome": "Santa Terezinha",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.30733053868212357,
+          "classe": 1,
+          "efr_mm": 24.80950384570001,
+          "rtotal_mm": 5.923550022512347,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.711919107347367,
+          "classe": 3,
+          "efr_mm": 22.653550039465337,
+          "rtotal_mm": 48.53836069527136,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.213651850740131,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.5897324093186151,
+          "classe": 2,
+          "efr_mm": 55.249350193066284,
+          "rtotal_mm": 3.72389073879523,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.5808949205265436,
+          "classe": 2,
+          "efr_mm": 42.45775130635501,
+          "rtotal_mm": 15.631740746299345,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.15933712014804552,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.27518989646502523,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.2155953303322845,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.14833577459442884,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.09625309885752838,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.07407122208738516,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.09625966339547103,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.07762024388465834,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.06053038578171397,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.16457281709096833,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.3121725511491605,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.23185117300756825,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.1987951850039121,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.22518234995958533,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.35757351085180933,
+          "classe": 1
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 15.1,
+        "48h": 21.3,
+        "72h": 27.1,
+        "96h": 27.6
+      }
+    },
+    {
+      "ibge": "4217808",
+      "nome": "Taió",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.39666845551774743,
+          "classe": 1,
+          "efr_mm": 29.993489439579704,
+          "rtotal_mm": 9.673356112195039,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5259783652244593,
+          "classe": 2,
+          "efr_mm": 28.89333210768443,
+          "rtotal_mm": 23.704504414761498,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.4099115776322161,
+          "classe": 2,
+          "efr_mm": 38.86474147070516,
+          "rtotal_mm": 2.126416292516445,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.46681376611296954,
+          "classe": 2,
+          "efr_mm": 29.3266325351662,
+          "rtotal_mm": 17.354744076130757,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.15652831990954333,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.5035072634529087,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.5765254863196382,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.4914563193908736,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.418925685804872,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.1657537595287862,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.13651386184513992,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.12149142798257268,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.09032963144823151,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.05546941012439849,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.2356838499489175,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.18953503040568814,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.1839096075745236,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.23468139402982702,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 1.073765279324689,
+          "classe": 4
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 21.39,
+        "48h": 36.19,
+        "72h": 43.57,
+        "96h": 44.77
+      }
+    },
+    {
+      "ibge": "4218608",
+      "nome": "Trombudo Central",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.24290892152406804,
+          "classe": 1,
+          "efr_mm": 18.75560177025219,
+          "rtotal_mm": 5.535290382154612,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5133592550826783,
+          "classe": 2,
+          "efr_mm": 18.63326328137638,
+          "rtotal_mm": 32.702662226891455,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.4005105064924791,
+          "classe": 2,
+          "efr_mm": 39.13057287313771,
+          "rtotal_mm": 0.9204777761101965,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.5010106526796636,
+          "classe": 2,
+          "efr_mm": 28.107891193336428,
+          "rtotal_mm": 21.993174074629934,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.1789423002001836,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.47602875248480475,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.38454957146774865,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.2900070134982564,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.19404708767564585,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.15876041533195637,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.35202197634025245,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.09913394679416357,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.07606083632434875,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.20283307376429283,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.17141431276480767,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.15945300198577442,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.1534208801303277,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.2687864134443253,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7024887298319554,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 10.3,
+        "48h": 13.700000000000001,
+        "72h": 20.0,
+        "96h": 21.900000000000002
+      }
+    },
+    {
+      "ibge": "4219200",
+      "nome": "Vidal Ramos",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.4816237444198318,
+          "classe": 2,
+          "efr_mm": 31.874847728290717,
+          "rtotal_mm": 16.287526713692454,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.6720373421845548,
+          "classe": 2,
+          "efr_mm": 36.23697643634198,
+          "rtotal_mm": 30.96675778211349,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.5120235444479385,
+          "classe": 2,
+          "efr_mm": 49.427132592552894,
+          "rtotal_mm": 1.775221852240954,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.4812121281626735,
+          "classe": 2,
+          "efr_mm": 36.29302170582328,
+          "rtotal_mm": 11.828191110444077,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.17793900257790476,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.9092066668664348,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.42252027465187486,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.2990945638598812,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.3781966653048074,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.20265004109952353,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.15445280030567335,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.2514194492014278,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.19447341464726645,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.14709337482601778,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.3461712531697395,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.2961305771259625,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.23542482987486865,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.3323672725015204,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.6176424312612883,
+          "classe": 2
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 26.03,
+        "48h": 33.71,
+        "72h": 46.47,
+        "96h": 47.27
+      }
+    },
+    {
+      "ibge": "4219358",
+      "nome": "Vitor Meireles",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.3111736208173901,
+          "classe": 1,
+          "efr_mm": 23.978385390558895,
+          "rtotal_mm": 7.138976691180112,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.582444943092074,
+          "classe": 2,
+          "efr_mm": 23.80347138704459,
+          "rtotal_mm": 34.44102292216281,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.4705177191185682,
+          "classe": 2,
+          "efr_mm": 45.802215616338735,
+          "rtotal_mm": 1.2495562955180919,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.4781351122292642,
+          "classe": 2,
+          "efr_mm": 33.46634380795931,
+          "rtotal_mm": 14.34716741496711,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.30518293711525263,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.9312173226118533,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.38139905875257357,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.2684611274307777,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.1792743737792222,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.13090633534483348,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.22690961900067125,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.13363496813142098,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.08728757331559886,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.09936498591958125,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.1731929738616256,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.1390225912033173,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.12887713833322378,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.25640750277967556,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.784677814844654,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 10.7,
+        "48h": 17.5,
+        "72h": 29.8,
+        "96h": 31.4
+      }
+    },
+    {
+      "ibge": "4219408",
+      "nome": "Witmarsum",
+      "limiar_mm": 100,
+      "fonte_limiar": "VIGIA, limiar de demonstração de 100 mm escolhido pela equipe com base nos critérios de deslizamento da Defesa Civil de Blumenau (alerta a partir de 100 mm em 24 h)",
+      "mv_h": 48,
+      "dias": [
+        {
+          "dia_alvo": "2026-11-21",
+          "d": 0,
+          "indice": 0.29894132968302756,
+          "classe": 1,
+          "efr_mm": 21.51259529847336,
+          "rtotal_mm": 8.381537669829399,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-22",
+          "d": 1,
+          "indice": 0.5153343066293009,
+          "classe": 2,
+          "efr_mm": 23.256844012272204,
+          "rtotal_mm": 28.276586650657883,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-23",
+          "d": 2,
+          "indice": 0.41019747165532866,
+          "classe": 2,
+          "efr_mm": 39.65653901927464,
+          "rtotal_mm": 1.3632081462582228,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        },
+        {
+          "dia_alvo": "2026-11-24",
+          "d": 3,
+          "indice": 0.4793119205267406,
+          "classe": 2,
+          "efr_mm": 29.21651611979988,
+          "rtotal_mm": 18.714675932874183,
+          "n_membros": 5,
+          "prob": {
+            "pontuais": 0.0,
+            "esparsos": 0.0,
+            "generalizados": 0.0
+          }
+        }
+      ],
+      "historico": [
+        {
+          "dia_alvo": "2026-11-06",
+          "indice": 0.2392179356621822,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-07",
+          "indice": 0.9511924038553792,
+          "classe": 3
+        },
+        {
+          "dia_alvo": "2026-11-08",
+          "indice": 0.4050886945203677,
+          "classe": 2
+        },
+        {
+          "dia_alvo": "2026-11-09",
+          "indice": 0.28049106935259477,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-10",
+          "indice": 0.18633222219343626,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-11",
+          "indice": 0.13452754167619965,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-12",
+          "indice": 0.17818235173533054,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-13",
+          "indice": 0.15671986169214158,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-14",
+          "indice": 0.1072316622070504,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-15",
+          "indice": 0.15693478431561325,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-16",
+          "indice": 0.15419253920920473,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-17",
+          "indice": 0.12742114801624008,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-18",
+          "indice": 0.13935367781321717,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-19",
+          "indice": 0.2517658950573354,
+          "classe": 1
+        },
+        {
+          "dia_alvo": "2026-11-20",
+          "indice": 0.7449693493325273,
+          "classe": 3
+        }
+      ],
+      "chuva_acum_mm": {
+        "24h": 10.4,
+        "48h": 13.8,
+        "72h": 26.900000000000002,
+        "96h": 28.900000000000002
       }
     }
   ]
