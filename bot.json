@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "gerado_em": "2026-11-20T17:51:47Z",
+  "gerado_em": "2026-11-21T00:00:12Z",
   "municipios": [
     {
       "ibge": "4200200",
@@ -187,7 +187,7 @@
   "status": {
     "cabecalho": "<b>Situação dos seus municípios</b>\n\n",
     "blocos": {
-      "4200200": "ℹ️ <b>Agrolândia</b> · Risco baixo\n🟩🟩🟩⬜⬜⬜⬜ classe 3 de 7 · Índice <b>0,74</b>\n📅 Válido para 20/11/2026 · cálculo de 20/11/2026 14:51",
+      "4200200": "ℹ️ <b>Agrolândia</b> · Risco baixo\n🟩🟩🟩⬜⬜⬜⬜ classe 3 de 7 · Índice <b>0,77</b>\n📅 Válido para 20/11/2026 · cálculo de 20/11/2026 21:00",
       "4200309": "ℹ️ <b>Agronômica</b> · Risco baixo\n🟩🟩🟩⬜⬜⬜⬜ classe 3 de 7 · Índice <b>0,76</b>\n📅 Válido para 20/11/2026 · cálculo de 20/11/2026 14:51",
       "4201802": "ℹ️ <b>Atalanta</b> · Risco baixo\n🟩🟩🟩⬜⬜⬜⬜ classe 3 de 7 · Índice <b>0,72</b>\n📅 Válido para 20/11/2026 · cálculo de 20/11/2026 14:51",
       "4201901": "ℹ️ <b>Aurora</b> · Risco muito baixo\n🟩🟩⬜⬜⬜⬜⬜ classe 2 de 7 · Índice <b>0,55</b>\n📅 Válido para 20/11/2026 · cálculo de 20/11/2026 14:51",
